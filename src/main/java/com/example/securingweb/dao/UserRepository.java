@@ -10,4 +10,6 @@ public interface UserRepository extends MongoRepository<ReportedUser, String> {
     public ReportedUser findByFirstName(String firstName);
     public List<ReportedUser> findByLastName(String lastName);
 
+    // použito pro vyhledání uživatele podle uživ jména v přihlášení
+    public ReportedUser findByUserName(String userName);
 }
