@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 
 import javax.persistence.Entity;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -43,11 +44,12 @@ public class ReportedUser implements UserDetails {
         this.lastName = lastName;
     }
 
+
     @Pattern(regexp="^[a-zA-Z]{2,20}",message="Invalid name pattern")
     private String firstName;
     @Pattern(regexp="^[a-zA-Z]{2,20}",message="Invalid surname pattern")
     private String lastName;
-    @Pattern(regexp="^[a-zA-Z]{3,20}",message="Invalid username pattern")
+    @Pattern(regexp="^[a-zA-Z0-9]{3,20}",message="Invalid username pattern")
     private String userName;
     @Size(min = 5, message = "Password must be at least 5 characters long")
     private String password;

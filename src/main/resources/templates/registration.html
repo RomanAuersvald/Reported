@@ -13,6 +13,7 @@
             <div><label> User Name : <input type="text" th:field="*{username}" class="form-control" placeholder="Enter username"/> </label></div>
             <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="alert alert-danger" role="alert">Username was not set</p>
             <div><label> Password: <input type="password" th:field="*{password}" class="form-control" placeholder="Password"/> </label></div>
+            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="alert alert-danger" role="alert">Password not set</p>
             <div><input type="submit" value="Sign In"/></div>
         </form>
     </body>

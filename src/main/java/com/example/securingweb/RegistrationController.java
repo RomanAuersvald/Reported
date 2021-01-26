@@ -11,6 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.Validator;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -31,38 +34,30 @@ public class RegistrationController {
 
     @PostMapping(path="/addUser")
     public //@ResponseBody // - pouze pokud chceme výsledek ukázat
-    String addNewUser (@RequestParam String firstName
-            , @RequestParam String lastName
-            , @RequestParam String username
-            , @RequestParam String password
-            ,@Valid @ModelAttribute("user") ReportedUser user
+    String addNewUser (@Validated @ModelAttribute("user") ReportedUser user
             , BindingResult bindingResult, Model model) {
 
-        if(!userService.isUnique(username)){
-            FieldError error = new FieldError("addDomain", "username",
+        if(!userService.isUnique(user.getUsername())){
+            FieldError error = new FieldError("addUser", "username",
                     "Username already exists.");
             bindingResult.addError(error);
         }
 
         if (bindingResult.hasErrors()) {
-            model.addAttribute("username", username);
-            model.addAttribute("firstName", firstName);
-            model.addAttribute("lastname", lastName);
+            for (ObjectError error: bindingResult.getAllErrors()){
+                System.out.println(error);
+            }
+            model.addAttribute("username", user.getUsername());
+            model.addAttribute("firstName", user.getFirstName());
+            model.addAttribute("lastname", user.getLastName());
             return "/registration";
         }
 
-        String encodedPassword = passwordEncoder.encode(password);
-
-        ReportedUser n = new ReportedUser(
-                username,
-                encodedPassword,
-                "USER",
-                firstName,
-                lastName
-        );
-        userRepository.save(n);
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setRole("USER");
+        userRepository.save(user);
         System.out.println("saved");
-        user_message = "Nová doména byla úspěšně přidána";
+        user_message = "";
         return "redirect:/login";
     }
 
