@@ -55,6 +55,7 @@ public class RegistrationController {
 
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setRole("USER");
+        user.setPassword(encodedPassword);
         userRepository.save(user);
         System.out.println("saved");
         user_message = "";
