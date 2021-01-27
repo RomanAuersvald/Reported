@@ -1,15 +1,11 @@
 package com.example.securingweb.model;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 
-import javax.persistence.Entity;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -49,16 +45,16 @@ public class ReportedUser implements UserDetails {
     private String firstName;
     @Pattern(regexp="^[a-zA-Z]{2,20}",message="Invalid surname pattern")
     private String lastName;
-    @Pattern(regexp="^[a-zA-Z0-9]{3,20}",message="Invalid username pattern")
-    private String userName;
+    @Pattern(regexp="^[a-zA-Z]{3,20}",message="Invalid username pattern")
+    private String username;
     @Size(min = 5, message = "Password must be at least 5 characters long")
     private String password;
     private String role;
 
     public ReportedUser() {}
 
-    public ReportedUser(String userName, String password, String role, String name, String surname){
-        this.userName = userName;
+    public ReportedUser(String username, String password, String role, String name, String surname){
+        this.username = username;
         this.password = password;
         this.role = role;
         this.firstName = name;
@@ -68,8 +64,8 @@ public class ReportedUser implements UserDetails {
     @Override
     public String toString() {
         return String.format(
-                "User[id=%s, firstName='%s', lastName='%s', role='%s']",
-                id, firstName, lastName, role);
+                "User[id=%s, firstName='%s', lastName='%s', role='%s', username='%s']",
+                id, firstName, lastName, role, username);
     }
 
     @Override
@@ -95,13 +91,17 @@ public class ReportedUser implements UserDetails {
         return password;
     }
 
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
 
-    @Override
-    public String getUsername() {
-        return userName;
+    public void setUsername(String username){
+        this.username = username;
     }
 
     @Override

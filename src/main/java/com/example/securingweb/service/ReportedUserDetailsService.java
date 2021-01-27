@@ -18,7 +18,7 @@ public class ReportedUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<ReportedUser> optionalUser = Optional.ofNullable(userRepository.findByUserName(username));
+        Optional<ReportedUser> optionalUser = Optional.ofNullable(userRepository.findByUsername(username));
         if(optionalUser.isPresent()) {
             return new ReportedUser( optionalUser.get().getUsername(), optionalUser.get().getPassword(), optionalUser.get().getRole(), optionalUser.get().getFirstName(), optionalUser.get().getLastName());
         }
