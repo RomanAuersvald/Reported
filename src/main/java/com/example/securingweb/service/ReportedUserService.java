@@ -12,16 +12,10 @@ public class ReportedUserService {
     @Autowired
     private UserRepository userRepository;
 
-
-    public ReportedUser findUserByLogin(String login){
-        ReportedUser user = userRepository.findByUserName(login);
-        return user;
-    }
-
     public boolean isUnique(String login){
         boolean unique = true;
 
-        if(findUserByLogin(login) != null)
+        if(userRepository.findByUsername(login) != null)
             unique = false;
 
         return unique;
