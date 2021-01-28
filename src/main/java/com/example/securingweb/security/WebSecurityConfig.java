@@ -1,4 +1,4 @@
-package com.example.securingweb;
+package com.example.securingweb.security;
 
 import com.example.securingweb.service.ReportedUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;

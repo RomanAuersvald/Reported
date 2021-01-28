@@ -1,5 +1,6 @@
-package com.example.securingweb.model;
+package com.example.securingweb.security;
 
+import com.example.securingweb.model.ReportedUser;
 import com.example.securingweb.service.SequenceGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;

@@ -1,4 +1,4 @@
-package com.example.securingweb.model;
+package com.example.securingweb.security;
 // https://www.baeldung.com/spring-boot-mongodb-auto-generated-field
 
 import org.springframework.data.annotation.Id;

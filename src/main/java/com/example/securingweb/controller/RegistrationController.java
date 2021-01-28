@@ -1,4 +1,4 @@
-package com.example.securingweb;
+package com.example.securingweb.controller;
 
 import com.example.securingweb.dao.UserRepository;
 import com.example.securingweb.model.ReportedUser;
