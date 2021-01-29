@@ -139,7 +139,99 @@
             </div>
         </nav>
 
+
+
+
+
+        <!-- Modal New Project-->
+        <div class="modal fade" id="newProjectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">New Project</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form th:action="@{/}" method="post">
+                    <div class="modal-body">
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">Project name</label>
+                                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Name of project">
+                            </div>
+                            <div class="form-group row">
+                                <label for="staticOwner" class="col-sm-2 col-form-label">Owner</label>
+                                <div class="col-sm-10">
+                                    <input type="text" readonly class="form-control-plaintext" id="staticOwner" value="Karel Karel">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="projectDescription">Project description</label>
+                                <textarea class="form-control" id="projectDescription" rows="3"></textarea>
+                            </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-primary" th:type="submit">Add New Project</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal New Task-->
+        <div class="modal fade" id="newTaskModal" tabindex="-1" role="dialog" aria-labelledby="taskModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="taskModalCenterTitle">New Task</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form th:action="@{/}" method="post">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="taskFormControlInput1">Task name</label>
+                                <input type="email" class="form-control" id="taskFormControlInput1" placeholder="Name of task">
+                            </div>
+                            <div class="form-group">
+                                <label for="taskFormControlSelect1">Select project</label>
+                                <select class="form-control" id="taskFormControlSelect1">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="taskDescription">Task description</label>
+                                <textarea class="form-control" id="taskDescription" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button class="btn btn-primary" th:type="submit">Add New task</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            <nav class="navbar navbar-expand-lg ">
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="btn-group mr-2">
+                        <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#newProjectModal">
+                            New Project
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#newTaskModal">
+                            New Task
+                        </button>
+                    </div>
+                </div>
+            </nav>
             <div layout:fragment="content"></div>
         </main>
     </div>
