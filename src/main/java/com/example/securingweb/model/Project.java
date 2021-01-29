@@ -1,7 +1,13 @@
 package com.example.securingweb.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.Collection;
 
+
+@Entity
 public class Project {
 
     public Project(){
@@ -28,7 +34,20 @@ public class Project {
         setTasks(tasks);
     }
 
-    private Collection<ProjectTask> tasks;
+    public long getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
+    }
+
+    @Id
+    @GeneratedValue // vyzkouset, jestli bude generovat ředu
+    private int Id;
+
+    @OneToMany
+    public Collection<ProjectTask> tasks;
 
     public String getName() {
         return name;

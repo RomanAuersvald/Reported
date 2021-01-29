@@ -1,6 +1,14 @@
 package com.example.securingweb.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class ProjectTask {
+    @Id
+    @GeneratedValue
+    private int Id;
 
     private String name;
 
