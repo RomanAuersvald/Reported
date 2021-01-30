@@ -1,4 +1,4 @@
-package com.example.securingweb;
+package com.example.securingweb.controller;
 
 
 import com.example.securingweb.model.ReportedUser;
@@ -8,18 +8,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping(path="/home")
+//@RequestMapping(path="/home")
 public class LandingPageController {
 
 
-    @GetMapping(path="/registeruser")
+    @GetMapping(value="/registeruser")
     public String registerUser(Model model) {
         ReportedUser user = new ReportedUser();
         model.addAttribute("user", user);
         return "/registration";
     }
 
-    @GetMapping(path="/loginuser")
+    @GetMapping(value="/loginuser")
     public String loginUser() {
         return "/login";
     }
