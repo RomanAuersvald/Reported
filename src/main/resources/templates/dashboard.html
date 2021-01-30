@@ -44,7 +44,7 @@
 <body>
 
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">My company name?</a>
+    <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Dashboard</a>
     <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -63,15 +63,26 @@
     <div class="row">
         <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
             <div class="sidebar-sticky pt-3">
+                <div th:if="${#httpServletRequest.remoteUser != null}">
+                    <p th:text="${#httpServletRequest.remoteUser}">
+                        N/a
+                    </p>
+                </div>
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link active" href="/templates/allProjects">
+                        <p class="nav-link">
+                            <span data-feather="home"></span>
+                            User: <strong>[[${#httpServletRequest.remoteUser}]]</strong>
+                        </p>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/project/all">
                             <span data-feather="home"></span>
                             My Projects - list?
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/templates/allTasks">
+                        <a class="nav-link" href="/task/all">
                             <span data-feather="file"></span>
                             All Tasks
                         </a>

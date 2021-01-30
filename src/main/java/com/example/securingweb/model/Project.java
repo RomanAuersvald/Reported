@@ -1,5 +1,7 @@
 package com.example.securingweb.model;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -7,76 +9,37 @@ import javax.persistence.OneToMany;
 import java.util.Collection;
 
 
-@Entity
+@Document(collection = "projects")
 public class Project {
 
-    public Project(){
+    @Id
+    private int id;
+    private final String name;
+    private final String description;
+    private final String owner;
 
-    }
-
-    public Project(String name, String description, ReportedUser owner) {
+    public Project(int id, String name, String description, String owner){
         this.name = name;
         this.description = description;
         this.owner = owner;
     }
 
-    public Collection<ProjectTask> getTasks() {
-        return tasks;
-    }
+    public int getId() { return id; }
 
-    public void setTasks(Collection<ProjectTask> tasks) {
-        this.tasks = tasks;
-    }
-
-    public void addTask(ProjectTask task){
-        Collection<ProjectTask> tasks = getTasks();
-        tasks.add(task);
-        setTasks(tasks);
-    }
-
-    public long getId() {
-        return Id;
-    }
-
-    public void setId(int id) {
-        Id = id;
-    }
-
-    @Id
-    @GeneratedValue // vyzkouset, jestli bude generovat ředu
-    private int Id;
-
-    @OneToMany
-    public Collection<ProjectTask> tasks;
+    public void setId(int id) { this.id = id; }
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    private String name;
-    private String description;
-
-    public ReportedUser getOwner() {
+    public String getOwner() {
         return owner;
     }
 
-    public void setOwner(ReportedUser owner) {
-        this.owner = owner;
-    }
-
-    private ReportedUser owner;
 
 
 }

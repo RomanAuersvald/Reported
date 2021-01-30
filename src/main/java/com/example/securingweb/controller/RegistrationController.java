@@ -36,6 +36,7 @@ public class RegistrationController {
             FieldError error = new FieldError("addUser", "login",
                     "Username already exists.");
             bindingResult.addError(error);
+//            return "redirect:/login";
         }
 
         if (bindingResult.hasErrors()) {
