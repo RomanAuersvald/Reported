@@ -10,11 +10,8 @@
 <body>
 <div class="container">
     ADD project
-    <form action="#" th:action="@{/project/add}" th:object="${project}" method="post">
-        <div class="form-group">
-            <label >ID:</label>
-            <input type="text" th:field="*{id}" class="form-control" placeholder="id" >
-        </div>
+    <form th:action="@{/project/addProject}" th:object="${project}" method="post">
+
         <div class="form-group">
             <label >Name:</label>
             <input type="text" th:field="*{name}" class="form-control" placeholder="id" >
@@ -27,9 +24,6 @@
             <label >Owner:</label>
             <input type="text" th:field="*{owner}" class="form-control" placeholder="id" >
         </div>
-
-
-
         <button type="submit" class="btn btn-primary">Add new project</button>
     </form>
 </div>

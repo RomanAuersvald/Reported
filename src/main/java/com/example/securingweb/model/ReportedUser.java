@@ -21,9 +21,6 @@ public class ReportedUser implements UserDetails {
     @Transient
     public static final String SEQUENCE_NAME = "users_sequence";
 
-    @Id
-    private long id;
-
     public String getFirstName() {
         return firstName;
     }
@@ -64,8 +61,8 @@ public class ReportedUser implements UserDetails {
     @Override
     public String toString() {
         return String.format(
-                "User[id=%s, firstName='%s', lastName='%s', role='%s', username='%s']",
-                id, firstName, lastName, role, username);
+                "User[firstName='%s', lastName='%s', role='%s', username='%s']",
+                firstName, lastName, role, username);
     }
 
     @Override
@@ -76,14 +73,6 @@ public class ReportedUser implements UserDetails {
         });
 
         return authorities;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     @Override

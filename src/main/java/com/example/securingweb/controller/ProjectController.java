@@ -47,10 +47,11 @@ public class ProjectController {
 
     @GetMapping("/project/addTest")
     public String addTestProject(Model model){
-        Project project = new Project(22, "Projekt 1", "projekt o projektu", "Johny");
+        Project project = new Project( "Projekt 1", "projekt o projektu", "Johny");
         msg = "addtest project msg";
         model.addAttribute("msg", msg);
         model.addAttribute("project", project);
+        repository.save(project);
         msg = "";
         return "redirect:/project/all";
 

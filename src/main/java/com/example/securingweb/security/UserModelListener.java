@@ -1,26 +1,26 @@
 package com.example.securingweb.security;
 
 import com.example.securingweb.model.ReportedUser;
-import com.example.securingweb.service.SequenceGeneratorService;
+//import com.example.securingweb.service.SequenceGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
 import org.springframework.data.mongodb.core.mapping.event.BeforeConvertEvent;
 import org.springframework.stereotype.Component;
 
-@Component
-public class UserModelListener extends AbstractMongoEventListener<ReportedUser> {
+//@Component
+//public class UserModelListener extends AbstractMongoEventListener<ReportedUser> {
 
-    private SequenceGeneratorService sequenceGenerator;
+//    private SequenceGeneratorService sequenceGenerator;
 
-    @Autowired
-    public UserModelListener(SequenceGeneratorService sequenceGenerator) {
-        this.sequenceGenerator = sequenceGenerator;
-    }
+//    @Autowired
+//    public UserModelListener(SequenceGeneratorService sequenceGenerator) {
+//        this.sequenceGenerator = sequenceGenerator;
+//    }
 
-    @Override
-    public void onBeforeConvert(BeforeConvertEvent<ReportedUser> event) {
-        if (event.getSource().getId() < 1) {
-            event.getSource().setId(sequenceGenerator.generateSequence(ReportedUser.SEQUENCE_NAME));
-        }
-    }
-}
+//    @Override
+//    public void onBeforeConvert(BeforeConvertEvent<ReportedUser> event) {
+//        if (event.getSource().getId() < 1) {
+//            event.getSource().setId(sequenceGenerator.generateSequence(ReportedUser.SEQUENCE_NAME));
+//        }
+//    }
+//}
