@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProjectService {
@@ -25,6 +26,11 @@ public class ProjectService {
 
     public void saveProject(Project p) { projectRepository.save(p);}
 
-    public void deleteProject(String id) { projectRepository.deleteById(id);}
+    public void deleteProject(String id) {
+        //Optional<Project> project = projectRepository.findById(id);
+        //if (project.isPresent()){
+        //    projectRepository.delete(project.get());
+        //}
+        projectRepository.deleteById(id);}
 
 }

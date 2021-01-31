@@ -26,12 +26,12 @@
             </thead>
             <tbody>
             <tr th:each="project : ${projects}">
-                <td th:text="${project.getObjectId()}"></td>
+                <td th:text="${project.getId()}"></td>
                 <td th:text="${project.name}"></td>
                 <td th:text="${project.description}"></td>
                 <td th:text="${project.owner}"></td>
-                <td><a th:href="@{/project/edit/{id}(id=${project.getObjectId()})}">Edit</a></td>
-                <td><a th:href="@{/project/delete/{id}(id=${project.getObjectId()})}">Delete</a></td>
+                <td><a th:href="@{/project/edit/{id}(id=${project.getId()})}">Edit</a></td>
+                <td><a th:href="@{/project/delete/{id}(id=${project.getId()})}">Delete</a></td>
             </tr>
             </tbody>
         </table>

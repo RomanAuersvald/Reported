@@ -13,6 +13,12 @@ import java.util.Collection;
 @Document(collection = "projects")
 public class Project {
 
+    public String getId() {
+        return id;
+    }
+
+    @Id
+    private String id;
     private final String name;
     private final String description;
     private final String owner;
@@ -36,6 +42,7 @@ public class Project {
         return owner;
     }
 
+    // pokaždé vytváříš nové ObjId proto se ti to pořád mění
     public String getObjectId() { return ObjectId.get().toHexString();
     }
 
