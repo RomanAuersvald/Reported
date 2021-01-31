@@ -21,6 +21,11 @@ public class LandingPageController {
         return "index";
     }
 
+//    @GetMapping(value = "/")
+//    public String init(){
+//        return "index";
+//    }
+
     @GetMapping(value="/registeruser")
     public String registerUser(Model model) {
         ReportedUser user = new ReportedUser();

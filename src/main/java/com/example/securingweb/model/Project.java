@@ -1,5 +1,6 @@
 package com.example.securingweb.model;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Entity;
@@ -35,6 +36,8 @@ public class Project {
         return owner;
     }
 
+    public String getObjectId() { return ObjectId.get().toHexString();
+    }
 
 
 }
