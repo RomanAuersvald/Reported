@@ -14,6 +14,10 @@ public class Project {
         return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     @Id
     private String id;
     private final String name;

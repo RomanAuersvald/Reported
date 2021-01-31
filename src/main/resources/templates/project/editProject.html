@@ -10,19 +10,22 @@
 <body>
 <div class="container">
     Edit project
-    <form th:action="@{/project/edit}" th:object="${project}" method="post">
-
+    <form th:action="@{/project/update/{id}(id=${project.id})}" th:object="${project}" method="post">
         <div class="form-group">
-            <label >Name:</label>
-            <input type="text" th:field="*{name}" class="form-control" placeholder="id" >
+            <input type="text" th:value="*{id}" class="form-control" readonly="readonly" >
         </div>
         <div class="form-group">
+            <label >Name:</label>
+            <input type="text" th:field="*{name}" class="form-control">
+        </div>
+
+        <div class="form-group">
             <label >Description:</label>
-            <input type="text" th:field="*{description}" class="form-control" placeholder="id" >
+            <input type="text" th:field="*{description}" class="form-control" >
         </div>
         <div class="form-group">
             <label >Owner:</label>
-            <input type="text" th:field="*{owner}" class="form-control" placeholder="id" >
+            <input type="text" th:field="*{ownerId}" class="form-control" >
         </div>
         <button type="submit" class="btn btn-primary">Edit</button>
     </form>

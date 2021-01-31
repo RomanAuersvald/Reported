@@ -91,19 +91,19 @@ public class ProjectController {
     }
 
     @RequestMapping(value = "/project/edit/{id}")
-    public ModelAndView gibMeEditForm(@PathVariable String id){
+    public ModelAndView gibMeEditForm(@PathVariable String id, Model model){
         ModelAndView form = new ModelAndView("project/editProject");
         Project project = service.grabProjectId(id);
-        form.addObject("project", project);
+        model.addAttribute("project", project);
         return form;
     }
 
-    @RequestMapping(value = "/project/edit")
-    public String editProject(@Valid @ModelAttribute("project") Project project, BindingResult bindingResult, Model model){
+    @RequestMapping(value = "/project/update/{id}", method = RequestMethod.POST)
+    public String editProject(@PathVariable("id") String id, @Valid @ModelAttribute("project") Project project, BindingResult bindingResult, Model model){
         if (bindingResult.hasErrors()){
+            project.setId(id);
             return "project/editProject";
         }
-
         service.saveProject(project);
         return "redirect:/project/all";
     }
