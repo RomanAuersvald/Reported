@@ -1,11 +1,12 @@
 package com.example.securingweb.model;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -18,8 +19,6 @@ import java.util.List;
 @Document(collection = "users")
 public class ReportedUser implements UserDetails {
 
-    @Transient
-    public static final String SEQUENCE_NAME = "users_sequence";
 
     public String getFirstName() {
         return firstName;
@@ -36,6 +35,13 @@ public class ReportedUser implements UserDetails {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    @Id
+    private String id;
 
 
     @Pattern(regexp="^[a-zA-Z]{2,20}",message="Invalid name pattern")
@@ -63,6 +69,12 @@ public class ReportedUser implements UserDetails {
         return String.format(
                 "User[firstName='%s', lastName='%s', role='%s', username='%s']",
                 firstName, lastName, role, username);
+    }
+
+    public String getNiceNameAndLastname(){
+        return String.format(
+                "%s %s",
+                firstName, lastName);
     }
 
     @Override

@@ -22,7 +22,7 @@
         </div>
         <div class="form-group">
             <label >Owner:</label>
-            <input type="text" th:field="*{owner}" class="form-control" placeholder="id" >
+            <input type="text" readonly class="form-control" th:value="*{ownerId}" placeholder="id" name="ownerId">
         </div>
         <button type="submit" class="btn btn-primary">Add new project</button>
     </form>

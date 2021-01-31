@@ -3,10 +3,7 @@ package com.example.securingweb.model;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Collection;
 
 
@@ -21,12 +18,13 @@ public class Project {
     private String id;
     private final String name;
     private final String description;
-    private final String owner;
 
-    public Project(String name, String description, String owner){
+    private final String ownerId;
+
+    public Project(String name, String description, String ownerId){
         this.name = name;
         this.description = description;
-        this.owner = owner;
+        this.ownerId = ownerId;
     }
 
 
@@ -38,13 +36,10 @@ public class Project {
         return description;
     }
 
-    public String getOwner() {
-        return owner;
+    public String getOwnerId() {
+        return ownerId;
     }
 
-    // pokaždé vytváříš nové ObjId proto se ti to pořád mění
-    public String getObjectId() { return ObjectId.get().toHexString();
-    }
 
 
 }

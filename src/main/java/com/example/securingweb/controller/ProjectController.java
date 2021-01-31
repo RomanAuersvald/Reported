@@ -1,9 +1,12 @@
 package com.example.securingweb.controller;
 
 import com.example.securingweb.dao.ProjectRepository;
+import com.example.securingweb.dao.UserRepository;
 import com.example.securingweb.model.Project;
+import com.example.securingweb.model.ReportedUser;
 import com.example.securingweb.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,6 +25,9 @@ public class ProjectController {
     @Autowired
     private ProjectService service;
 
+    @Autowired
+    private UserRepository userRepository;
+
     public ProjectController(ProjectRepository repository) {
         this.repository = repository;
     }
@@ -38,7 +44,10 @@ public class ProjectController {
     // most mezi allProjects.html -> add project (addProject.html) -> metoda project/add dole
     @GetMapping("/project/ad")
     public String bringMeAdd(Model model){
-        Project project = new Project("project32", "project post test", "Johny");
+
+    ReportedUser user = getCurrentLoggedUser();
+    String name = user.getNiceNameAndLastname();
+        Project project = new Project("project32", "project post test", user.getId());
         model.addAttribute("project", project);
         return "project/addProject";
     }
@@ -56,7 +65,8 @@ public class ProjectController {
 
     @GetMapping("/project/addTest")
     public String addTestProject(Model model){
-        Project project = new Project( "Projekt 1", "projekt o projektu", "Johny");
+        ReportedUser user = getCurrentLoggedUser();
+        Project project = new Project( "Projekt 1", "projekt o projektu", user.getId());
         msg = "addtest project msg";
         model.addAttribute("msg", msg);
         model.addAttribute("project", project);
@@ -70,5 +80,12 @@ public class ProjectController {
 //        repository.deleteById(id);
         service.deleteProject(id);
         return "redirect:/project/all";
+    }
+
+
+    private ReportedUser getCurrentLoggedUser(){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        ReportedUser userDetails = ReportedUser.class.cast(principal);
+        return userRepository.findByUsername(userDetails.getUsername());
     }
 }

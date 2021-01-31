@@ -29,7 +29,7 @@
                 <td th:text="${project.getId()}"></td>
                 <td th:text="${project.name}"></td>
                 <td th:text="${project.description}"></td>
-                <td th:text="${project.owner}"></td>
+                <td th:text="${project.ownerId}"></td>
                 <td><a th:href="@{/project/edit/{id}(id=${project.getId()})}">Edit</a></td>
                 <td><a th:href="@{/project/delete/{id}(id=${project.getId()})}">Delete</a></td>
             </tr>
