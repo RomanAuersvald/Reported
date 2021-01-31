@@ -31,6 +31,10 @@ public class ProjectService {
         //if (project.isPresent()){
         //    projectRepository.delete(project.get());
         //}
-        projectRepository.deleteById(id);}
+        projectRepository.deleteById(id);
+    }
 
+    public Project grabProjectId(String id) {
+        return projectRepository.findById(id).get();
+    }
 }

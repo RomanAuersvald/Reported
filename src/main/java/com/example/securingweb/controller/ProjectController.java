@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.Collection;
@@ -87,5 +88,23 @@ public class ProjectController {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         ReportedUser userDetails = ReportedUser.class.cast(principal);
         return userRepository.findByUsername(userDetails.getUsername());
+    }
+
+    @RequestMapping(value = "/project/edit/{id}")
+    public ModelAndView gibMeEditForm(@PathVariable String id){
+        ModelAndView form = new ModelAndView("project/editProject");
+        Project project = service.grabProjectId(id);
+        form.addObject("project", project);
+        return form;
+    }
+
+    @RequestMapping(value = "/project/edit")
+    public String editProject(@Valid @ModelAttribute("project") Project project, BindingResult bindingResult, Model model){
+        if (bindingResult.hasErrors()){
+            return "project/editProject";
+        }
+
+        service.saveProject(project);
+        return "redirect:/project/all";
     }
 }
