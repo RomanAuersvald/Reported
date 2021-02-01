@@ -27,6 +27,9 @@ public class ProjectTaskController {
     private ProjectTaskRepository repository;
 
     @Autowired
+    private ProjectRepository projectRepository;
+
+    @Autowired
     private ProjectTaskService service;
 
     @Autowired
@@ -43,6 +46,8 @@ public class ProjectTaskController {
         model.addAttribute("msg", msg);
         model.addAttribute("tasks", repository.findProjectTasksByProjectId(id));
         model.addAttribute("projectId", id);
+        model.addAttribute("projects", projectRepository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
+        model.addAttribute("user", getCurrentLoggedUser());
         msg = "";
         return "task/allTasks";
     }
@@ -53,6 +58,8 @@ public class ProjectTaskController {
         msg = "Test response msg.";
         model.addAttribute("msg", msg);
         model.addAttribute("tasks", repository.findAll());
+        model.addAttribute("projects", projectRepository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
+        model.addAttribute("user", getCurrentLoggedUser());
         msg = "";
         return "task/allTasks";
     }
@@ -62,7 +69,8 @@ public class ProjectTaskController {
         ProjectTask task = new ProjectTask();
         task.setProjectId(id);
         model.addAttribute("task", task);
-
+        model.addAttribute("projects", projectRepository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
+        model.addAttribute("user", getCurrentLoggedUser());
         return "task/addTask"; // html
     }
 
@@ -96,6 +104,8 @@ public class ProjectTaskController {
         ModelAndView form = new ModelAndView("task/editTask");
         ProjectTask task = service.grabProjectId(id);
         model.addAttribute("task", task);
+        model.addAttribute("projects", projectRepository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
+        model.addAttribute("user", getCurrentLoggedUser());
         return form;
     }
 

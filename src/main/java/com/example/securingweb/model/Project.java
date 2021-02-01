@@ -4,6 +4,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 
@@ -22,13 +23,37 @@ public class Project {
     private String id;
     private final String name;
     private final String description;
-
     private final String ownerId;
+    private Double estimatedHours;
 
-    public Project(String name, String description, String ownerId){
+    private LocalDateTime projectStart;
+    private LocalDateTime projectEnd;
+
+    public Double getEstimatedHours() {
+        return estimatedHours;
+    }
+
+    public void setEstimatedHours(Double estimatedHours) {
+        this.estimatedHours = estimatedHours;
+    }
+
+    public LocalDateTime getProjectStart() {
+        return projectStart;
+    }
+
+    public LocalDateTime getProjectEnd() {
+        return projectEnd;
+    }
+
+    public void setProjectEnd(LocalDateTime projectEnd) {
+        this.projectEnd = projectEnd;
+    }
+
+    public Project(String name, String description, String ownerId, LocalDateTime projectStart){
         this.name = name;
         this.description = description;
         this.ownerId = ownerId;
+        this.projectStart = projectStart;
     }
 
 

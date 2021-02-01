@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 @Controller
@@ -37,7 +38,8 @@ public class ProjectController {
     public String showAllProject(Model model){
 //        msg = "Test response msg.";
         model.addAttribute("msg", msg);
-        model.addAttribute("projects", repository.findAll());
+        model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
+        model.addAttribute("user", getCurrentLoggedUser());
         return "project/allProjects";
     }
 
@@ -47,8 +49,10 @@ public class ProjectController {
 
         ReportedUser user = getCurrentLoggedUser();
         String name = user.getNiceNameAndLastname();
-        Project project = new Project("", "", user.getId());
+        Project project = new Project("", "", user.getId(), LocalDateTime.now());
         model.addAttribute("project", project);
+        model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
+        model.addAttribute("user", getCurrentLoggedUser());
         return "project/addProject";
     }
 
@@ -66,10 +70,12 @@ public class ProjectController {
     @GetMapping("/project/addTest")
     public String addTestProject(Model model){
         ReportedUser user = getCurrentLoggedUser();
-        Project project = new Project( "Projekt 1", "projekt o projektu", user.getId());
+        Project project = new Project( "Projekt 1", "projekt o projektu", user.getId(), LocalDateTime.now());
         msg = "Projeck byl uspesne pridan (Test)!";
         model.addAttribute("msg", msg);
         model.addAttribute("project", project);
+        model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
+        model.addAttribute("user", getCurrentLoggedUser());
         repository.save(project);
         return "redirect:/project/all";
     }
@@ -94,6 +100,8 @@ public class ProjectController {
         ModelAndView form = new ModelAndView("project/editProject");
         Project project = service.grabProjectId(id);
         model.addAttribute("project", project);
+        model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
+        model.addAttribute("user", getCurrentLoggedUser());
         return form;
     }
 
