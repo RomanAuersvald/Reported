@@ -35,10 +35,9 @@ public class ProjectController {
 
     @GetMapping("/project/all")
     public String showAllProject(Model model){
-        msg = "Test response msg.";
+//        msg = "Test response msg.";
         model.addAttribute("msg", msg);
         model.addAttribute("projects", repository.findAll());
-        msg = "";
         return "project/allProjects";
     }
 
@@ -48,7 +47,7 @@ public class ProjectController {
 
         ReportedUser user = getCurrentLoggedUser();
         String name = user.getNiceNameAndLastname();
-        Project project = new Project("project32", "project post test", user.getId());
+        Project project = new Project("", "", user.getId());
         model.addAttribute("project", project);
         return "project/addProject";
     }
@@ -60,7 +59,7 @@ public class ProjectController {
         }
         System.out.println(project);
         repository.save(project);
-        msg = "added";
+        msg = "Projekt byl uspesne pridan!";
         return "redirect:/project/all";
     }
 
@@ -68,11 +67,10 @@ public class ProjectController {
     public String addTestProject(Model model){
         ReportedUser user = getCurrentLoggedUser();
         Project project = new Project( "Projekt 1", "projekt o projektu", user.getId());
-        msg = "addtest project msg";
+        msg = "Projeck byl uspesne pridan (Test)!";
         model.addAttribute("msg", msg);
         model.addAttribute("project", project);
         repository.save(project);
-        msg = "";
         return "redirect:/project/all";
     }
 
@@ -80,6 +78,7 @@ public class ProjectController {
     public String deleteProject(@PathVariable String id) {
 //        repository.deleteById(id);
         service.deleteProject(id);
+        msg = "Projekt s id: " + id + " byl uspesne odstranen!";
         return "redirect:/project/all";
     }
 
@@ -105,6 +104,7 @@ public class ProjectController {
             return "project/editProject";
         }
         service.saveProject(project);
+        msg = "Projekt s id: " + id + " byl uspesne editovan!";
         return "redirect:/project/all";
     }
 }

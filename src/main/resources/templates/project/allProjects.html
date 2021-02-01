@@ -9,13 +9,14 @@
 <body>
 
 <div layout:fragment="content" class="container">
-    <div class="alert alert-danger" role="alert" style="margin-top: 10px">
-        <strong th:text="' ' + ${msg}"></strong>
+    <div th:if="${msg !=''}" class="alert alert-success alert-dismissible fade show" style="margin-top: 10px">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <i class="fas fa-check-circle" style="color:green"></i><strong th:text="${msg}"></strong>
     </div>
     <div th:switch="${projects}">
         <h2 th:case="null">No projects yet!</h2>
         <div th:case="*">
-            <h2>Projects</h2>
+            <h2>Projects</h2><p><a th:href="@{'/project/ad'}" class="btn btn-outline-primary"><i class="bi bi-folder-plus" style="margin-right: 5px"></i>Add a new project</a></p>
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -24,6 +25,7 @@
                     <th>Description</th>
                     <th>Owner</th>
                     <th>Add task</th>
+                    <th>Info</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
@@ -34,14 +36,14 @@
                     <td th:text="${project.name}"></td>
                     <td th:text="${project.description}"></td>
                     <td th:text="${project.ownerId}"></td>
-                    <td><a th:href="@{/tasks/ad/{id}(id=${project.getId()})}">Add task</a></td>
-                    <td><a th:href="@{/project/edit/{id}(id=${project.getId()})}">Edit</a></td>
-                    <td><a th:href="@{/project/delete/{id}(id=${project.getId()})}">Delete</a></td>
+                    <td><a th:href="@{/tasks/ad/{id}(id=${project.getId()})}"><i class="bi-plus-circle" style="font-size: 1rem; color: forestgreen;"></i></a></td>
+                    <td><a href="#"><i class="bi-info-circle" style="font-size: 1rem; color: cornflowerblue;"></i></a></td>
+                    <td><a th:href="@{/project/edit/{id}(id=${project.getId()})}"><i class="bi-pencil" style="font-size: 1rem; color: forestgreen;"></i></a></td>
+                    <td><a th:href="@{/project/delete/{id}(id=${project.getId()})}"><i class="bi-x-circle-fill" style="font-size: 1rem; color: darkred;"></i></a></td>
                 </tr>
                 </tbody>
             </table>
         </div>
-        <p><a th:href="@{'/project/ad'}">Add a new project</a></p>
     </div>
 </div>
 </body>
