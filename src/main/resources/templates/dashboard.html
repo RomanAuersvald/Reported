@@ -14,7 +14,7 @@
             <div class="col">Welcome there u fag</div>
             <div class="col"><a th:href="@{'/project/ad'}" class="btn btn-primary"><i class="bi bi-folder-plus" style="margin-right: 5px"></i>Pridat Projekt</a></div>
             <div class="col"><a th:href="@{'/project/ad'}" class="btn btn-success"><i class="bi bi-folder-plus" style="margin-right: 5px"></i>Pridat Zakaznika</a></div>
-            <div class="col"><a th:href="@{'/project/ad'}" class="btn btn-warning"><i class="bi bi-folder-plus" style="margin-right: 5px"></i>Vytvorit skupinu keltu</a></div>
+            <div class="col"><a th:href="@{'/project/ad'}" class="btn btn-warning"><i class="bi bi-folder-plus" style="margin-right: 5px"></i>Vytvorit skupinu</a></div>
 
         </div>
 
@@ -25,15 +25,14 @@
                     <div class="col-md-6" th:each="project, stats : ${projectsProgress}" th:with="progress=${project.value}">
                         <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                             <div class="col p-4 d-flex flex-column position-static">
-                                <strong class="d-inline-block mb-2 text-primary">#Projekt</strong>
+                                <strong class="d-inline-block mb-2 text-primary" th:text="'~' + ${project.key.estimatedHours} + ' hours'"></strong>
                                 <h3 class="mb-0" th:text="${project.key.name}"></h3>
                                 <div class="mb-1 text-muted" th:text="${project.key.projectStart.toLocalDate()}"></div>
                                 <p class="card-text mb-auto" th:text="${project.key.description}"></p>
 <!--                                <a href="#" class="stretched-link">Show me this shit</a>-->
                                 <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                                    <div class="progress-bar" role="progressbar" th:attr="aria-valuenow=${progress}" th:style="'width:' + ${progress} + '%;'"  th:text="${progress} + ' %'" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
-                                <span th:text="${progress}"></span>
                             </div>
 
                             <div class="col-auto d-none d-lg-block">
