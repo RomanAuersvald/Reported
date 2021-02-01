@@ -22,18 +22,18 @@
             <h2 th:case="null">No projects yet!</h2>
             <div th:case="*">
                 <div class="row mb-2">
-                    <div class="col-md-6" th:each="project : ${projects}">
+                    <div class="col-md-6" th:each="project, stats : ${projectsProgress}" th:with="progress=${project.value}">
                         <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                             <div class="col p-4 d-flex flex-column position-static">
                                 <strong class="d-inline-block mb-2 text-primary">#Projekt</strong>
-                                <h3 class="mb-0" th:text="${project.name}"></h3>
-                                <div class="mb-1 text-muted" th:text="${project.projectStart.toLocalDate()}"></div>
-                                <p class="card-text mb-auto" th:text="${project.description}"></p>
+                                <h3 class="mb-0" th:text="${project.key.name}"></h3>
+                                <div class="mb-1 text-muted" th:text="${project.key.projectStart.toLocalDate()}"></div>
+                                <p class="card-text mb-auto" th:text="${project.key.description}"></p>
 <!--                                <a href="#" class="stretched-link">Show me this shit</a>-->
                                 <div class="progress">
                                     <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
                                 </div>
-                                <span th:text="${projectsProgress.values()}"></span>
+                                <span th:text="${progress}"></span>
                             </div>
 
                             <div class="col-auto d-none d-lg-block">
