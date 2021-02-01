@@ -20,6 +20,7 @@
                 <th>Name</th>
                 <th>Description</th>
                 <th>Owner</th>
+                <th>Add task</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
@@ -30,6 +31,7 @@
                 <td th:text="${project.name}"></td>
                 <td th:text="${project.description}"></td>
                 <td th:text="${project.ownerId}"></td>
+                <td><a th:href="@{/tasks/ad/{id}(id=${project.getId()})}">Add task</a></td>
                 <td><a th:href="@{/project/edit/{id}(id=${project.getId()})}">Edit</a></td>
                 <td><a th:href="@{/project/delete/{id}(id=${project.getId()})}">Delete</a></td>
             </tr>

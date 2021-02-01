@@ -8,21 +8,37 @@
     <title>Title</title>
 </head>
 <body>
-<div layout:fragment="contentLower">
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">View 2</h1>
-        <div class="btn-toolbar mb-2 mb-md-0">
-            <div class="btn-group mr-2">
-                <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-            </div>
-            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                <span data-feather="calendar"></span>
-                This week
-            </button>
-        </div>
+<strong th:text="' ' + ${msg}"></strong>
+<div th:switch="${tasks}">
+    <h2 th:case="null">No tasks yet!</h2>
+    <div th:case="*">
+        <h2>Tasks</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>ProjectId</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="task : ${tasks}">
+                <td th:text="${task.getId()}"></td>
+                <td th:text="${task.taskName}"></td>
+                <td th:text="${task.description}"></td>
+                <td th:text="${task.projectId}"></td>
+                <td><a th:href="@{/tasks/edit/{id}(id=${task.getId()})}">Edit</a></td>
+                <td><a th:href="@{/tasks/delete/{id}(id=${task.getId()})}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
-</div>
+    <div th:if="${projectId != null}">
+    <p><a th:href="@{/tasks/ad/{id}(id=${projectId})}">Add a new task</a></p>
+    </div>
 </div>
 </body>
 </html>
