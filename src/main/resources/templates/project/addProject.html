@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html  layout:decorate="~{dashboard}"
+<html  layout:decorate="~{layout_dash}"
        xmlns:th="https://www.thymeleaf.org"
        xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
        xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Reported - Dashboard</title>
 </head>
 <body>
-<div class="container">
+
+<div layout:fragment="content" class="container">
     ADD project
     <form th:action="@{/project/add}" th:object="${project}" method="post">
 

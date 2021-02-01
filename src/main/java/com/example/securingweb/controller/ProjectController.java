@@ -46,8 +46,8 @@ public class ProjectController {
     @GetMapping("/project/ad")
     public String bringMeAdd(Model model){
 
-    ReportedUser user = getCurrentLoggedUser();
-    String name = user.getNiceNameAndLastname();
+        ReportedUser user = getCurrentLoggedUser();
+        String name = user.getNiceNameAndLastname();
         Project project = new Project("project32", "project post test", user.getId());
         model.addAttribute("project", project);
         return "project/addProject";

@@ -1,44 +1,48 @@
 <!DOCTYPE html>
-<html  layout:decorate="~{dashboard}"
+<html  layout:decorate="~{layout_dash}"
        xmlns:th="https://www.thymeleaf.org"
        xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
        xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Reported - Dashboard</title>
 </head>
 <body>
-<strong th:text="' ' + ${msg}"></strong>
-<div th:switch="${projects}">
-    <h2 th:case="null">No projects yet!</h2>
-    <div th:case="*">
-        <h2>Projects</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Owner</th>
-                <th>Add task</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="project : ${projects}">
-                <td th:text="${project.getId()}"></td>
-                <td th:text="${project.name}"></td>
-                <td th:text="${project.description}"></td>
-                <td th:text="${project.ownerId}"></td>
-                <td><a th:href="@{/tasks/ad/{id}(id=${project.getId()})}">Add task</a></td>
-                <td><a th:href="@{/project/edit/{id}(id=${project.getId()})}">Edit</a></td>
-                <td><a th:href="@{/project/delete/{id}(id=${project.getId()})}">Delete</a></td>
-            </tr>
-            </tbody>
-        </table>
+
+<div layout:fragment="content" class="container">
+    <div class="alert alert-danger" role="alert" style="margin-top: 10px">
+        <strong th:text="' ' + ${msg}"></strong>
     </div>
-    <p><a th:href="@{'/project/ad'}">Add a new project</a></p>
+    <div th:switch="${projects}">
+        <h2 th:case="null">No projects yet!</h2>
+        <div th:case="*">
+            <h2>Projects</h2>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Owner</th>
+                    <th>Add task</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="project : ${projects}">
+                    <td th:text="${project.getId()}"></td>
+                    <td th:text="${project.name}"></td>
+                    <td th:text="${project.description}"></td>
+                    <td th:text="${project.ownerId}"></td>
+                    <td><a th:href="@{/tasks/ad/{id}(id=${project.getId()})}">Add task</a></td>
+                    <td><a th:href="@{/project/edit/{id}(id=${project.getId()})}">Edit</a></td>
+                    <td><a th:href="@{/project/delete/{id}(id=${project.getId()})}">Delete</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <p><a th:href="@{'/project/ad'}">Add a new project</a></p>
+    </div>
 </div>
 </body>
 <!--<body>-->

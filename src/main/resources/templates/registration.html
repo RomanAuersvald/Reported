@@ -1,23 +1,53 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-    <head>
-        <title>Registration for Reported system</title>
-    </head>
-    <body>
+<html  layout:decorate="~{layout}"
+       xmlns:th="https://www.thymeleaf.org"
+       xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Reported - Sign Up</title>
+</head>
+<body>
+<div layout:fragment="content" class="container" style="padding-top: 150px">
+    <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
+    <div class="row">
         <form th:action="@{/registration/addUser}" th:object="${user}" method="post">
-            <div><label> Name : <input type="text" th:field="*{firstName}" class="form-control" placeholder="Enter name"/> </label></div>
-            <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="alert alert-danger" role="alert">Name was not set</p>
-
-            <div><label> Surname : <input type="text" th:field="*{lastName}" class="form-control" placeholder="Enter lastname"/> </label></div>
-            <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="alert alert-danger" role="alert">Surname was not set</p>
-
-            <div><label> User Name : <input type="text" th:field="*{username}" class="form-control" placeholder="Enter username"/> </label></div>
-            <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="alert alert-danger" role="alert">Username was not set</p>
-
-            <div><label> Password: <input type="password" th:field="*{password}" class="form-control" placeholder="Password"/> </label></div>
-            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="alert alert-danger" role="alert">Password not set</p>
-            <div><input type="submit" value="Sign In"/></div>
+            <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input type="text" th:field="*{firstName}" class="form-control" placeholder="Enter name">
+                <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="alert alert-danger" role="alert">Name was not set</p>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Surname</label>
+                <input type="text" th:field="*{lastName}" class="form-control" placeholder="Enter lastname">
+                <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="alert alert-danger" role="alert">Surname was not set</p>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">User Name</label>
+                <input type="text" th:field="*{username}" class="form-control" placeholder="Enter username">
+                <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="alert alert-danger" role="alert">Username was not set</p>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="text" th:field="*{password}" class="form-control" placeholder="Password">
+                <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="alert alert-danger" role="alert">Password not set</p>
+            </div>
+            <button type="submit" class="btn btn-primary">Sign In</button>
         </form>
-    </body>
+    </div>
+<!--    <body>-->
+<!--        <form th:action="@{/registration/addUser}" th:object="${user}" method="post">-->
+<!--            <div><label> Name : <input type="text" th:field="*{firstName}" class="form-control" placeholder="Enter name"/> </label></div>-->
+<!--            <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="alert alert-danger" role="alert">Name was not set</p>-->
+
+<!--            <div><label> Surname : <input type="text" th:field="*{lastName}" class="form-control" placeholder="Enter lastname"/> </label></div>-->
+<!--            <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="alert alert-danger" role="alert">Surname was not set</p>-->
+
+<!--            <div><label> User Name : <input type="text" th:field="*{username}" class="form-control" placeholder="Enter username"/> </label></div>-->
+<!--            <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="alert alert-danger" role="alert">Username was not set</p>-->
+
+<!--            <div><label> Password: <input type="password" th:field="*{password}" class="form-control" placeholder="Password"/> </label></div>-->
+<!--            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="alert alert-danger" role="alert">Password not set</p>-->
+<!--            <div><input type="submit" value="Sign In"/></div>-->
+<!--        </form>-->
+<!--    </body>-->
 </html>
