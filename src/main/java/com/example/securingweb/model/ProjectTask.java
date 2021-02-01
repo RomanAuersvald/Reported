@@ -53,6 +53,16 @@ public class ProjectTask {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime endDate;
 
+    public Double getHourRate() {
+        return hourRate;
+    }
+
+    public void setHourRate(Double hourRate) {
+        this.hourRate = hourRate;
+    }
+
+    private Double hourRate;
+
     public ProjectTask(String taskName, String description, String projectId, LocalDateTime startDate, LocalDateTime endDate){ // @NotNull
         this.taskName = taskName;
         this.description = description;

@@ -18,6 +18,7 @@ package com.example.securingweb.controller;
 
         import javax.validation.Valid;
         import java.util.Collection;
+        import java.util.Optional;
 
 @Controller
 public class ProjectTaskController {
@@ -66,8 +67,10 @@ public class ProjectTaskController {
 
     @GetMapping("/tasks/ad/{id}")
     public String bringMeAdd(Model model, @PathVariable String id){
+        Optional<Project> p = projectRepository.findById(id);
         ProjectTask task = new ProjectTask();
         task.setProjectId(id);
+        task.setHourRate(p.get().getHourRate()); // přiřazení výchozí hodinovky podle projektu
         model.addAttribute("task", task);
         model.addAttribute("projects", projectRepository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("user", getCurrentLoggedUser());

@@ -29,6 +29,10 @@
             <input type="datetime-local" th:field="*{endDate}" class="form-control" placeholder="date of end" th:name="endDate">
         </div>
         <div class="form-group">
+            <label >Hour rate:</label>
+            <input type="number" th:field="*{hourRate}" class="form-control" placeholder="Hour rate" >
+        </div>
+        <div class="form-group">
             <label >Owner:</label>
             <input type="text" readonly class="form-control" th:value="*{projectId}" placeholder="id" th:name="projectId">
         </div>

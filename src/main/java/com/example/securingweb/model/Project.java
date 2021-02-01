@@ -27,10 +27,21 @@ public class Project {
     private final String ownerId;
     private Double estimatedHours;
 
+    private Double hourRate;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime projectStart;
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime projectEnd;
+
+
+    public Double getHourRate() {
+        return hourRate;
+    }
+
+    public void setHourRate(Double hourRate) {
+        this.hourRate = hourRate;
+    }
 
     public Double getEstimatedHours() {
         return estimatedHours;
