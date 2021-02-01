@@ -6,7 +6,7 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="collapse navbar-collapse" id="navbarCollapse" >
                         <ul class="navbar-nav mr-auto">
                                 <li class="nav-item active">
                                         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
@@ -24,12 +24,20 @@
                                         <a class="nav-link" href="#">anonym</a>
                                 </li>
                         </ul>
-                        <form class="form-inline mt-2 mt-md-0" th:action="@{/loginuser}" method="get">
-                                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Log In</button>
-                        </form>
-                        <form class="form-inline mt-2 mt-md-0" th:action="@{/registeruser}" method="get">
-                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign Up</button>
-                        </form>
+                        <div th:if="${user != null}">
+                                <form class="form-inline mt-2 mt-md-0" th:action="@{/dashboard}" method="get">
+                                        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Dashboard</button>
+                                </form>
+                        </div>
+                        <div th:unless="${user != null}">
+                                <form class="form-inline mt-2 mt-md-0" th:action="@{/loginuser}" method="get">
+                                        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Log In</button>
+                                </form>
+                                <form class="form-inline mt-2 mt-md-0" th:action="@{/registeruser}" method="get">
+                                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign Up</button>
+                                </form>
+                        </div>
+
                 </div>
         </nav>
 </header>

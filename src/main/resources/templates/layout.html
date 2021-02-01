@@ -36,7 +36,7 @@
     </style>
 </head>
 <body>
-<div th:include="header"></div>
+<div th:include="header" th:object="${user}"></div>
 <div layout:fragment="content"></div>
 </body>
 </html>
