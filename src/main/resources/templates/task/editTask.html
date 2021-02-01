@@ -24,6 +24,14 @@
             <input type="text" th:field="*{description}" class="form-control" >
         </div>
         <div class="form-group">
+            <label >Start date:</label>
+            <input type="datetime-local" th:field="*{startDate}" class="form-control" placeholder="date of start" th:name="startDate">
+        </div>
+        <div class="form-group">
+            <label >End date:</label>
+            <input type="datetime-local" th:field="*{endDate}" class="form-control" placeholder="date of end" th:name="endDate">
+        </div>
+        <div class="form-group">
             <label >Owner:</label>
             <input type="text" th:field="*{projectId}" class="form-control" >
         </div>
