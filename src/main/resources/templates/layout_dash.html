@@ -55,14 +55,13 @@
                 <ul class="nav flex-column">
                     <li class="nav-item">
                         <p class="nav-link">
-                            <span data-feather="home"></span>
-                            User: <strong>[[${#httpServletRequest.remoteUser}]]</strong>
+                            <strong>User: <span th:text="${user.username}"></span></strong>
                         </p>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="/project/all">
                             <span data-feather="home"></span>
-                            My Projects <span class="badge bg-light text-danger">4</span>
+                            My Projects <span class="badge bg-light text-danger" th:text="${#lists.size(projects)}"></span>
                         </a>
                     </li>
                     <li class="nav-item">
