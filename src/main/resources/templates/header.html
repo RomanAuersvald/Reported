@@ -24,19 +24,17 @@
                                         <a class="nav-link" href="#">anonym</a>
                                 </li>
                         </ul>
-                        <div th:if="${user != null}">
-                                <form class="form-inline mt-2 mt-md-0" th:action="@{/dashboard}" method="get">
-                                        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Dashboard</button>
-                                </form>
+                        <div>
+                                <span th:if="${user != null}">
+                                        <a th:href="@{/dashboard}" class="btn btn-outline-primary my-2 my-sm-0">Dashboard</a>
+                                        <a th:href="@{/logout}" class="btn btn-outline-warning my-2 my-sm-0">Log Out</a>
+                                </span>
+                                <span th:unless="${user != null}">
+                                        <a th:href="@{/loginuser}" class="btn btn-outline-primary my-2 my-sm-0">Log In</a>
+                                        <a th:href="@{/registeruser}" class="btn btn-outline-success my-2 my-sm-0">Sign Up</a>
+                                </span>
                         </div>
-                        <div th:unless="${user != null}">
-                                <form class="form-inline mt-2 mt-md-0" th:action="@{/loginuser}" method="get">
-                                        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Log In</button>
-                                </form>
-                                <form class="form-inline mt-2 mt-md-0" th:action="@{/registeruser}" method="get">
-                                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Sign Up</button>
-                                </form>
-                        </div>
+
 
                 </div>
         </nav>
