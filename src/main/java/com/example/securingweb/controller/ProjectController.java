@@ -59,6 +59,8 @@ public class ProjectController {
     @RequestMapping(value = "/project/add", method = RequestMethod.POST)
     public String addProject(@Valid @ModelAttribute("project") Project project, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
+            model.addAttribute("user", getCurrentLoggedUser());
             return "project/addProject";
         }
         System.out.println(project);

@@ -2,6 +2,7 @@ package com.example.securingweb.model;
 
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -26,7 +27,9 @@ public class Project {
     private final String ownerId;
     private Double estimatedHours;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime projectStart;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime projectEnd;
 
     public Double getEstimatedHours() {

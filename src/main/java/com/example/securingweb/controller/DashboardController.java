@@ -1,6 +1,7 @@
 package com.example.securingweb.controller;
 
 import com.example.securingweb.dao.ProjectRepository;
+import com.example.securingweb.dao.ProjectTaskRepository;
 import com.example.securingweb.dao.UserRepository;
 import com.example.securingweb.model.Project;
 import com.example.securingweb.model.ReportedUser;
@@ -13,12 +14,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class DashboardController {
 
     @Autowired
     private ProjectRepository repository;
+
+    @Autowired
+    private ProjectTaskRepository taskRepository;
 
     @Autowired
     private ProjectService service;
@@ -34,6 +39,13 @@ public class DashboardController {
         model.addAttribute("user", user);
         return "/dashboard";
     }
+
+//    private Map<Project, Double> getProjectsProgress(Collection<Project> projects){
+//        Map<Project, Double> progress;
+//        for (){
+//
+//        }
+//    }
 
 
     private ReportedUser getCurrentLoggedUser(){
