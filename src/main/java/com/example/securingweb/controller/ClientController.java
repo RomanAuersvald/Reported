@@ -1,7 +1,9 @@
 package com.example.securingweb.controller;
 
+import com.example.securingweb.dao.ClientRepository;
 import com.example.securingweb.dao.ProjectRepository;
 import com.example.securingweb.dao.UserRepository;
+import com.example.securingweb.model.Client;
 import com.example.securingweb.model.Project;
 import com.example.securingweb.model.ReportedUser;
 import com.example.securingweb.service.ProjectService;
@@ -15,79 +17,63 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.Collection;
 
 @Controller
-public class ProjectController {
+public class ClientController {
     private String msg = "";
 
     @Autowired
     private ProjectRepository repository;
 
     @Autowired
-    private ProjectService service;
-
-    @Autowired
     private UserRepository userRepository;
 
-    public ProjectController(ProjectRepository repository) {
+    @Autowired
+    private ClientRepository clientRepository;
+
+    public ClientController(ProjectRepository repository) {
         this.repository = repository;
     }
 
-    @GetMapping("/project/all")
+    @GetMapping("/client/all")
     public String showAllProject(Model model){
 //        msg = "Test response msg.";
         model.addAttribute("msg", msg);
+        model.addAttribute("clients", clientRepository.findClientsByUserId(getCurrentLoggedUser().getId()));
         model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("user", getCurrentLoggedUser());
-        return "project/allProjects";
+        return "client/allClients";
     }
 
     // most mezi allProjects.html -> add project (addProject.html) -> metoda project/add dole
-    @GetMapping("/project/ad")
+    @GetMapping("/client/ad")
     public String bringMeAdd(Model model){
-
         ReportedUser user = getCurrentLoggedUser();
         String name = user.getNiceNameAndLastname();
-        Project project = new Project("", "", user.getId(), LocalDateTime.now());
-        model.addAttribute("project", project);
+        Client client = new Client();
+        model.addAttribute("client", client);
         model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("user", getCurrentLoggedUser());
-        return "project/addProject";
+        return "client/addClient";
     }
 
-    @RequestMapping(value = "/project/add", method = RequestMethod.POST)
-    public String addProject(@Valid @ModelAttribute("project") Project project, BindingResult bindingResult, Model model) {
+    @RequestMapping(value = "/client/add", method = RequestMethod.POST)
+    public String addProject(@Valid @ModelAttribute("client") Client client, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
             model.addAttribute("user", getCurrentLoggedUser());
-            return "project/addProject";
+            return "client/addClient";
         }
-        System.out.println(project);
-        repository.save(project);
-        msg = "Projekt byl uspesne pridan!";
-        return "redirect:/project/all";
+        clientRepository.save(client);
+        msg = "Client byl uspesne pridan!";
+        return "redirect:/client/all";
     }
 
-    @GetMapping("/project/addTest")
-    public String addTestProject(Model model){
-        ReportedUser user = getCurrentLoggedUser();
-        Project project = new Project( "Projekt 1", "projekt o projektu", user.getId(), LocalDateTime.now());
-        msg = "Projeck byl uspesne pridan (Test)!";
-        model.addAttribute("msg", msg);
-        model.addAttribute("project", project);
-        model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
-        model.addAttribute("user", getCurrentLoggedUser());
-        repository.save(project);
-        return "redirect:/project/all";
-    }
-
-    @RequestMapping(value = "/project/delete/{id}")
+    @RequestMapping(value = "/client/delete/{id}")
     public String deleteProject(@PathVariable String id) {
-//        repository.deleteById(id);
-        service.deleteProject(id);
-        msg = "Projekt s id: " + id + " byl uspesne odstranen!";
-        return "redirect:/project/all";
+        clientRepository.deleteById(id);
+        msg = "Client s id: " + id + " byl uspesne odstranen!";
+        return "redirect:/client/all";
     }
 
 
@@ -97,24 +83,24 @@ public class ProjectController {
         return userRepository.findByUsername(userDetails.getUsername());
     }
 
-    @RequestMapping(value = "/project/edit/{id}")
+    @RequestMapping(value = "/client/edit/{id}")
     public ModelAndView gibMeEditForm(@PathVariable String id, Model model){
-        ModelAndView form = new ModelAndView("project/editProject");
-        Project project = service.grabProjectId(id);
-        model.addAttribute("project", project);
+        ModelAndView form = new ModelAndView("client/editClient");
+        Client client = clientRepository.findById(id).get();
+        model.addAttribute("client", client);
         model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("user", getCurrentLoggedUser());
         return form;
     }
 
-    @RequestMapping(value = "/project/update/{id}", method = RequestMethod.POST)
-    public String editProject(@PathVariable("id") String id, @Valid @ModelAttribute("project") Project project, BindingResult bindingResult, Model model){
+    @RequestMapping(value = "/client/update/{id}", method = RequestMethod.POST)
+    public String editProject(@PathVariable("id") String id, @Valid @ModelAttribute("client") Client client, BindingResult bindingResult, Model model){
         if (bindingResult.hasErrors()){
-            project.setId(id);
-            return "project/editProject";
+            client.setId(id);
+            return "client/editClient";
         }
-        service.saveProject(project);
-        msg = "Projekt s id: " + id + " byl uspesne editovan!";
-        return "redirect:/project/all";
+        clientRepository.save(client);
+        msg = "Client s id: " + id + " byl uspesne editovan!";
+        return "redirect:/client/all";
     }
 }
