@@ -80,6 +80,10 @@ public class ProjectTaskController {
             return "task/addTask";
         }
 //        System.out.println(project);
+        if (task.taskComplete()){
+            Long duration = task.getTaskDuration();
+            System.out.println(duration);
+        }
         repository.save(task);
         msg = "added";
         return "redirect:/tasks/all";

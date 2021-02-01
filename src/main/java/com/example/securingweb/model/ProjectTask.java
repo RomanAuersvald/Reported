@@ -7,6 +7,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Document(collection = "projectTasks")
 public class ProjectTask {
@@ -45,42 +47,49 @@ public class ProjectTask {
     private String description;
     private String projectId;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate startDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime startDate;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate endDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime endDate;
 
-    public ProjectTask(String taskName, String description, String projectId, @NotNull LocalDate startDate){
+    public ProjectTask(String taskName, String description, String projectId, LocalDateTime startDate, LocalDateTime endDate){ // @NotNull
         this.taskName = taskName;
         this.description = description;
         this.projectId = projectId;
         this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
+    public Boolean taskComplete(){
+        return endDate != null;
+    }
+
+    public Long getTaskDuration(){
+        return ChronoUnit.SECONDS.between(startDate, endDate);
     }
 
     public void setProjectId(String projectId) {
         this.projectId = projectId;
     }
 
-
-
     public String getProjectId() {
         return projectId;
     }
 
-    public LocalDate getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 }
