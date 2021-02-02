@@ -22,6 +22,7 @@
                 <option th:each="i : ${projectTasks}" th:value="${i.getId()}" th:text="${i.taskName}">
                 </option>
             </select>
+            <div id="helper" class="form-text"><sup>For task to appear here you need to close it first.</sup></div>
             <p th:if="${#fields.hasErrors('taskIds')}" th:errors="*{taskIds}" class="alert alert-danger" role="alert">firstName was not set</p>
         </div>
         <div class="form-group">
@@ -30,6 +31,7 @@
                 <option th:each="i : ${clients}" th:value="${i.getId()}" th:text="${i.getCompanyName()}" selected>
                 </option>
             </select>
+            <div id="helper" class="form-text"><sup>For client to appear here you need to fill its address.</sup></div>
             <p th:if="${#fields.hasErrors('clientId')}" th:errors="*{clientId}" class="alert alert-danger" role="alert">firstName was not set</p>
         </div>
         <div class="form-group">

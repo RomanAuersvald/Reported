@@ -94,9 +94,15 @@ public class InvoiceController {
                 closedTasks.add(task);
             }
         }
+        List<Client> clientsWithAddress = new ArrayList<Client>();
+        for (Client client : clientRepository.findClientsByUserId(user.getId())){
+            if (addressRepository.findAddressByOwnerId(client.getId()) != null){
+                clientsWithAddress.add(client);
+            }
+        }
         model.addAttribute("projectName", p.getName());
         model.addAttribute("invoice", invoice);
-        model.addAttribute("clients", clientRepository.findClientsByUserId(user.getId()));
+        model.addAttribute("clients", clientsWithAddress);
         model.addAttribute("projectTasks", closedTasks);
         model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("user", getCurrentLoggedUser());
