@@ -1,11 +1,10 @@
 package com.example.securingweb.controller;
 
+import com.example.securingweb.dao.AddressRepository;
 import com.example.securingweb.dao.ClientRepository;
 import com.example.securingweb.dao.ProjectRepository;
 import com.example.securingweb.dao.UserRepository;
-import com.example.securingweb.model.Client;
-import com.example.securingweb.model.Project;
-import com.example.securingweb.model.ReportedUser;
+import com.example.securingweb.model.*;
 import com.example.securingweb.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +16,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class ClientController {
@@ -31,6 +33,9 @@ public class ClientController {
     @Autowired
     private ClientRepository clientRepository;
 
+    @Autowired
+    private AddressRepository addressRepository;
+
     public ClientController(ProjectRepository repository) {
         this.repository = repository;
     }
@@ -38,11 +43,26 @@ public class ClientController {
     @GetMapping("/client/all")
     public String showAllProject(Model model){
 //        msg = "Test response msg.";
+        Collection<Client> clients = clientRepository.findClientsByUserId(getCurrentLoggedUser().getId());
+        model.addAttribute("clientAddress", getClientAddress(clients));
         model.addAttribute("msg", msg);
-        model.addAttribute("clients", clientRepository.findClientsByUserId(getCurrentLoggedUser().getId()));
+        model.addAttribute("clients", clients);
         model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("user", getCurrentLoggedUser());
         return "client/allClients";
+    }
+
+    private Map<Client, Boolean> getClientAddress(Collection<Client> clients){
+        Map<Client, Boolean> progress = new HashMap<>();
+        for (Client client: clients){
+            Address address = addressRepository.findAddressByOwnerId(client.getId());
+            if (address != null){
+                progress.put(client, Boolean.TRUE);
+            }else{
+                progress.put(client, Boolean.FALSE);
+            }
+        }
+        return progress;
     }
 
     // most mezi allProjects.html -> add project (addProject.html) -> metoda project/add dole
