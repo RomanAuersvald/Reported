@@ -106,6 +106,15 @@ public class InvoiceController {
     @RequestMapping(value = "/invoice/add", method = RequestMethod.POST)
     public String addInvoice(@Valid @ModelAttribute("invoice") Invoice invoice, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            List<ProjectTask> closedTasks = new ArrayList<ProjectTask>();
+            for (ProjectTask task : projectTaskRepository.findProjectTasksByProjectId(invoice.getProjectId())){
+                if (task.taskComplete()){
+                    closedTasks.add(task);
+                }
+            }
+            ReportedUser user = getCurrentLoggedUser();
+            model.addAttribute("projectTasks", closedTasks);
+            model.addAttribute("clients", clientRepository.findClientsByUserId(user.getId()));
             model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
             model.addAttribute("user", getCurrentLoggedUser());
             return "invoice/add";

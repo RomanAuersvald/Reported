@@ -5,6 +5,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
@@ -22,13 +24,16 @@ public class Project {
 
     @Id
     private String id;
+    @NotEmpty(message = "Project name cannot be empty")
     private final String name;
+    @NotEmpty(message = "Project name cannot be empty")
     private final String description;
     private final String ownerId;
+    @NotNull(message = "Fill estimated budget it will be cool")
     private Double estimatedHours;
 
     private Double hourRate;
-
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime projectStart;
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")

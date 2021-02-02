@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -42,11 +43,11 @@ public class ProjectTask {
     public void setDescription(String description) {
         this.description = description;
     }
-
+    @NotEmpty(message = "Just fill that name, it will be easier to recognize this task.")
     private String taskName;
     private String description;
     private String projectId;
-
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime startDate;
 

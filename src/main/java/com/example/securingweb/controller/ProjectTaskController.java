@@ -88,6 +88,8 @@ public class ProjectTaskController {
     @RequestMapping(value = "/task/add", method = RequestMethod.POST)
     public String addTask(@Valid @ModelAttribute("task") ProjectTask task, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("projects", projectRepository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
+            model.addAttribute("user", getCurrentLoggedUser());
             return "task/add";
         }
 //        System.out.println(project);
@@ -129,6 +131,8 @@ public class ProjectTaskController {
     public String editaTask(@PathVariable("id") String id, @Valid @ModelAttribute("task") ProjectTask task, BindingResult bindingResult, Model model){
         if (bindingResult.hasErrors()){
             task.setId(id);
+            model.addAttribute("projects", projectRepository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
+            model.addAttribute("user", getCurrentLoggedUser());
             return "task/edit";
         }
         service.saveTask(task);

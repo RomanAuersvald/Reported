@@ -55,10 +55,12 @@ public class UserController {
     public String editUser(@PathVariable("id") String id, @Valid @ModelAttribute("user") ReportedUser user, BindingResult bindingResult, Model model){
         if (bindingResult.hasErrors()){
             user.setId(id);
+            model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
+            model.addAttribute("user", user);
             return "user/edit";
         }
         userRepository.save(user);
         msg = "User s id: " + id + " byl uspesne editovan!";
-        return "/dashboard";
+        return "redirect:/dashboard"; // return to user detail
     }
 }
