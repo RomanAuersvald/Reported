@@ -14,6 +14,9 @@ import java.util.Collection;
 @Document(collection = "projects")
 public class Project {
 
+    public Project() {
+    }
+
     public String getId() {
         return id;
     }
@@ -24,11 +27,28 @@ public class Project {
 
     @Id
     private String id;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public void setProjectStart(LocalDateTime projectStart) {
+        this.projectStart = projectStart;
+    }
+
     @NotEmpty(message = "Project name cannot be empty")
-    private final String name;
+    private  String name;
     @NotEmpty(message = "Project name cannot be empty")
-    private final String description;
-    private final String ownerId;
+    private  String description;
+    private  String ownerId;
     @NotNull(message = "Fill estimated budget it will be cool")
     private Double estimatedHours;
 
