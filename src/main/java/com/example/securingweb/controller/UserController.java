@@ -61,4 +61,20 @@ public class UserController {
         msg = "User s id: " + id + " byl uspesne editovan!";
         return "/dashboard";
     }
+
+    @RequestMapping(value = "/user/addPremium/{id}")
+    public String addPremiumToUser(@PathVariable String id){
+        ReportedUser user = getCurrentLoggedUser();
+        user.setRole("PREMIUM");
+        userRepository.save(user);
+        return "redirect:/dashboard";
+    }
+
+    @RequestMapping(value = "/user/deletePremium/{id}")
+    public String deletePremiumUser(@PathVariable String id){
+        ReportedUser user = getCurrentLoggedUser();
+        user.setRole("USER");
+        userRepository.save(user);
+        return "redirect:/dashboard";
+    }
 }

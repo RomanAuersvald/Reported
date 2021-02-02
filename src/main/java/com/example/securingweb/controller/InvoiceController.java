@@ -75,7 +75,7 @@ public class InvoiceController {
         model.addAttribute("msg", msg);
         model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("user", getCurrentLoggedUser());
-        model.addAttribute("invoices", invoiceRepository.findAllByUserId(getCurrentLoggedUser().getId()));
+        model.addAttribute("invoices", invoiceRepository.findAllByUserIdOrderByIdAsc(getCurrentLoggedUser().getId()));
         return "invoice/all";
     }
 

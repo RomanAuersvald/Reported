@@ -48,7 +48,7 @@ public class ProjectController {
     public String showAllProject(Model model){
 //        msg = "";
         model.addAttribute("msg", msg);
-        model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
+        model.addAttribute("projects", repository.findProjectsByOwnerIdOrderByIdAsc(getCurrentLoggedUser().getId()));
         model.addAttribute("user", getCurrentLoggedUser());
         return "project/all";
     }
@@ -136,8 +136,8 @@ public class ProjectController {
     public ModelAndView showMeDetail(@PathVariable String id, Model model){
         ModelAndView form = new ModelAndView("project/detail");
         Project project = service.grabProjectId(id);
-        Collection<ProjectTask> tasks = taskRepository.findProjectTasksByProjectId(id);
-        Collection<Invoice> invoices = invoiceRepository.findAllByProjectId(id);
+        Collection<ProjectTask> tasks = taskRepository.findProjectTaskByProjectIdOrderByStartDateAsc(id);
+        Collection<Invoice> invoices = invoiceRepository.findAllByProjectIdOrderByCreatedDesc(id);
         model.addAttribute("invoices", invoices);
         model.addAttribute("tasks", tasks);
         model.addAttribute("project", project);

@@ -11,4 +11,6 @@ import java.util.Collection;
 public interface ProjectTaskRepository extends CrudRepository<ProjectTask, String> {
 
     Collection<ProjectTask> findProjectTasksByProjectId(String id);
+
+    Collection<ProjectTask> findProjectTaskByProjectIdOrderByStartDateAsc(String id);
 }

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html  layout:decorate="~{layout_dash}"
+       xmlns:th="https://www.thymeleaf.org"
+       xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Reported - Dashboard</title>
+</head>
+<body>
+
+<div layout:fragment="content" class="container">
+    <h2 style="margin-top: 30px">Upravit Clienta</h2>
+    <form th:action="@{/client/edit/{id}(id=${client.id})}" th:object="${client}" method="post">
+        <input type="hidden" readonly class="form-control" th:value="*{id}" name="id">
+        <div class="form-group">
+            <label>First name:</label>
+            <input type="text" th:field="*{firstName}" class="form-control" placeholder="First name" >
+        </div>
+        <div class="form-group">
+            <label>Last name:</label>
+            <input type="text" th:field="*{lastName}" class="form-control" placeholder="Last name" >
+        </div>
+        <div class="form-group">
+            <label>Company name:</label>
+            <input type="text" th:field="*{companyName}" class="form-control" placeholder="Company name" >
+        </div>
+        <div class="form-group">
+            <label>ICO:</label>
+            <input type="text" th:field="*{ico}" class="form-control" placeholder="ICO code" >
+        </div>
+        <div class="form-group">
+            <label>DIC:</label>
+            <input type="text" th:field="*{dic}" class="form-control" placeholder="DIC code" >
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary" style="margin-right: 5px">Ulozit</button>
+            <a href="/client/all" class="btn btn-success">Zpet</a>
+        </div>
+
+    </form>
+</div>
+</body>
+</html>

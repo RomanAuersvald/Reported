@@ -41,7 +41,7 @@ public class ClientController {
     @GetMapping("/client/all")
     public String showAllProject(Model model){
 //        msg = "Test response msg.";
-        Collection<Client> clients = clientRepository.findClientsByUserId(getCurrentLoggedUser().getId());
+        Collection<Client> clients = clientRepository.findClientByUserIdOrderByCompanyNameAsc(getCurrentLoggedUser().getId());
         model.addAttribute("clientAddress", getClientAddress(clients));
         model.addAttribute("msg", msg);
         model.addAttribute("clients", clients);

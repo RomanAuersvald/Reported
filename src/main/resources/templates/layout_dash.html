@@ -39,7 +39,7 @@
     </style>
     <!-- Custom styles for this template -->
     <link href="dashboard.css" rel="stylesheet">
-    <link th:src="@{/static/css/dashboard/dashboard.css}" rel="stylesheet" type="text/css"/
+    <link th:src="@{/static/css/dashboard/dashboard.css}" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div th:include="header_dash"></div>
@@ -55,7 +55,10 @@
                 <ul class="nav flex-column">
                     <li class="nav-item">
                         <p class="nav-link">
-                            User: <strong><span th:text="${user.username}"></span></strong> ( <small th:text="${user.getAuthorities()}"></small> )
+                            User: <strong><span th:text="${user.username}"></span></strong>
+                            <span th:if="${user.getRole() == 'PREMIUM'}"><i class="bi-check-circle-fill" style="font-size: 1rem; color: green;"></i></span>
+                            <span th:unless="${user.getRole() == 'PREMIUM'}"><a th:href="@{/user/addPremium/{id}(id=${user.getId()})}"><i class="bi-check-circle" style="font-size: 1rem; color: green;"></i></a></span>
+                            (<small th:text="${user.getAuthorities()}"></small>)
                         </p>
                     </li>
                     <li class="nav-item">
@@ -100,6 +103,7 @@
                         </a>
                     </li>
                 </ul>
+                <span th:if="${user.getRole() == 'PREMIUM'}"><a th:href="@{/user/deletePremium/{id}(id=${user.getId()})}" class="btn btn-outline-light">Remove premium</a></span>
             </div>
         </nav>
         <div layout:fragment="content"></div>

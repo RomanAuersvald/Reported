@@ -11,4 +11,5 @@ import java.util.Collection;
 public interface ClientRepository extends CrudRepository<Client, String> {
 
     Collection<Client> findClientsByUserId(String id);
+    Collection<Client> findClientByUserIdOrderByCompanyNameAsc(String id);
 }

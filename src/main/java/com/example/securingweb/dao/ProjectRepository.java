@@ -18,6 +18,8 @@ public interface ProjectRepository extends CrudRepository<Project, String> {
 
     Collection<Project> findProjectsByOwnerId(String id);
 
+    Collection<Project> findProjectsByOwnerIdOrderByIdAsc(String id);
+
 
     Project findProjectById(String s);
 }
