@@ -13,8 +13,8 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         <i class="fas fa-check-circle" style="color:green"></i><strong th:text="${msg}"></strong>
     </div>
-    <div th:switch="${tasks}">
-        <h2 th:case="null">No tasks yet!</h2>
+    <div th:switch="${#lists.size(tasks)}">
+        <h2 th:case="0">No tasks yet!</h2>
         <div th:case="*">
             <h2 style="margin-top: 30px" th:text="'Tasks(' + ${#lists.size(tasks)} + ')'"></h2>
             <table class="table table-striped">
