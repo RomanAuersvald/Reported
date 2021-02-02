@@ -12,14 +12,17 @@
     <div class="container">
         <div class="row" style="margin: 30px">
             <div class="col">Hi there!</div>
-            <div class="col"><a th:href="@{'/project/ad'}" class="btn btn-primary"><i class="bi bi-folder-plus" style="margin-right: 5px"></i>Pridat Projekt</a></div>
-            <div class="col"><a th:href="@{'/client/ad'}" class="btn btn-success"><i class="bi bi-folder-plus" style="margin-right: 5px"></i>Pridat Klienta</a></div>
-            <div class="col"><a th:href="@{'/project/ad'}" class="btn btn-warning"><i class="bi bi-folder-plus" style="margin-right: 5px"></i>Vytvorit skupinu</a></div>
+            <div class="col"><a th:href="@{'/project/ad'}" class="btn btn-primary"><i class="bi bi-folder-plus" style="margin-right: 5px"></i>Create Project</a></div>
+            <div class="col"><a th:href="@{'/client/ad'}" class="btn btn-success"><i class="bi bi-folder-plus" style="margin-right: 5px"></i>New Client</a></div>
+<!--            <div class="col"><a th:href="@{'/project/ad'}" class="btn btn-warning"><i class="bi bi-folder-plus" style="margin-right: 5px"></i>New Working Group</a></div>-->
 
         </div>
 
         <div th:switch="${#lists.size(projects)}">
-            <h2 th:case="0">No projects yet!</h2>
+            <div th:case="0">
+                <h2 style="margin-top: 30px">No projects yet!</h2>
+                <span>You may wanna start with creating new project with button up there.</span>
+            </div>
             <div th:case="*">
                 <div class="row mb-2">
                     <div class="col-md-6" th:each="project, stats : ${projectsProgress}" th:with="progress=${project.value}">
