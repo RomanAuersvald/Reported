@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html  layout:decorate="~{layout_dash}"
+       xmlns:th="https://www.thymeleaf.org"
+       xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Reported - Dashboard</title>
+</head>
+<body>
+
+<div layout:fragment="content" class="container">
+    <div th:if="${msg !=''}" class="alert alert-success alert-dismissible fade show" style="margin-top: 10px">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <i class="fas fa-check-circle" style="color:green"></i><strong th:text="${msg}"></strong>
+    </div>
+    <div th:switch="${tasks}">
+        <h2 th:case="null">No tasks yet!</h2>
+        <div th:case="*">
+            <h2 style="margin-top: 30px" th:text="'Tasks(' + ${#lists.size(tasks)} + ')'"></h2>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>ProjectId</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Info</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="task : ${tasks}">
+                    <td th:text="${task.projectId}"></td>
+                    <td th:text="${task.taskName}"></td>
+                    <td th:text="${task.description}"></td>
+                    <td>
+                        <span th:if="${task.taskComplete() == true}">Done</span>
+                        <span th:unless="${task.taskComplete() == true}">Pending</span>
+                    </td>
+<!--                    <td th:text="${task.taskComplete()} ? 'Done' : 'Pending'"><td>-->
+                    <td><a th:href="@{/task/detail/{id}(id=${task.getId()})}"><i class="bi-info-circle" style="font-size: 1rem; color: cornflowerblue;"></i></a></td>
+                    <td><a th:href="@{/task/edit/{id}(id=${task.getId()})}"><i class="bi-pencil" style="font-size: 1rem; color: forestgreen;"></i></a></td>
+                    <td><a th:href="@{/task/delete/{id}(id=${task.getId()})}"><i class="bi-x-circle-fill" style="font-size: 1rem; color: darkred;"></i></a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:if="${projectId != null}">
+            <p><a th:href="@{/task/ad/{id}(id=${projectId})}">Add a new task</a></p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

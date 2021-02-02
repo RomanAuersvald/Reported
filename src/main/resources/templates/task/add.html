@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html  layout:decorate="~{layout_dash}"
+       xmlns:th="https://www.thymeleaf.org"
+       xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Reported - Dashboard</title>
+</head>
+<body>
+
+<div layout:fragment="content" class="container">
+    <h2 style="margin-top: 30px">Nova Uloha</h2><hr>
+    <form th:action="@{/task/add}" th:object="${task}" method="post">
+
+        <div class="form-group">
+            <label>Name:</label>
+            <input type="text" th:field="*{taskName}" class="form-control" placeholder="Name">
+        </div>
+        <div class="form-group">
+            <label>Description:</label>
+            <input type="text" th:field="*{description}" class="form-control" placeholder="description">
+        </div>
+        <div class="form-group">
+            <label>Start date:</label>
+            <input type="datetime-local" th:field="*{startDate}" class="form-control" placeholder="date of start">
+        </div>
+        <div class="form-group">
+            <label>End date:</label>
+            <input type="datetime-local" th:field="*{endDate}" class="form-control" placeholder="date of end">
+        </div>
+        <div class="form-group">
+            <label>Hour rate:</label>
+            <input type="number" th:field="*{hourRate}" class="form-control" placeholder="Hour rate">
+        </div>
+        <input type="hidden" readonly class="form-control" th:value="*{projectId}" placeholder="id">
+        <button type="submit" class="btn btn-primary">Vytvorit ulohu</button>
+    </form>
+</div>
+</body>
+</html>

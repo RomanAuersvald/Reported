@@ -34,7 +34,7 @@ public class ProjectTaskService {
         projectTaskRepository.deleteById(id);
     }
 
-    public ProjectTask grabProjectId(String id) {
+    public ProjectTask grabTaskId(String id) {
         return projectTaskRepository.findById(id).get();
     }
 }

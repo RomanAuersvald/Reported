@@ -41,7 +41,7 @@ public class ProjectController {
 
     @GetMapping("/project/all")
     public String showAllProject(Model model){
-//        msg = "Test response msg.";
+//        msg = "";
         model.addAttribute("msg", msg);
         model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("user", getCurrentLoggedUser());
