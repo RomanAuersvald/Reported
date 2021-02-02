@@ -16,7 +16,7 @@
     <div th:switch="${invoices}">
         <h2 th:case="null">No invoices yet!</h2>
         <div th:case="*">
-            <h2>Invoices</h2><p><a th:href="@{'/invoice/ad'}" class="btn btn-outline-primary"><i class="bi bi-folder-plus" style="margin-right: 5px"></i>Add a new invoice</a></p>
+            <h2 style="margin-top: 30px">Invoices</h2><p><a th:href="@{'/invoice/ad'}" class="btn btn-outline-primary"><i class="bi bi-folder-plus" style="margin-right: 5px"></i>Add a new invoice</a></p>
             <table class="table table-striped">
                 <thead>
                 <tr>

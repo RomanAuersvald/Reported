@@ -1,8 +1,10 @@
 package com.example.securingweb.controller;
 
+import com.example.securingweb.dao.InvoiceRepository;
 import com.example.securingweb.dao.ProjectRepository;
 import com.example.securingweb.dao.ProjectTaskRepository;
 import com.example.securingweb.dao.UserRepository;
+import com.example.securingweb.model.Invoice;
 import com.example.securingweb.model.Project;
 import com.example.securingweb.model.ProjectTask;
 import com.example.securingweb.model.ReportedUser;
@@ -34,6 +36,9 @@ public class ProjectController {
 
     @Autowired
     private ProjectTaskRepository taskRepository;
+
+    @Autowired
+    private InvoiceRepository invoiceRepository;
 
     public ProjectController(ProjectRepository repository) {
         this.repository = repository;
@@ -128,6 +133,8 @@ public class ProjectController {
         ModelAndView form = new ModelAndView("project/detail");
         Project project = service.grabProjectId(id);
         Collection<ProjectTask> tasks = taskRepository.findProjectTasksByProjectId(id);
+        Collection<Invoice> invoices = invoiceRepository.findAllByProjectId(id);
+        model.addAttribute("invoices", invoices);
         model.addAttribute("tasks", tasks);
         model.addAttribute("project", project);
         model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
