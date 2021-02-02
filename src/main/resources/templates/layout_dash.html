@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 
-    <script th:src="@{/static/js/dashboard/dashboard.js}"></script>
+    <script th:src="@{/js/dashboard/dashboard.js}"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -38,8 +38,7 @@
         }
     </style>
     <!-- Custom styles for this template -->
-    <link href="dashboard.css" rel="stylesheet">
-    <link th:src="@{/static/css/dashboard/dashboard.css}" rel="stylesheet" type="text/css">
+    <link th:src="@{/css/dashboard/dashboard.css}" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div th:include="header_dash"></div>
@@ -101,6 +100,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/user/detail">
                             <i class="bi-option" style="font-size: 1.25rem; color: green;"></i> Settings
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/log">
+                            <i class="bi-arrow-left-right" style="font-size: 1.25rem; color: green;"></i> Activity Log
                         </a>
                     </li>
                 </ul>

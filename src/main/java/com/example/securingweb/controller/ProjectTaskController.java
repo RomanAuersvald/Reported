@@ -1,5 +1,6 @@
 package com.example.securingweb.controller;
 
+        import com.example.securingweb.dao.LogRepository;
         import com.example.securingweb.dao.ProjectRepository;
         import com.example.securingweb.dao.ProjectTaskRepository;
         import com.example.securingweb.dao.UserRepository;
@@ -32,6 +33,9 @@ public class ProjectTaskController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private LogRepository logRepository;
 
     public ProjectTaskController(ProjectTaskRepository repository) {
         this.repository = repository;
@@ -101,7 +105,9 @@ public class ProjectTaskController {
             System.out.println(duration);
         }
         repository.save(task);
-        msg = "Task byl uspesne pridan!";
+        msg = "Task byl uspesne pridan";
+        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 1, LocalDateTime.now());
+        logRepository.save(notification);
         return "redirect:/task/all";
     }
 
@@ -109,7 +115,9 @@ public class ProjectTaskController {
     public String deleteTask(@PathVariable String id) {
 //        repository.deleteById(id);
         service.deleteTask(id);
-        msg = "Task s id: " + id + " byl uspesne odstranen!";
+        msg = "Task s id: " + id + " byl uspesne odstranen";
+        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 3, LocalDateTime.now());
+        logRepository.save(notification);
         return "redirect:/task/all";
     }
 
@@ -139,7 +147,9 @@ public class ProjectTaskController {
             return "task/edit";
         }
         service.saveTask(task);
-        msg = "Task s id: " + id + " byl uspesne editovan!";
+        msg = "Task s id: " + id + " byl uspesne editovan";
+        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 2, LocalDateTime.now());
+        logRepository.save(notification);
         return "redirect:/task/all";
     }
 
@@ -158,7 +168,9 @@ public class ProjectTaskController {
         ProjectTask task = service.grabTaskId(id);
         task.setEndDate(LocalDateTime.now());
         service.saveTask(task);
-        msg = "Task s id: " + id + " byl oznacetn za hotovy.";
+        msg = "Task s id: " + id + " byl oznacen za hotovy.";
+        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 4, LocalDateTime.now());
+        logRepository.save(notification);
         return "redirect:/task/all";
     }
 }

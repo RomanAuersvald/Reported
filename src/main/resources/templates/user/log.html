@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html  layout:decorate="~{layout_dash}"
+       xmlns:th="https://www.thymeleaf.org"
+       xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Reported - Dashboard</title>
+</head>
+<body>
+
+<div layout:fragment="content" class="container">
+    <div th:switch="${#lists.size(logs)}">
+        <div th:case="0">
+            <h2 style="margin-top: 30px">No logs yet!</h2>
+            <h3>You have to do something before.</h3>
+        </div>
+        <div th:case="*">
+            <h2 style="margin-top: 30px">Activity Log</h2>
+            <table class="table table-sm">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Time</th>
+                    <th>Type</th>
+                    <th>Message</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="log : ${logs}">
+                    <th:block th:switch="${log.type}">
+                        <th:block th:case="1">
+                            <td th:text="${log.id}" class="bg-success"></td>
+                            <td th:text="${log.timestamp.toLocalTime() + ' ' + log.timestamp.toLocalDate()}" class="bg-success"></td>
+                            <td class="bg-success">Create</td>
+                            <td th:text="${log.notification}" class="bg-success"></td>
+                        </th:block>
+                        <th:block th:case="2">
+                            <td th:text="${log.id}" class="bg-warning"></td>
+                            <td th:text="${log.timestamp.toLocalTime() + ' ' + log.timestamp.toLocalDate()}" class="bg-warning"></td>
+                            <td class="bg-warning">Update</td>
+                            <td th:text="${log.notification}" class="bg-warning"></td>
+                        </th:block>
+                        <th:block th:case="3">
+                            <td th:text="${log.id}" class="bg-danger"></td>
+                            <td th:text="${log.timestamp.toLocalTime() + ' ' + log.timestamp.toLocalDate()}" class="bg-danger"></td>
+                            <td class="bg-danger">Delete</td>
+                            <td th:text="${log.notification}" class="bg-danger"></td>
+                        </th:block>
+                        <th:block th:case="4">
+                            <td th:text="${log.id}"></td>
+                            <td th:text="${log.timestamp.toLocalTime() + ' ' + log.timestamp.toLocalDate()}"></td>
+                            <td>Default</td>
+                            <td th:text="${log.notification}"></td>
+                        </th:block>
+                    </th:block>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

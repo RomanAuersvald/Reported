@@ -1,13 +1,7 @@
 package com.example.securingweb.controller;
 
-import com.example.securingweb.dao.InvoiceRepository;
-import com.example.securingweb.dao.ProjectRepository;
-import com.example.securingweb.dao.ProjectTaskRepository;
-import com.example.securingweb.dao.UserRepository;
-import com.example.securingweb.model.Invoice;
-import com.example.securingweb.model.Project;
-import com.example.securingweb.model.ProjectTask;
-import com.example.securingweb.model.ReportedUser;
+import com.example.securingweb.dao.*;
+import com.example.securingweb.model.*;
 import com.example.securingweb.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,6 +33,9 @@ public class ProjectController {
 
     @Autowired
     private InvoiceRepository invoiceRepository;
+
+    @Autowired
+    private LogRepository logRepository;
 
     public ProjectController(ProjectRepository repository) {
         this.repository = repository;
@@ -75,7 +72,9 @@ public class ProjectController {
         }
         System.out.println(project);
         repository.save(project);
-        msg = "Projekt byl uspesne pridan!";
+        msg = "Projekt byl uspesne pridan";
+        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 1, LocalDateTime.now());
+        logRepository.save(notification);
         return "redirect:/project/all";
     }
 
@@ -100,7 +99,9 @@ public class ProjectController {
             taskRepository.delete(task);
         }
         service.deleteProject(id);
-        msg = "Projekt s id: " + id + " byl uspesne odstranen!";
+        msg = "Projekt s id: " + id + " byl uspesne odstranen";
+        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 3, LocalDateTime.now());
+        logRepository.save(notification);
         return "redirect:/project/all";
     }
 
@@ -128,7 +129,9 @@ public class ProjectController {
             return "project/edit";
         }
         service.saveProject(project);
-        msg = "Projekt s id: " + id + " byl uspesne editovan!";
+        msg = "Projekt s id: " + id + " byl uspesne editovan";
+        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 2, LocalDateTime.now());
+        logRepository.save(notification);
         return "redirect:/project/all";
     }
 
@@ -151,6 +154,8 @@ public class ProjectController {
         project.setProjectEnd(LocalDateTime.now());
         service.saveProject(project);
         msg = "Project s id " + id + " byl oznacen za hotovy.";
+        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 4, LocalDateTime.now());
+        logRepository.save(notification);
         return "redirect:/project/detail/" + id;
     }
 }

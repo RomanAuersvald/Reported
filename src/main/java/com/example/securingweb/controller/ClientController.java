@@ -1,9 +1,6 @@
 package com.example.securingweb.controller;
 
-import com.example.securingweb.dao.AddressRepository;
-import com.example.securingweb.dao.ClientRepository;
-import com.example.securingweb.dao.ProjectRepository;
-import com.example.securingweb.dao.UserRepository;
+import com.example.securingweb.dao.*;
 import com.example.securingweb.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,6 +35,9 @@ public class ClientController {
     public ClientController(ProjectRepository repository) {
         this.repository = repository;
     }
+
+    @Autowired
+    private LogRepository logRepository;
 
     @GetMapping("/client/all")
     public String showAllProject(Model model){
@@ -84,14 +85,18 @@ public class ClientController {
             return "client/add";
         }
         clientRepository.save(client);
-        msg = "Client byl uspesne pridan!";
+        msg = "Client byl uspesne pridan";
+        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 1, LocalDateTime.now());
+        logRepository.save(notification);
         return "redirect:/client/all";
     }
 
     @RequestMapping(value = "/client/delete/{id}")
     public String deleteProject(@PathVariable String id) {
         clientRepository.deleteById(id);
-        msg = "Client s id: " + id + " byl uspesne odstranen!";
+        msg = "Client s id: " + id + " byl uspesne odstranen";
+        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 3, LocalDateTime.now());
+        logRepository.save(notification);
         return "redirect:/client/all";
     }
 
@@ -119,7 +124,9 @@ public class ClientController {
             return "client/edit";
         }
         clientRepository.save(client);
-        msg = "Client s id: " + id + " byl uspesne editovan!";
+        msg = "Client s id: " + id + " byl uspesne editovan";
+        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 2, LocalDateTime.now());
+        logRepository.save(notification);
         return "redirect:/client/all";
     }
 }

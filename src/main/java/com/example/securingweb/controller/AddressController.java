@@ -1,9 +1,6 @@
 package com.example.securingweb.controller;
 
-import com.example.securingweb.dao.AddressRepository;
-import com.example.securingweb.dao.ClientRepository;
-import com.example.securingweb.dao.ProjectRepository;
-import com.example.securingweb.dao.UserRepository;
+import com.example.securingweb.dao.*;
 import com.example.securingweb.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Controller
@@ -35,6 +33,9 @@ public class AddressController {
     public AddressController(ProjectRepository repository) {
         this.repository = repository;
     }
+
+    @Autowired
+    private LogRepository logRepository;
 
     @GetMapping("/address/ad")
     public String bringMeAdd(Model model){
@@ -72,7 +73,9 @@ public class AddressController {
             return "address/add";
         }
         addressRepository.save(address);
-        msg = "Adresa byl uspesne pridan!";
+        msg = "Adresa byla uspesne pridana";
+        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 1, LocalDateTime.now());
+        logRepository.save(notification);
         Optional<Client> client = clientRepository.findById(address.getOwnerId());
         if (client.isPresent()){
             //client
@@ -85,7 +88,9 @@ public class AddressController {
     @RequestMapping(value = "/address/delete/{id}")
     public String deleteProject(@PathVariable String id) {
         addressRepository.deleteById(id);
-        msg = "Adresa s id: " + id + " byl uspesne odstranen!";
+        msg = "Adresa s id: " + id + " byla uspesne odstranena";
+        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 3, LocalDateTime.now());
+        logRepository.save(notification);
         return "redirect:/client/all";
     }
 
@@ -118,7 +123,9 @@ public class AddressController {
             return "address/edit";
         }
         addressRepository.save(address);
-        msg = "Adresa s id: " + id + " byl uspesne editovan!";
+        msg = "Adresa s id: " + id + " byla uspesne editovana";
+        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 2, LocalDateTime.now());
+        logRepository.save(notification);
         Optional<Client> client = clientRepository.findById(address.getOwnerId());
         if (client.isPresent()){
             //client
