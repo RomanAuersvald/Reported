@@ -110,7 +110,7 @@
                         </td>
 
                         <td>
-                            Invoice #: 123<br></br>
+                            Invoice #: <span th:text="${invoiceNumber}"></span><br></br>
                             Created: <span th:text="${created}"></span><br></br>
                             Due: <span th:text="${dueBy}"></span>
                         </td>
@@ -155,7 +155,7 @@
             </td>
 
             <td>
-                XXXXXXXXX
+                <span th:text="${userBankAccount}"></span>
             </td>
         </tr>
 
@@ -169,20 +169,16 @@
             </td>
         </tr>
 
-        <tr th:each="task : ${tasks}">
-            <td th:text="*{task.taskName}"></td>
-
-            <div th:with="result= *{task.hourRate * (task.getTaskDuration() / 3600)}">
-                <td th:text="${result}"></td>
-            </div>
-
+        <tr th:each="task, price : ${tasks}" th:with="progress=${task.value}">
+            <td th:text="*{task.key.taskName}"></td>
+                <td th:text="${task.value}"></td>
         </tr>
 
         <tr class="total">
             <td></td>
 
             <td>
-                Total: $385.00
+                Total: $<span th:text="${totalPrice}"></span>
             </td>
         </tr>
     </table>

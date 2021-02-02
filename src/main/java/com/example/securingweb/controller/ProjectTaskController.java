@@ -3,9 +3,7 @@ package com.example.securingweb.controller;
         import com.example.securingweb.dao.ProjectRepository;
         import com.example.securingweb.dao.ProjectTaskRepository;
         import com.example.securingweb.dao.UserRepository;
-        import com.example.securingweb.model.Project;
-        import com.example.securingweb.model.ProjectTask;
-        import com.example.securingweb.model.ReportedUser;
+        import com.example.securingweb.model.*;
         import com.example.securingweb.service.ProjectTaskService;
         import org.springframework.beans.factory.annotation.Autowired;
         import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +15,9 @@ package com.example.securingweb.controller;
 
         import javax.validation.Valid;
         import java.time.LocalDateTime;
+        import java.util.Collection;
+        import java.util.HashMap;
+        import java.util.Map;
         import java.util.Optional;
 
 @Controller
@@ -55,8 +56,16 @@ public class ProjectTaskController {
     @GetMapping("/task/all")
     public String showAllTasks(Model model){
 //        msg = "Test response msg.";
+        Collection<ProjectTask> tasks = ((Collection<ProjectTask>) repository.findAll());
+        Map<ProjectTask, Project> tasksProject = new HashMap<>();
+        for (ProjectTask task: tasks){
+            String projId = task.getProjectId();
+            Project project = projectRepository.findProjectById(projId);
+            tasksProject.put(task, project);
+        }
+
         model.addAttribute("msg", msg);
-        model.addAttribute("tasks", repository.findAll());
+        model.addAttribute("tasks", tasksProject);
         model.addAttribute("projects", projectRepository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("user", getCurrentLoggedUser());
         msg = "";
@@ -133,6 +142,7 @@ public class ProjectTaskController {
         ProjectTask task = service.grabTaskId(id);
         model.addAttribute("task", task);
         model.addAttribute("user", getCurrentLoggedUser());
+        model.addAttribute("projects", projectRepository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
         return form;
     }
 }

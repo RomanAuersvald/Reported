@@ -39,7 +39,7 @@
                     <td th:text="${project.projectStart.toLocalDate()}"></td>
                     <td th:text="${project.description}"></td>
 <!--                    <td th:text="${project.ownerId}"></td>-->
-                    <td><a th:href="@{/tasks/ad/{id}(id=${project.getId()})}"><i class="bi-plus-circle" style="font-size: 1rem; color: forestgreen;"></i></a></td>
+                    <td><a th:href="@{/task/ad/{id}(id=${project.getId()})}"><i class="bi-plus-circle" style="font-size: 1rem; color: forestgreen;"></i></a></td>
                     <td th:text="${project.estimatedHours} + 'h'"></td>
                     <td><a th:href="@{/project/detail/{id}(id=${project.getId()})}"><i class="bi-info-circle" style="font-size: 1rem; color: cornflowerblue;"></i></a></td>
                     <td><a th:href="@{/project/edit/{id}(id=${project.getId()})}"><i class="bi-pencil" style="font-size: 1rem; color: forestgreen;"></i></a></td>

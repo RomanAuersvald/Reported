@@ -18,6 +18,6 @@ public interface ProjectRepository extends CrudRepository<Project, String> {
 
     Collection<Project> findProjectsByOwnerId(String id);
 
-    @Override
-    Optional<Project> findById(String s);
+
+    Project findProjectById(String s);
 }

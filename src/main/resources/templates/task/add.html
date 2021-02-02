@@ -32,7 +32,9 @@
             <label>Hour rate:</label>
             <input type="number" th:field="*{hourRate}" class="form-control" placeholder="Hour rate">
         </div>
-        <input type="hidden" readonly class="form-control" th:value="*{projectId}" placeholder="id">
+        <div class="form-group">
+        <input type="hidden" readonly class="form-control" th:field="*{projectId}">
+        </div>
         <button type="submit" class="btn btn-primary">Vytvorit ulohu</button>
     </form>
 </div>

@@ -54,6 +54,16 @@ public class ReportedUser implements UserDetails {
     private String password;
     private String role;
 
+    public String getBankAccount() {
+        return bankAccount;
+    }
+
+    public void setBankAccount(String bankAccount) {
+        this.bankAccount = bankAccount;
+    }
+
+    private String bankAccount;
+
     public ReportedUser() {}
 
     public ReportedUser(String username, String password, String role, String name, String surname){
