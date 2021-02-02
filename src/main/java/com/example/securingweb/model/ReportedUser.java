@@ -40,6 +40,10 @@ public class ReportedUser implements UserDetails {
         return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     @Id
     private String id;
 

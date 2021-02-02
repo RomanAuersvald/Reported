@@ -55,7 +55,7 @@ public class RegistrationController {
         userRepository.save(user);
         System.out.println("saved");
         user_message = "";
-        return "redirect:/login";
+        return "redirect:/loginuser";
     }
 
     @GetMapping(path="/all")

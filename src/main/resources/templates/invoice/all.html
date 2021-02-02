@@ -32,17 +32,17 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="invoice : ${invoices}">
-                    <td th:text="${invoice.project.name}"></td>
+                <tr th:each="invoice, pri : ${price}" th:with="progress=${invoice.value}">
+                    <td th:text="${invoice.key.project.name}"></td>
 <!--                    <td th:text="${invoice.project.name}"><a th:href="@{/project/detail/{id}(id=${invoice.project.getId()})}"></a></td>-->
-                    <td th:text="${invoice.client.getFirstName()}"></td>
-                    <td th:text="${invoice.client.getCompanyName()}"></td>
-                    <td th:text="${invoice.dueBy.toLocalDate()}"></td>
-                    <td th:text="${invoice.created.toLocalDate()}"></td>
-                    <td>100.0$</td>
-                    <td><a th:href="@{/invoice/pdf/{id}(id=${invoice.getId()})}" th:target="_blank"><i class="bi-file-earmark-check" style="font-size: 1rem; color: darkorange;"></i></a></td>
-                    <td><a th:href="@{/invoice/edit/{id}(id=${invoice.getId()})}"><i class="bi-pencil" style="font-size: 1rem; color: forestgreen;"></i></a></td>
-                    <td><a th:href="@{/invoice/delete/{id}(id=${invoice.getId()})}"><i class="bi-x-circle-fill" style="font-size: 1rem; color: darkred;"></i></a></td>
+                    <td th:text="${invoice.key.client.getFirstName()}"></td>
+                    <td th:text="${invoice.key.client.getCompanyName()}"></td>
+                    <td th:text="${invoice.key.dueBy.toLocalDate()}"></td>
+                    <td th:text="${invoice.key.created.toLocalDate()}"></td>
+                    <td th:text="'$'+ ${invoice.value}">100.0$</td>
+                    <td><a th:href="@{/invoice/pdf/{id}(id=${invoice.key.getId()})}" th:target="_blank"><i class="bi-file-earmark-check" style="font-size: 1rem; color: darkorange;"></i></a></td>
+                    <td><a th:href="@{/invoice/edit/{id}(id=${invoice.key.getId()})}"><i class="bi-pencil" style="font-size: 1rem; color: forestgreen;"></i></a></td>
+                    <td><a th:href="@{/invoice/delete/{id}(id=${invoice.key.getId()})}"><i class="bi-x-circle-fill" style="font-size: 1rem; color: darkred;"></i></a></td>
                 </tr>
                 </tbody>
             </table>

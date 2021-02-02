@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html  layout:decorate="~{layout_dash}"
+       xmlns:th="https://www.thymeleaf.org"
+       xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Reported - Dashboard</title>
+</head>
+<body>
+
+<div layout:fragment="content" class="container">
+    <h2><span th:text="${user.getNiceNameAndLastname()}"></span> Details</h2>
+    <form th:action="@{/user/update/{id}(id=${user.getId()})}" th:object="${user}" method="post">
+
+        <div class="form-group">
+            <label >First name:</label>
+            <input type="text" th:field="*{firstName}" class="form-control" placeholder="First name" >
+        </div>
+        <div class="form-group">
+            <label >Last name:</label>
+            <input type="text" th:field="*{lastName}" class="form-control" placeholder="Last name" >
+        </div>
+        <div class="form-group">
+            <label >Bank account number:</label>
+            <input type="text" th:field="*{bankAccount}" class="form-control" placeholder="Bank account" >
+        </div>
+        <div class="form-group">
+            <input type="hidden" readonly class="form-control" th:field="*{role}">
+            <input type="hidden" readonly class="form-control" th:field="*{password}">
+            <input type="hidden" readonly class="form-control" th:field="*{username}">
+        </div>
+        <button type="submit" class="btn btn-primary">Edit details</button>
+    </form>
+</div>
+</body>
+</html>

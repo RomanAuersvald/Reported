@@ -57,7 +57,7 @@ public class InvoiceController {
     @GetMapping("/invoice/all")
     public String showAllInvoices(Model model){
 //        msg = "Test response msg.";
-        Map<ProjectTask, Double> taskPrice = new HashMap<>();
+        Map<Invoice, Double> taskPrice = new HashMap<>();
         Double totalPrice = 0.0;
         Collection<Invoice> invoices = invoiceRepository.findAllByUserId(getCurrentLoggedUser().getId());
         for (Invoice invoice : invoices){
@@ -66,9 +66,10 @@ public class InvoiceController {
                 Long duration = task.getTaskDuration();
                 Double hourRate = task.getHourRate();
                 Double price = hourRate * (duration / 3600);
-                taskPrice.put(task, price);
                 totalPrice += price;
             }
+            taskPrice.put(invoice, totalPrice);
+            totalPrice = 0.0;
         }
         model.addAttribute("price", taskPrice);
         model.addAttribute("msg", msg);
