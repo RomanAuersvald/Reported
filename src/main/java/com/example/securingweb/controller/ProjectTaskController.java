@@ -145,4 +145,13 @@ public class ProjectTaskController {
         model.addAttribute("projects", projectRepository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
         return form;
     }
+
+    @RequestMapping(value = "/task/completed/{id}")
+    public String markTaskAsCompleted(@PathVariable String id){
+        ProjectTask task = service.grabTaskId(id);
+        task.setEndDate(LocalDateTime.now());
+        service.saveTask(task);
+        msg = "Task s id: " + id + " byl oznacetn za hotovy.";
+        return "redirect:/task/all";
+    }
 }

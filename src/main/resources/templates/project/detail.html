@@ -26,13 +26,19 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Project Start</label>
             <div class="col-sm-10">
-                <input type="text" readonly class="form-control-plaintext" th:value="${project.projectStart}">
+                <input type="text" readonly class="form-control-plaintext" th:value="${project.getProjectStart().toLocalDate() + ' ' + project.getProjectStart().toLocalTime()}">
             </div>
         </div>
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Project End</label>
             <div class="col-sm-10">
-                <input type="text" readonly class="form-control-plaintext" th:value="${project.projectEnd}">
+                <span th:if="${project.getProjectEnd() != null}">
+                    <input type="text" readonly class="form-control-plaintext" th:value="${project.getProjectEnd().toLocalDate() + ' ' + project.getProjectEnd().toLocalTime()}">
+                </span>
+                <span th:unless="${project.getProjectEnd() != null}">
+                    <input type="text" readonly class="form-control-plaintext" th:value="${project.projectEnd}">
+                </span>
+
             </div>
         </div>
         <div class="form-group row">
@@ -51,6 +57,9 @@
     <div>
         <a th:href="@{/project/edit/{id}(id=${project.getId()})}" class="btn btn-outline-primary">Upravit projekt</a>
         <a th:href="@{/project/delete/{id}(id=${project.getId()})}" class="btn btn-outline-danger">Smazat projekt</a>
+        <a th:href="@{/project/completed/{id}(id=${project.getId()})}" class="btn btn-outline-dark">Complete project</a><br /><br />
+        <a th:href="@{/task/ad/{id}(id=${project.getId()})}" class="btn btn-outline-dark"><i class="bi-plus-circle" style="font-size: 1rem; color: forestgreen;"></i> Pridat Task</a>
+        <a th:href="@{/invoice/ad/{id}(id=${project.getId()})}" class="btn btn-outline-dark"><i class="bi-receipt" style="font-size: 1rem; color: purple;"></i> Vytvorit fakturu</a>
         <a href="/project/all" class="btn btn-success">Zpet</a>
     </div>
     <div th:switch="${#lists.size(tasks)}">
@@ -84,9 +93,13 @@
                         <span th:unless="${task.endDate != null}">-</span>
                     </td>
 <!--                    <td th:text="${task.taskComplete()} ? 'Done' : 'Pending'"><td>-->
+<!--                    <td>-->
+<!--                        <span th:if="${task.taskComplete() == true}">Done</span>-->
+<!--                        <span th:unless="${task.taskComplete() == true}">Pending</span>-->
+<!--                    </td>-->
                     <td>
-                        <span th:if="${task.taskComplete() == true}">Done</span>
-                        <span th:unless="${task.taskComplete() == true}">Pending</span>
+                        <span th:if="${task.taskComplete() == true}"><i class="bi-check-circle-fill" style="font-size: 1rem; color: green;"></i></span>
+                        <span th:unless="${task.taskComplete() == true}"><a th:href="@{/task/completed/{id}(id=${task.getId()})}"><i class="bi-check-circle" style="font-size: 1rem; color: orange;"></i></a></span>
                     </td>
                     <td><a th:href="@{/task/detail/{id}(id=${task.getId()})}"><i class="bi-info-circle" style="font-size: 1rem; color: cornflowerblue;"></i></a></td>
                 </tr>
@@ -104,12 +117,20 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Nazev</th>
+                    <th>Client</th>
+                    <th>Company name</th>
+                    <th>Due by</th>
+                    <th>Created</th>
+                    <th>PDF</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="invoice : ${invoices}">
-                    <td th:text="${invoice.project.name}"></td>
+                    <td th:text="${invoice.client.firstName}"></td>
+                    <td th:text="${invoice.client.companyName}"></td>
+                    <td th:text="${invoice.dueBy.toLocalDate()}"></td>
+                    <td th:text="${invoice.created.toLocalDate()}"></td>
+                    <td><a th:href="@{/invoice/pdf/{id}(id=${invoice.id})}" th:target="_blank"><i class="bi-file-earmark-check" style="font-size: 1rem; color: darkorange;"></i></a></td>
                 </tr>
                 </tbody>
             </table>
