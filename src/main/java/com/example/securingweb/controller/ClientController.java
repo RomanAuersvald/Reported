@@ -5,7 +5,6 @@ import com.example.securingweb.dao.ClientRepository;
 import com.example.securingweb.dao.ProjectRepository;
 import com.example.securingweb.dao.UserRepository;
 import com.example.securingweb.model.*;
-import com.example.securingweb.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,7 +47,7 @@ public class ClientController {
         model.addAttribute("clients", clients);
         model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("user", getCurrentLoggedUser());
-        return "client/allClients";
+        return "all";
     }
 
     private Map<Client, Boolean> getClientAddress(Collection<Client> clients){
@@ -75,7 +73,7 @@ public class ClientController {
         model.addAttribute("client", client);
         model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("user", getCurrentLoggedUser());
-        return "client/addClient";
+        return "add";
     }
 
     @RequestMapping(value = "/client/add", method = RequestMethod.POST)
@@ -83,7 +81,7 @@ public class ClientController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
             model.addAttribute("user", getCurrentLoggedUser());
-            return "client/addClient";
+            return "add";
         }
         clientRepository.save(client);
         msg = "Client byl uspesne pridan!";

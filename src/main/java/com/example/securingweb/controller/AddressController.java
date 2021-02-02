@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @Controller
 public class AddressController {
@@ -55,7 +54,7 @@ public class AddressController {
         model.addAttribute("address", address);
         model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("user", getCurrentLoggedUser());
-        return "address/addAddress";
+        return "add";
     }
 
     @GetMapping("/address/ad/{id}")
@@ -67,7 +66,7 @@ public class AddressController {
         model.addAttribute("address", ad);
         model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("user", getCurrentLoggedUser());
-        return "address/addAddress"; // html
+        return "add"; // html
     }
 
     @RequestMapping(value = "/address/add", method = RequestMethod.POST)
@@ -75,7 +74,7 @@ public class AddressController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
             model.addAttribute("user", getCurrentLoggedUser());
-            return "address/addAddress";
+            return "add";
         }
         addressRepository.save(address);
         msg = "Adresa byl uspesne pridan!";
@@ -98,7 +97,7 @@ public class AddressController {
 
     @RequestMapping(value = "/address/edit/{id}")
     public ModelAndView gibMeEditForm(@PathVariable String id, Model model){
-        ModelAndView form = new ModelAndView("address/editAddress");
+        ModelAndView form = new ModelAndView("edit");
         Address address = addressRepository.findAddressByOwnerId(id);
         Client client = clientRepository.findById(id).get();
         model.addAttribute("client", client);
@@ -112,7 +111,7 @@ public class AddressController {
     public String editProject(@PathVariable("id") String id, @Valid @ModelAttribute("address") Address address, BindingResult bindingResult, Model model){
         if (bindingResult.hasErrors()){
             address.setId(id);
-            return "address/editAddress";
+            return "edit";
         }
         addressRepository.save(address);
         msg = "Adresa s id: " + id + " byl uspesne editovan!";
