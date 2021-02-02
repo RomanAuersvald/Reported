@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html  layout:decorate="~{layout_dash}"
+       xmlns:th="https://www.thymeleaf.org"
+       xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Reported - Dashboard</title>
+</head>
+<body>
+
+<div layout:fragment="content" class="container">
+    <h2>Projects</h2>
+    <form th:action="@{/address/add}" th:object="${address}" method="post">
+
+        <div class="form-group">
+            <label >Street:</label>
+            <input type="text" th:field="*{street}" class="form-control" placeholder="Street name" >
+        </div>
+        <div class="form-group">
+            <label >City:</label>
+            <input type="text" th:field="*{city}" class="form-control" placeholder="City" >
+        </div>
+        <div class="form-group">
+            <label >Post code:</label>
+            <input type="text" th:field="*{postCode}" class="form-control" placeholder="Post code" >
+        </div>
+        <div class="form-group">
+            <label >Owner:</label>
+            <input type="hidden" readonly class="form-control" th:value="*{ownerId}" placeholder="id" name="ownerId">
+        </div>
+        <button type="submit" class="btn btn-primary">Add new project</button>
+    </form>
+</div>
+</body>
+</html>

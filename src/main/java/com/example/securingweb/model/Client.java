@@ -10,6 +10,10 @@ public class Client {
         this.id = id;
     }
 
+    public String getId() {
+        return id;
+    }
+
     @Id
     public String id;
 

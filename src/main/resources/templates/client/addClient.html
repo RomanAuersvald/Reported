@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html  layout:decorate="~{layout_dash}"
+       xmlns:th="https://www.thymeleaf.org"
+       xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Reported - Dashboard</title>
+</head>
+<body>
+
+<div layout:fragment="content" class="container">
+    <h2>Clients</h2>
+    <form th:action="@{/client/add}" th:object="${client}" method="post">
+
+        <div class="form-group">
+            <label >Name:</label>
+            <input type="text" th:field="*{firstName}" class="form-control" placeholder="Name" >
+        </div>
+        <div class="form-group">
+            <label >Last name:</label>
+            <input type="text" th:field="*{lastName}" class="form-control" placeholder="last name" >
+        </div>
+        <div class="form-group">
+            <label >Company name:</label>
+            <input type="text" th:field="*{companyName}" class="form-control" placeholder="company name" >
+        </div>
+        <div class="form-group">
+            <label >ICO:</label>
+            <input type="text" th:field="*{ico}" class="form-control" placeholder="ico" >
+        </div>
+        <div class="form-group">
+            <label >DIC:</label>
+            <input type="text" th:field="*{dic}" class="form-control" placeholder="dic" >
+        </div>
+        <div class="form-group">
+            <input type="hidden" th:field="*{userId}" class="form-control"  >
+        </div>
+        <button type="submit" class="btn btn-primary">Add new client</button>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html  layout:decorate="~{layout_dash}"
+       xmlns:th="https://www.thymeleaf.org"
+       xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Reported - Dashboard</title>
+</head>
+<body>
+
+<div layout:fragment="content" class="container">
+    <div th:if="${msg !=''}" class="alert alert-success alert-dismissible fade show" style="margin-top: 10px">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <i class="fas fa-check-circle" style="color:green"></i><strong th:text="${msg}"></strong>
+    </div>
+    <div th:switch="${invoices}">
+        <h2 th:case="null">No invoices yet!</h2>
+        <div th:case="*">
+            <h2>Invoices</h2><p><a th:href="@{'/invoice/ad'}" class="btn btn-outline-primary"><i class="bi bi-folder-plus" style="margin-right: 5px"></i>Add a new invoice</a></p>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Project</th>
+                    <th>Client</th>
+                    <th>Company name</th>
+                    <th>Due by</th>
+                    <th>Created</th>
+                    <th>PDF</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="invoice : ${invoices}">
+                    <td th:text="${invoice.project.name}"></td>
+                    <td th:text="${invoice.client.getFirstName()}"></td>
+                    <td th:text="${invoice.client.getCompanyName()}"></td>
+                    <td th:text="${invoice.dueBy}"></td>
+                    <td th:text="${invoice.created}"></td>
+                    <td><a th:href="@{/invoice/pdf/{id}(id=${invoice.getId()})}"><i class="bi-pencil" style="font-size: 1rem; color: forestgreen;"></i></a></td>
+                    <td><a th:href="@{/invoice/edit/{id}(id=${invoice.getId()})}"><i class="bi-pencil" style="font-size: 1rem; color: forestgreen;"></i></a></td>
+                    <td><a th:href="@{/invoice/delete/{id}(id=${invoice.getId()})}"><i class="bi-x-circle-fill" style="font-size: 1rem; color: darkred;"></i></a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

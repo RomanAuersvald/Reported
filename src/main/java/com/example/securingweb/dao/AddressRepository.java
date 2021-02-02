@@ -8,5 +8,6 @@ import java.util.Collection;
 
 public interface AddressRepository  extends CrudRepository<Address, String> {
 
-    Collection<Address> findAddressesByOwnerId(String id);
+    Address findAddressByOwnerId(String id);
+
 }

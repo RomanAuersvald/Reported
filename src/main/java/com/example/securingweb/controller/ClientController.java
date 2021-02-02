@@ -51,6 +51,7 @@ public class ClientController {
         ReportedUser user = getCurrentLoggedUser();
         String name = user.getNiceNameAndLastname();
         Client client = new Client();
+        client.setUserId(user.getId());
         model.addAttribute("client", client);
         model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("user", getCurrentLoggedUser());

@@ -4,9 +4,7 @@ import com.example.securingweb.dao.AddressRepository;
 import com.example.securingweb.dao.ClientRepository;
 import com.example.securingweb.dao.ProjectRepository;
 import com.example.securingweb.dao.UserRepository;
-import com.example.securingweb.model.Address;
-import com.example.securingweb.model.Client;
-import com.example.securingweb.model.ReportedUser;
+import com.example.securingweb.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 public class AddressController {
@@ -34,11 +33,11 @@ public class AddressController {
         this.repository = repository;
     }
 
-    @GetMapping("/addresses/all")
+    @GetMapping("/address/all")
     public String showAllProject(Model model){
 //        msg = "Test response msg.";
         model.addAttribute("msg", msg);
-        model.addAttribute("addresses", addressRepository.findAddressesByOwnerId(getCurrentLoggedUser().getId()));
+        model.addAttribute("addresses", addressRepository.findAddressByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("user", getCurrentLoggedUser());
         return "address/allAddresses";
@@ -54,6 +53,16 @@ public class AddressController {
         model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("user", getCurrentLoggedUser());
         return "address/addAddress";
+    }
+
+    @GetMapping("/address/ad/{id}")
+    public String bringMeAdd(Model model, @PathVariable String id){
+        Address ad = new Address();
+        ad.setOwnerId(id);
+        model.addAttribute("address", ad);
+        model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
+        model.addAttribute("user", getCurrentLoggedUser());
+        return "address/addAddress"; // html
     }
 
     @RequestMapping(value = "/address/add", method = RequestMethod.POST)

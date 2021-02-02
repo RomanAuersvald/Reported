@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html  layout:decorate="~{layout_dash}"
+       xmlns:th="https://www.thymeleaf.org"
+       xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout"
+       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Reported - Dashboard</title>
+</head>
+<body>
+
+<div layout:fragment="content" class="container">
+    <h2>Invoice</h2>
+    <form th:action="@{/invoice/add}" th:object="${invoice}" method="post">
+
+        <div class="form-group">
+            <label >Project name:</label>
+            <input type="text" th:field="*{project.name}" readonly class="form-control" placeholder="Name" >
+        </div>
+        <div class="form-group">
+            <label >Selected tasks:</label>
+            <select th:field="*{taskIds}" multiple>
+                <option th:each="i : ${projectTasks}" th:value="${i.getId()}" th:text="${i.taskName}">
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label >Client:</label>
+            <select th:field="*{clientId}">
+                <option th:each="i : ${clients}" th:value="${i.getId()}" th:text="${i.getCompanyName()}" selected>
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label >Due date:</label>
+            <input type="datetime-local" th:field="*{dueBy}" class="form-control" placeholder="due" >
+        </div>
+        <div class="form-group">
+            <input type="hidden"  class="form-control" th:field="*{projectId}">
+            <input type="hidden"  class="form-control" th:field="*{user}">
+            <input type="hidden"  class="form-control" th:field="*{project}">
+            <input type="hidden"  class="form-control" th:field="*{userId}">
+            <input type="hidden"  class="form-control" th:field="*{tasks}">
+            <input type="hidden"  class="form-control" th:field="*{client}">
+        </div>
+        <button type="submit" class="btn btn-primary">Create invoice</button>
+    </form>
+</div>
+</body>
+</html>
