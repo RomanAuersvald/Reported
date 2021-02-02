@@ -95,6 +95,10 @@ public class ProjectController {
     @RequestMapping(value = "/project/delete/{id}")
     public String deleteProject(@PathVariable String id) {
 //        repository.deleteById(id);
+        Collection<ProjectTask> tasks = taskRepository.findProjectTasksByProjectId(id);
+        for (ProjectTask task : tasks){
+            taskRepository.delete(task);
+        }
         service.deleteProject(id);
         msg = "Projekt s id: " + id + " byl uspesne odstranen!";
         return "redirect:/project/all";

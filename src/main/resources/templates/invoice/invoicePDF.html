@@ -2,7 +2,7 @@
 <html xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="utf-8"></meta>
-    <title>A simple, clean, and responsive HTML invoice template</title>
+    <title th:text="'Invoice #:' + ${invoiceNumber}"></title>
 
     <style>
         .invoice-box {
