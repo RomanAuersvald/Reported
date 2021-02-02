@@ -9,9 +9,9 @@
 <body>
 
 <div layout:fragment="content">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row" style="margin: 30px">
-            <div class="col">Hi there!</div>
+            <div class="col"><h3 th:text="'Hi ' + ${user.getFirstName()}"></h3></div>
             <div class="col"><a th:href="@{'/project/ad'}" class="btn btn-primary"><i class="bi bi-folder-plus" style="margin-right: 5px"></i>Create Project</a></div>
             <div class="col" th:if="${user.getRole() == 'PREMIUM'}" ><a th:href="@{'/client/ad'}" class="btn btn-success"><i class="bi bi-folder-plus" style="margin-right: 5px"></i>New Client</a></div>
 <!--            <div class="col"><a th:href="@{'/project/ad'}" class="btn btn-warning"><i class="bi bi-folder-plus" style="margin-right: 5px"></i>New Working Group</a></div>-->
@@ -24,11 +24,11 @@
                 <span>You may wanna start with creating new project with button up there.</span>
             </div>
             <div th:case="*">
-                <div class="row mb-2">
+                <div class="row">
                     <div class="col-md-6" th:each="project, stats : ${projectsProgress}" th:with="progress=${project.value}">
                         <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
                             <div class="col p-4 d-flex flex-column position-static text-nowrap">
-                                <strong class="d-inline-block mb-2 text-primary" th:text="'~' + ${project.key.estimatedHours} + ' hours'"></strong>
+                                <div><span th:if="${project.key.projectEnd != null}" style="white-space:nowrap;"><i class="bi-check-circle-fill" style="font-size: 1rem; color: green;margin-right: 5px"></i></span><strong class="d-inline-block mb-2 text-primary" th:text="'~' + ${project.key.estimatedHours} + ' hours'"></strong></div>
                                 <a th:href="@{/project/detail/{id}(id=${project.key.getId()})}"><h3 class="mb-0" th:text="${project.key.name}"></h3></a>
                                 <div class="mb-1 text-muted" th:text="${project.key.projectStart.toLocalDate()}"></div>
                                 <p class="card-text mb-auto" th:text="${project.key.description}"></p>
@@ -38,10 +38,10 @@
                                 </div>
                             </div>
 
-                            <div class="col-auto d-none d-lg-block">
-                                <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+<!--                            <div class="col-auto d-none d-lg-block">-->
+<!--                                <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>-->
 
-                            </div>
+<!--                            </div>-->
                         </div>
                     </div>
             </div>
