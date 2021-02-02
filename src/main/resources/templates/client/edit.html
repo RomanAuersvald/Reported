@@ -10,7 +10,7 @@
 
 <div layout:fragment="content" class="container">
     <h2 style="margin-top: 30px">Upravit Clienta</h2>
-    <form th:action="@{/client/edit/{id}(id=${client.id})}" th:object="${client}" method="post">
+    <form th:action="@{/client/update/{id}(id=${client.id})}" th:object="${client}" method="post">
         <input type="hidden" readonly class="form-control" th:value="*{id}" name="id">
         <div class="form-group">
             <label>First name:</label>
