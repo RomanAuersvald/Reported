@@ -35,17 +35,6 @@ public class AddressController {
         this.repository = repository;
     }
 
-//    @GetMapping("/address/all")
-//    public String showAllProject(Model model){
-////        msg = "Test response msg.";
-//        model.addAttribute("msg", msg);
-//        model.addAttribute("addresses", addressRepository.findAddressByOwnerId(getCurrentLoggedUser().getId()));
-//        model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
-//        model.addAttribute("user", getCurrentLoggedUser());
-//        return "address/allAddress";
-//    }
-
-    // most mezi allProjects.html -> add project (addProject.html) -> metoda project/add dole
     @GetMapping("/address/ad")
     public String bringMeAdd(Model model){
         ReportedUser user = getCurrentLoggedUser();
@@ -58,7 +47,7 @@ public class AddressController {
     }
 
     @GetMapping("/address/ad/{id}")
-    public String bringMeAdd(Model model, @PathVariable String id){
+    public String bringMeAddId(Model model, @PathVariable String id){
         Address ad = new Address();
         ad.setOwnerId(id);
         Client client = clientRepository.findById(id).get();

@@ -128,6 +128,9 @@ public class InvoiceController {
         ModelAndView form = new ModelAndView("invoice/edit");
 //        Project project = service.grabProjectId(id);
         Invoice invoice = invoiceRepository.findById(id).get();
+        model.addAttribute("projectTasks", projectTaskRepository.findProjectTasksByProjectId(invoice.getProjectId()));
+        model.addAttribute("clients", clientRepository.findClientsByUserId(getCurrentLoggedUser().getId()));
+        model.addAttribute("projectName", repository.findProjectById(invoice.getProjectId()).getName());
         model.addAttribute("invoice", invoice);
         model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("user", getCurrentLoggedUser());
