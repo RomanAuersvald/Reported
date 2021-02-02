@@ -43,7 +43,7 @@ public class AddressController {
         model.addAttribute("address", address);
         model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("user", getCurrentLoggedUser());
-        return "add";
+        return "address/add";
     }
 
     @GetMapping("/address/ad/{id}")
@@ -55,15 +55,16 @@ public class AddressController {
         model.addAttribute("address", ad);
         model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("user", getCurrentLoggedUser());
-        return "add"; // html
+        return "address/add"; // html
     }
 
     @RequestMapping(value = "/address/add", method = RequestMethod.POST)
     public String addProject(@Valid @ModelAttribute("address") Address address, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("client", clientRepository.findById(address.getOwnerId()).get());
             model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
             model.addAttribute("user", getCurrentLoggedUser());
-            return "add";
+            return "address/add";
         }
         addressRepository.save(address);
         msg = "Adresa byl uspesne pridan!";
@@ -86,7 +87,7 @@ public class AddressController {
 
     @RequestMapping(value = "/address/edit/{id}")
     public ModelAndView gibMeEditForm(@PathVariable String id, Model model){
-        ModelAndView form = new ModelAndView("edit");
+        ModelAndView form = new ModelAndView("address/edit");
         Address address = addressRepository.findAddressByOwnerId(id);
         Client client = clientRepository.findById(id).get();
         model.addAttribute("client", client);
@@ -100,7 +101,7 @@ public class AddressController {
     public String editProject(@PathVariable("id") String id, @Valid @ModelAttribute("address") Address address, BindingResult bindingResult, Model model){
         if (bindingResult.hasErrors()){
             address.setId(id);
-            return "edit";
+            return "address/edit";
         }
         addressRepository.save(address);
         msg = "Adresa s id: " + id + " byl uspesne editovan!";

@@ -24,9 +24,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class InvoiceController {
@@ -90,10 +88,16 @@ public class InvoiceController {
         invoice.setCreated(LocalDateTime.now());
         invoice.setUser(user);
         invoice.setUserId(user.getId());
+        List<ProjectTask> closedTasks = new ArrayList<ProjectTask>();
+        for (ProjectTask task : projectTaskRepository.findProjectTasksByProjectId(id)){
+            if (task.taskComplete()){
+                closedTasks.add(task);
+            }
+        }
         model.addAttribute("projectName", p.getName());
         model.addAttribute("invoice", invoice);
         model.addAttribute("clients", clientRepository.findClientsByUserId(user.getId()));
-        model.addAttribute("projectTasks", projectTaskRepository.findProjectTasksByProjectId(id));
+        model.addAttribute("projectTasks", closedTasks);
         model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("user", getCurrentLoggedUser());
         return "invoice/add";

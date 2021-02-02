@@ -47,7 +47,7 @@ public class ClientController {
         model.addAttribute("clients", clients);
         model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("user", getCurrentLoggedUser());
-        return "all";
+        return "client/all";
     }
 
     private Map<Client, Boolean> getClientAddress(Collection<Client> clients){
@@ -73,7 +73,7 @@ public class ClientController {
         model.addAttribute("client", client);
         model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("user", getCurrentLoggedUser());
-        return "add";
+        return "client/add";
     }
 
     @RequestMapping(value = "/client/add", method = RequestMethod.POST)
@@ -81,7 +81,7 @@ public class ClientController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
             model.addAttribute("user", getCurrentLoggedUser());
-            return "add";
+            return "client/add";
         }
         clientRepository.save(client);
         msg = "Client byl uspesne pridan!";
@@ -104,7 +104,7 @@ public class ClientController {
 
     @RequestMapping(value = "/client/edit/{id}")
     public ModelAndView gibMeEditForm(@PathVariable String id, Model model){
-        ModelAndView form = new ModelAndView("client/editClient");
+        ModelAndView form = new ModelAndView("client/edit");
         Client client = clientRepository.findById(id).get();
         model.addAttribute("client", client);
         model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
@@ -116,7 +116,7 @@ public class ClientController {
     public String editProject(@PathVariable("id") String id, @Valid @ModelAttribute("client") Client client, BindingResult bindingResult, Model model){
         if (bindingResult.hasErrors()){
             client.setId(id);
-            return "client/editClient";
+            return "client/edit";
         }
         clientRepository.save(client);
         msg = "Client s id: " + id + " byl uspesne editovan!";

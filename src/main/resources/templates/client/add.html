@@ -15,22 +15,27 @@
         <div class="form-group">
             <label >Name:</label>
             <input type="text" th:field="*{firstName}" class="form-control" placeholder="Name" >
+            <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="alert alert-danger" role="alert">firstName was not set</p>
         </div>
         <div class="form-group">
             <label >Last name:</label>
             <input type="text" th:field="*{lastName}" class="form-control" placeholder="last name" >
+            <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="alert alert-danger" role="alert">lastName was not set</p>
         </div>
         <div class="form-group">
             <label >Company name:</label>
             <input type="text" th:field="*{companyName}" class="form-control" placeholder="company name" >
+            <p th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}" class="alert alert-danger" role="alert">companyName was not set</p>
         </div>
         <div class="form-group">
             <label >ICO:</label>
             <input type="text" th:field="*{ico}" class="form-control" placeholder="ico" >
+            <p th:if="${#fields.hasErrors('ico')}" th:errors="*{ico}" class="alert alert-danger" role="alert">ico was not set</p>
         </div>
         <div class="form-group">
             <label >DIC:</label>
             <input type="text" th:field="*{dic}" class="form-control" placeholder="dic" >
+            <p th:if="${#fields.hasErrors('dic')}" th:errors="*{dic}" class="alert alert-danger" role="alert">dic was not set</p>
         </div>
         <div class="form-group">
             <input type="hidden" th:field="*{userId}" class="form-control"  >

@@ -9,7 +9,8 @@
 <body>
 
 <div layout:fragment="content" class="container">
-    <h2><span th:text="${client.companyName}"></span> Address</h2>
+    <h2><span th:if="${client != null}" th:text="${client.companyName}"></span> Address</h2>
+    <h2><span th:if="${client == null}" th:text="${user.getNiceNameAndLastname()}"></span> Address</h2>
     <form th:action="@{/address/update/{id}(id=${address.id})}" th:object="${address}" method="post">
 
         <div class="form-group">
