@@ -24,15 +24,15 @@
                 <span>You may wanna start with creating new project with button up there.</span>
             </div>
             <div th:case="*">
-                <div class="card-deck">
-                    <div class="card bg-light" th:each="project, stats : ${projectsProgress}" th:with="progress=${project.value}">
-                        <div class="card-body">
-                            <div class="card-text">
-                                <strong class="d-inline-block mb-2 text-primary" th:text="'~' + ${project.key.estimatedHours} + ' hours'"></strong>
+                <div class="row">
+                    <div class="col-md-6" th:each="project, stats : ${projectsProgress}" th:with="progress=${project.value}">
+                        <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                            <div class="col p-4 d-flex flex-column position-static text-nowrap">
+                                <div><span th:if="${project.key.projectEnd != null}" style="white-space:nowrap;"><i class="bi-check-circle-fill" style="font-size: 1rem; color: green;margin-right: 5px"></i></span><strong class="d-inline-block mb-2 text-primary" th:text="'~' + ${project.key.estimatedHours} + ' hours'"></strong></div>
                                 <a th:href="@{/project/detail/{id}(id=${project.key.getId()})}"><h3 class="mb-0" th:text="${project.key.name}"></h3></a>
                                 <div class="mb-1 text-muted" th:text="${project.key.projectStart.toLocalDate()}"></div>
-                                <p class="mb-auto" th:text="${project.key.description}"></p>
-                                <a th:href="@{/project/detail/{id}(id=${project.key.getId()})}" th:class="stretched-link">Project detail</a>
+                                <p class="card-text mb-auto" th:text="${project.key.description}"></p>
+                                <a th:href="@{/project/detail/{id}(id=${project.key.getId()})}" class="stretched-link">Project detail</a>
                                 <div class="progress">
                                     <div class="progress-bar" role="progressbar" th:attr="aria-valuenow=${progress}" th:style="'width:' + ${progress} + '%;'"  th:text="${progress} + ' %'" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
@@ -41,7 +41,7 @@
 
                         </div>
                     </div>
-            </div>
+                </div>
         </div>
         </div>
 </div>
