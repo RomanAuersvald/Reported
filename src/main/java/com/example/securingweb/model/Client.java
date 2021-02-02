@@ -3,24 +3,25 @@ package com.example.securingweb.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotEmpty;
+
 @Document(collection = "clients")
 public class Client {
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getId() {
-        return id;
-    }
 
     @Id
     public String id;
-
+    @NotEmpty(message = "Enter customers first name")
     private String firstName;
+    @NotEmpty(message = "Enter customers last name")
     private String lastName;
+    @NotEmpty(message = "Enter customer company name")
     private String companyName;
+    @NotEmpty(message = "Enter valid ICO")
     private String ico;
+    @NotEmpty(message = "Enter valid DIC")
+    private String dic;
+    private String userId;
 
     public String getUserId() {
         return userId;
@@ -30,7 +31,14 @@ public class Client {
         this.userId = userId;
     }
 
-    private String userId;
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -72,7 +80,7 @@ public class Client {
         this.dic = dic;
     }
 
-    private String dic;
+
 
 
 

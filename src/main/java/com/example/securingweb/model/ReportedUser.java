@@ -8,6 +8,7 @@ import org.springframework.validation.annotation.Validated;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
@@ -47,12 +48,11 @@ public class ReportedUser implements UserDetails {
     @Id
     private String id;
 
-
-    @Pattern(regexp="^[a-zA-Z]{2,20}",message="Invalid name pattern")
+    @NotEmpty(message="Name cannot be empty")
     private String firstName;
-    @Pattern(regexp="^[a-zA-Z]{2,20}",message="Invalid surname pattern")
+    @NotEmpty(message="Last name cannot be empty")
     private String lastName;
-    @Pattern(regexp="^[a-zA-Z]{3,20}",message="Invalid username pattern")
+    @NotEmpty(message="username cannot be empty")
     private String username;
     @Size(min = 5, message = "Password must be at least 5 characters long")
     private String password;

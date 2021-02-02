@@ -61,6 +61,7 @@ public class AddressController {
     @RequestMapping(value = "/address/add", method = RequestMethod.POST)
     public String addProject(@Valid @ModelAttribute("address") Address address, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("client", clientRepository.findById(address.getOwnerId()).get());
             model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
             model.addAttribute("user", getCurrentLoggedUser());
             return "address/add";

@@ -4,6 +4,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
@@ -12,6 +14,27 @@ public class Invoice {
 
     @Id
     private String id;
+
+    private ReportedUser user;
+    private Client client; // vybírá se
+    private Collection<ProjectTask> tasks; // vybírá se
+    private Project project;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime created;
+    @NotEmpty(message = "How did you get this error?")
+    private String userId;
+    @NotEmpty(message = "How did you get this error?")
+    private String projectId;
+    @NotEmpty(message = "You need to select customer")
+    private String clientId;
+    @NotEmpty(message = "You need to select at least one task yo")
+    private Collection<String> taskIds;
+
+    // datum splatnosti
+    @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime dueBy; // vybírá se
 
     public String getId() {
         return id;
@@ -85,15 +108,6 @@ public class Invoice {
         this.dueBy = dueBy;
     }
 
-    private ReportedUser user;
-    private Client client; // vybírá se
-    private Collection<ProjectTask> tasks; // vybírá se
-    private Project project;
-    private LocalDateTime created;
-    private String userId;
-    private String projectId;
-    private String clientId;
-
     public void addTaskObjects(ProjectTask task){
         this.tasks.add(task);
     }
@@ -114,10 +128,6 @@ public class Invoice {
         this.taskIds = taskIds;
     }
 
-    private Collection<String> taskIds;
 
-    // datum splatnosti
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    private LocalDateTime dueBy; // vybírá se
 
 }

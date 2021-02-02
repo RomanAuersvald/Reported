@@ -28,7 +28,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Password</label>
-                <input type="text" th:field="*{password}" class="form-control" placeholder="Password">
+                <input type="password" th:field="*{password}" class="form-control" placeholder="Password">
                 <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="alert alert-danger" role="alert">Password not set</p>
             </div>
             <button type="submit" class="btn btn-primary">Sign In</button>

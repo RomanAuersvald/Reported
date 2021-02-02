@@ -15,10 +15,12 @@
         <div class="form-group">
             <label >First name:</label>
             <input type="text" th:field="*{firstName}" class="form-control" placeholder="First name" >
+            <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="alert alert-danger" role="alert"></p>
         </div>
         <div class="form-group">
             <label >Last name:</label>
             <input type="text" th:field="*{lastName}" class="form-control" placeholder="Last name" >
+            <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="alert alert-danger" role="alert"></p>
         </div>
         <div class="form-group">
             <label >Bank account number:</label>

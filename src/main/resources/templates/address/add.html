@@ -9,20 +9,24 @@
 <body>
 
 <div layout:fragment="content" class="container">
-    <h2 style="margin-top: 30px"><span th:text="${client.companyName}"></span> Address</h2>
+    <h2><span th:if="${client != null}" th:text="${client.companyName}"></span> Address</h2>
+    <h2><span th:if="${client == null}" th:text="${user.getNiceNameAndLastname()}"></span> Address</h2>
     <form th:action="@{/address/add}" th:object="${address}" method="post">
 
         <div class="form-group">
             <label >Street:</label>
             <input type="text" th:field="*{street}" class="form-control" placeholder="Street name" >
+            <p th:if="${#fields.hasErrors('street')}" th:errors="*{street}" class="alert alert-danger" role="alert">street was not set</p>
         </div>
         <div class="form-group">
             <label >City:</label>
             <input type="text" th:field="*{city}" class="form-control" placeholder="City" >
+            <p th:if="${#fields.hasErrors('city')}" th:errors="*{city}" class="alert alert-danger" role="alert">city was not set</p>
         </div>
         <div class="form-group">
             <label >Post code:</label>
             <input type="text" th:field="*{postCode}" class="form-control" placeholder="Post code" >
+            <p th:if="${#fields.hasErrors('postCode')}" th:errors="*{postCode}" class="alert alert-danger" role="alert">postCode was not set</p>
         </div>
         <div class="form-group">
             <input type="hidden" readonly class="form-control" th:value="*{ownerId}"name="ownerId">
