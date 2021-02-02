@@ -79,4 +79,11 @@ public class UserController {
         userRepository.save(user);
         return "redirect:/dashboard";
     }
+
+    @RequestMapping(value = "/user/detail")
+    public String showMeUserDetail(Model model){
+        model.addAttribute("user", getCurrentLoggedUser());
+        model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
+        return "user/detail";
+    }
 }
