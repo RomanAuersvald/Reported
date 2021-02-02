@@ -13,7 +13,7 @@ import java.util.Map;
 @Service
 public class InvoiceService {
 
-    public String parseThymeleafTemplate(Invoice invoice, Address clientAddress) {
+    public String parseThymeleafTemplate(Invoice invoice, Address clientAddress, Address userAddress) {
         ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode(TemplateMode.HTML);
@@ -26,11 +26,13 @@ public class InvoiceService {
         context.setVariable("created", invoice.getCreated());
         context.setVariable("dueBy", invoice.getDueBy());
 
-        context.setVariable("userStreet", invoice.getUser().getUsername());
-        context.setVariable("userCity", invoice.getDueBy());
-        context.setVariable("userPostCode", invoice.getDueBy());
+        context.setVariable("userName", invoice.getUser().getNiceNameAndLastname());
+        context.setVariable("userStreet", userAddress.getStreet());
+        context.setVariable("userCity", userAddress.getCity());
+        context.setVariable("userPostCode", userAddress.getPostCode());
         context.setVariable("userBankAccount", invoice.getUser().getBankAccount());
 
+        context.setVariable("clientName", invoice.getClient().getCompanyName());
         context.setVariable("clientStreet", clientAddress.getStreet());
         context.setVariable("clientCity",clientAddress.getCity());
         context.setVariable("clientPostCode", clientAddress.getPostCode());

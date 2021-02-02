@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 public class AddressController {
@@ -50,8 +51,12 @@ public class AddressController {
     public String bringMeAddId(Model model, @PathVariable String id){
         Address ad = new Address();
         ad.setOwnerId(id);
-        Client client = clientRepository.findById(id).get();
-        model.addAttribute("client", client);
+        Optional<Client> client = clientRepository.findById(id);
+        if (client.isPresent()){
+            //client
+            model.addAttribute("client", client.get());
+        }
+
         model.addAttribute("address", ad);
         model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("user", getCurrentLoggedUser());
@@ -68,7 +73,13 @@ public class AddressController {
         }
         addressRepository.save(address);
         msg = "Adresa byl uspesne pridan!";
-        return "redirect:/client/all";
+        Optional<Client> client = clientRepository.findById(address.getOwnerId());
+        if (client.isPresent()){
+            //client
+            return "redirect:/client/all";
+        }else{
+            return "redirect:/user/detail";
+        }
     }
 
     @RequestMapping(value = "/address/delete/{id}")
@@ -89,8 +100,11 @@ public class AddressController {
     public ModelAndView gibMeEditForm(@PathVariable String id, Model model){
         ModelAndView form = new ModelAndView("address/edit");
         Address address = addressRepository.findAddressByOwnerId(id);
-        Client client = clientRepository.findById(id).get();
-        model.addAttribute("client", client);
+        Optional<Client> client = clientRepository.findById(id);
+        if (client.isPresent()){
+            //client
+            model.addAttribute("client", client.get());
+        }
         model.addAttribute("address", address);
         model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("user", getCurrentLoggedUser());
@@ -105,6 +119,13 @@ public class AddressController {
         }
         addressRepository.save(address);
         msg = "Adresa s id: " + id + " byl uspesne editovan!";
-        return "redirect:/client/all";
+        Optional<Client> client = clientRepository.findById(address.getOwnerId());
+        if (client.isPresent()){
+            //client
+            return "redirect:/client/all";
+        }else{
+            return "redirect:/user/detail";
+        }
+
     }
 }

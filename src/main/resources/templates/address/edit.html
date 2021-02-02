@@ -33,7 +33,12 @@
         </div>
         <div>
             <button type="submit" class="btn btn-primary" style="margin-right: 5px">Ulozit</button>
-            <a href="/client/all" class="btn btn-success">Zpet</a>
+            <span th:if="${client == null}">
+                        <a th:href="@{/user/detail}" class="btn btn-success">Zpet</a>
+                        </span>
+            <span th:unless="${client == null}">
+                            <a th:href="@{/client/all}" class="btn btn-success">Zpet</a>
+                        </span>
         </div>
 
     </form>

@@ -82,6 +82,7 @@ public class UserController {
 
     @RequestMapping(value = "/user/detail")
     public String showMeUserDetail(Model model){
+        model.addAttribute("address", addressRepository.findAddressByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("user", getCurrentLoggedUser());
         model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
         return "user/detail";

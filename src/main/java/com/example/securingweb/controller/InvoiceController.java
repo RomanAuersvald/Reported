@@ -160,7 +160,8 @@ public class InvoiceController {
     public ResponseEntity<byte[]> getMePDF(@PathVariable String id, Model model){
         Invoice invoice = invoiceRepository.findById(id).get();
         Address address = addressRepository.findAddressByOwnerId(invoice.getClientId());
-        String filledHTML = invoiceService.parseThymeleafTemplate(invoice, address);
+        Address addressUser = addressRepository.findAddressByOwnerId(invoice.getUserId());
+        String filledHTML = invoiceService.parseThymeleafTemplate(invoice, address, addressUser);
 
         String outputFolder = System.getProperty("user.home") + File.separator + id + ".pdf";
         OutputStream outputStream = null;
