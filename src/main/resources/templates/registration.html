@@ -18,7 +18,7 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Surname</label>
-                <input type="text" th:field="*{lastName}" class="form-control" placeholder="Enter lastname">
+                <input type="text" th:field="*{lastName}" class="form-control" placeholder="Enter surname">
                 <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="alert alert-danger" role="alert">Surname was not set</p>
             </div>
             <div class="mb-3">
@@ -31,7 +31,7 @@
                 <input type="password" th:field="*{password}" class="form-control" placeholder="Password">
                 <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="alert alert-danger" role="alert">Password not set</p>
             </div>
-            <button type="submit" class="btn btn-primary">Sign In</button>
+            <button type="submit" class="btn btn-primary">Sign Up</button>
         </form>
     </div>
 <!--    <body>-->

@@ -58,29 +58,35 @@
                             User: <strong><span th:text="${user.username}"></span></strong>
                             <span th:if="${user.getRole() == 'PREMIUM'}"><i class="bi-check-circle-fill" style="font-size: 1rem; color: green;"></i></span>
                             <span th:unless="${user.getRole() == 'PREMIUM'}"><a th:href="@{/user/addPremium/{id}(id=${user.getId()})}"><i class="bi-check-circle" style="font-size: 1rem; color: green;"></i></a></span>
-                            (<small th:text="${user.getAuthorities()}"></small>)
+<!--                            (<small th:text="${user.getAuthorities()}"></small>)-->
                         </p>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard">
+                            <span data-feather="file"></span>
+                            <i class="bi-stack" style="font-size: 1.25rem; color: green;"></i>&nbsp;Home
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="/project/all">
                             <span data-feather="home"></span>
-                            My Projects <span class="badge bg-light text-danger" th:text="${#lists.size(projects)}"></span>
+                            <i class="bi bi-box" style="font-size: 1.25rem; color: green;"></i>&nbsp;My Projects <span class="badge bg-light text-danger" th:text="${#lists.size(projects)}"></span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/task/all">
                             <span data-feather="file"></span>
-                            All Tasks
+                            <i class="bi-clipboard-check" style="font-size: 1.25rem; color: green;"></i>&nbsp;All Tasks
                         </a>
                     </li>
                     <li class="nav-item" th:if="${user.getRole() == 'PREMIUM'}">
                         <a class="nav-link" href="/invoice/all">
-                            My invoices
+                            <i class="bi-file-earmark-text" style="font-size: 1.25rem; color: green;"></i>&nbsp;My invoices
                         </a>
                     </li>
                     <li class="nav-item" th:if="${user.getRole() == 'PREMIUM'}">
                         <a class="nav-link" href="/client/all">
-                            My Clients
+                            <i class="bi-people-fill" style="font-size: 1.25rem; color: green;"></i>&nbsp;My Clients
                         </a>
                     </li>
                 </ul>

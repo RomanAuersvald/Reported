@@ -15,7 +15,7 @@
     </div>
     <div th:switch="${#maps.size(tasks)}">
         <div th:case="0">
-            <h2>No tasks yet!</h2>
+            <h2 style="margin-top: 30px">No tasks yet!</h2>
             <h3>You have to create project before <a th:href="@{'/project/ad'}"><i class="bi-plus-circle" style="font-size: 3rem; color: forestgreen;"></i></a></h3>
         </div>
         <div th:case="*">
