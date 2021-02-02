@@ -24,6 +24,7 @@
                     <th>Name</th>
                     <th>Description</th>
                     <th>Status</th>
+                    <th>Marked</th>
                     <th>Info</th>
                     <th>Edit</th>
                     <th>Delete</th>
@@ -39,6 +40,10 @@
                         <span th:unless="${task.key.taskComplete() == true}">Pending</span>
                     </td>
 <!--                    <td th:text="${task.taskComplete()} ? 'Done' : 'Pending'"><td>-->
+                    <td>
+                        <span th:if="${task.key.taskComplete() == true}"><i class="bi-check-circle-fill" style="font-size: 1rem; color: green;"></i></span>
+                        <span th:unless="${task.key.taskComplete() == true}"><a th:href="@{/task/completed/{id}(id=${task.key.getId()})}"><i class="bi-check-circle" style="font-size: 1rem; color: orange;"></i></a></span>
+                    </td>
                     <td><a th:href="@{/task/detail/{id}(id=${task.key.getId()})}"><i class="bi-info-circle" style="font-size: 1rem; color: cornflowerblue;"></i></a></td>
                     <td><a th:href="@{/task/edit/{id}(id=${task.key.getId()})}"><i class="bi-pencil" style="font-size: 1rem; color: forestgreen;"></i></a></td>
                     <td><a th:href="@{/task/delete/{id}(id=${task.key.getId()})}"><i class="bi-x-circle-fill" style="font-size: 1rem; color: darkred;"></i></a></td>

@@ -111,8 +111,8 @@
 
                         <td>
                             Invoice #: <span th:text="${invoiceNumber}"></span><br></br>
-                            Created: <span th:text="${created}"></span><br></br>
-                            Due: <span th:text="${dueBy}"></span>
+                            Created: <span th:text="${created.toLocalDate()}"></span><br></br>
+                            Due: <span th:text="${dueBy.toLocalDate()}"></span>
                         </td>
                     </tr>
                 </table>

@@ -145,4 +145,12 @@ public class ProjectController {
         model.addAttribute("user", getCurrentLoggedUser());
         return form;
     }
+    @RequestMapping(value = "/project/completed/{id}")
+    public String markProjectAsCompleted(@PathVariable String id){
+        Project project = service.grabProjectId(id);
+        project.setProjectEnd(LocalDateTime.now());
+        service.saveProject(project);
+        msg = "Project s id " + id + " byl oznacen za hotovy.";
+        return "redirect:/project/detail/" + id;
+    }
 }
