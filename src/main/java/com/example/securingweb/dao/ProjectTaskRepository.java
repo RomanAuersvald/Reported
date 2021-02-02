@@ -13,4 +13,6 @@ public interface ProjectTaskRepository extends CrudRepository<ProjectTask, Strin
     Collection<ProjectTask> findProjectTasksByProjectId(String id);
 
     Collection<ProjectTask> findProjectTaskByProjectIdOrderByStartDateAsc(String id);
+
+    Collection<ProjectTask> findProjectTasksByProjectIdOrderByStartDateAsc(String id);
 }

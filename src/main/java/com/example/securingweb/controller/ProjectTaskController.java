@@ -15,10 +15,7 @@ package com.example.securingweb.controller;
 
         import javax.validation.Valid;
         import java.time.LocalDateTime;
-        import java.util.Collection;
-        import java.util.HashMap;
-        import java.util.Map;
-        import java.util.Optional;
+        import java.util.*;
 
 @Controller
 public class ProjectTaskController {
@@ -56,7 +53,13 @@ public class ProjectTaskController {
     @GetMapping("/task/all")
     public String showAllTasks(Model model){
 //        msg = "Test response msg.";
-        Collection<ProjectTask> tasks = ((Collection<ProjectTask>) repository.findAll());
+        Collection<Project> projects = projectRepository.findProjectsByOwnerIdOrderByProjectStart(getCurrentLoggedUser().getId());
+        Set<ProjectTask> tasks = new LinkedHashSet<>();
+        for (Project p : projects){
+            tasks.addAll(repository.findProjectTasksByProjectIdOrderByStartDateAsc(p.getId()));
+        }
+
+//        Collection<ProjectTask> tasks =  repository.findProjectTasksByProjectIdOrderByStartDateAsc(projectRepository.findProjectById(task.getP)); //.findAll());
         Map<ProjectTask, Project> tasksProject = new HashMap<>();
         for (ProjectTask task: tasks){
             String projId = task.getProjectId();

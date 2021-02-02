@@ -17,6 +17,7 @@ public interface ProjectRepository extends CrudRepository<Project, String> {
     long count();
 
     Collection<Project> findProjectsByOwnerId(String id);
+    Collection<Project> findProjectsByOwnerIdOrderByProjectStart(String id);
 
     Collection<Project> findProjectsByOwnerIdOrderByIdAsc(String id);
 

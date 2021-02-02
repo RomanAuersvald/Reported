@@ -73,7 +73,7 @@
                             All Tasks
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" th:if="${user.getRole() == 'PREMIUM'}">
                         <a class="nav-link" href="/invoice/all">
                             My invoices
                         </a>
