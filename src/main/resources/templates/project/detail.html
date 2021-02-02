@@ -59,7 +59,7 @@
             <span>You may want add one <a th:href="@{/task/ad/{id}(id=${project.getId()})}"><i class="bi-plus-circle" style="font-size: 1rem; color: forestgreen;"></i></a></span>
         </div>
         <div th:case="*">
-            <h2 style="margin-top: 30px" th:text="'Projektove ulohy(' + ${#lists.size(tasks)} + '):'"></h2>
+            <h2 style="margin-top: 30px" th:text="'Tasks(' + ${#lists.size(tasks)} + '):'"></h2>
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -100,7 +100,7 @@
             <span>You may want add one <a th:href="@{/invoice/ad/{id}(id=${project.getId()})}"><i class="bi-receipt" style="font-size: 1rem; color: purple;"></i></a></span>
         </div>
         <div th:case="*">
-            <h2 style="margin-top: 30px" th:text="'Projektove ulohy(' + ${#lists.size(invoices)} + '):'"></h2>
+            <h2 style="margin-top: 30px" th:text="'Invoices(' + ${#lists.size(invoices)} + '):'"></h2>
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -109,7 +109,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="invoice : ${invoices}">
-                    <td th:text="${invoice.project}"></td>
+                    <td th:text="${invoice.project.name}"></td>
                 </tr>
                 </tbody>
             </table>

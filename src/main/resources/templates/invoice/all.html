@@ -13,10 +13,10 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         <i class="fas fa-check-circle" style="color:green"></i><strong th:text="${msg}"></strong>
     </div>
-    <div th:switch="${invoices}">
-        <h2 th:case="null">No invoices yet!</h2>
+    <div th:switch="${#lists.size(invoices)}">
+        <h2 th:case="0" style="margin-top: 30px">No invoices yet!</h2>
         <div th:case="*">
-            <h2 style="margin-top: 30px">Invoices</h2><p><a th:href="@{'/invoice/ad'}" class="btn btn-outline-primary"><i class="bi bi-folder-plus" style="margin-right: 5px"></i>Add a new invoice</a></p>
+            <h2 style="margin-top: 30px">Invoices</h2>
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -25,6 +25,7 @@
                     <th>Company name</th>
                     <th>Due by</th>
                     <th>Created</th>
+                    <th>$$</th>
                     <th>PDF</th>
                     <th>Edit</th>
                     <th>Delete</th>
@@ -33,11 +34,13 @@
                 <tbody>
                 <tr th:each="invoice : ${invoices}">
                     <td th:text="${invoice.project.name}"></td>
+<!--                    <td th:text="${invoice.project.name}"><a th:href="@{/project/detail/{id}(id=${invoice.project.getId()})}"></a></td>-->
                     <td th:text="${invoice.client.getFirstName()}"></td>
                     <td th:text="${invoice.client.getCompanyName()}"></td>
-                    <td th:text="${invoice.dueBy}"></td>
-                    <td th:text="${invoice.created}"></td>
-                    <td><a th:href="@{/invoice/pdf/{id}(id=${invoice.getId()})}" th:target="_blank"><i class="bi-pencil" style="font-size: 1rem; color: forestgreen;"></i></a></td>
+                    <td th:text="${invoice.dueBy.toLocalDate()}"></td>
+                    <td th:text="${invoice.created.toLocalDate()}"></td>
+                    <td>100.0$</td>
+                    <td><a th:href="@{/invoice/pdf/{id}(id=${invoice.getId()})}" th:target="_blank"><i class="bi-file-earmark-check" style="font-size: 1rem; color: darkorange;"></i></a></td>
                     <td><a th:href="@{/invoice/edit/{id}(id=${invoice.getId()})}"><i class="bi-pencil" style="font-size: 1rem; color: forestgreen;"></i></a></td>
                     <td><a th:href="@{/invoice/delete/{id}(id=${invoice.getId()})}"><i class="bi-x-circle-fill" style="font-size: 1rem; color: darkred;"></i></a></td>
                 </tr>

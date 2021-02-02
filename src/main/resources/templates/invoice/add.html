@@ -9,29 +9,29 @@
 <body>
 
 <div layout:fragment="content" class="container">
-    <h2>Invoice</h2>
+    <h2 style="margin-top: 30px">Invoice</h2>
     <form th:action="@{/invoice/add}" th:object="${invoice}" method="post">
 
         <div class="form-group">
-            <label >Project name:</label>
+            <label>Project name:</label>
             <input type="text" th:field="*{project.name}" readonly class="form-control" placeholder="Name" >
         </div>
         <div class="form-group">
-            <label >Selected tasks:</label>
+            <label>Selected tasks:</label>
             <select th:field="*{taskIds}" multiple>
                 <option th:each="i : ${projectTasks}" th:value="${i.getId()}" th:text="${i.taskName}">
                 </option>
             </select>
         </div>
         <div class="form-group">
-            <label >Client:</label>
+            <label>Client:</label>
             <select th:field="*{clientId}">
                 <option th:each="i : ${clients}" th:value="${i.getId()}" th:text="${i.getCompanyName()}" selected>
                 </option>
             </select>
         </div>
         <div class="form-group">
-            <label >Due date:</label>
+            <label>Due date:</label>
             <input type="datetime-local" th:field="*{dueBy}" class="form-control" placeholder="due" >
         </div>
         <div class="form-group">

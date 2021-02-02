@@ -13,10 +13,10 @@
         <button type="button" class="close" data-dismiss="alert">&times;</button>
         <i class="fas fa-check-circle" style="color:green"></i><strong th:text="${msg}"></strong>
     </div>
-    <div th:switch="${clients}">
-        <h2 th:case="empty">No clients yet!</h2>
+    <div th:switch="${#lists.size(clients)}">
+        <h2 th:case="0" style="margin-top: 30px">No clients yet!</h2>
         <div th:case="*">
-            <h2>Clients</h2><p><a th:href="@{'/client/ad'}" class="btn btn-outline-primary"><i class="bi bi-folder-plus" style="margin-right: 5px"></i>Add a new client</a></p>
+            <h2 style="margin-top: 30px">Clients</h2><p><a th:href="@{'/client/ad'}" class="btn btn-outline-primary"><i class="bi bi-folder-plus" style="margin-right: 5px"></i>Add a new client</a></p>
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -42,7 +42,7 @@
                         <a th:href="@{/address/ad/{id}(id=${client.key.getId()})}"><i class="bi-plus-circle" style="font-size: 1rem; color: forestgreen;"></i></a>
                         </span>
                         <span th:unless="${client.value == false}">
-                            <a th:href="@{/address/edit/{id}(id=${client.key.getId()})}"><i class="bi-pencil" style="font-size: 1rem; color: forestgreen;"></i></a>
+                            <a th:href="@{/address/edit/{id}(id=${client.key.getId()})}"><i class="bi-house-door" style="font-size: 1rem; color: deepskyblue;"></i></a>
                         </span>
                     </td>
                     <td><a th:href="@{/client/edit/{id}(id=${client.key.getId()})}"><i class="bi-pencil" style="font-size: 1rem; color: forestgreen;"></i></a></td>

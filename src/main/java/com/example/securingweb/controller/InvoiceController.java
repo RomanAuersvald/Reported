@@ -24,6 +24,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class InvoiceController {
@@ -54,11 +57,25 @@ public class InvoiceController {
     @GetMapping("/invoice/all")
     public String showAllInvoices(Model model){
 //        msg = "Test response msg.";
+        Map<ProjectTask, Double> taskPrice = new HashMap<>();
+        Double totalPrice = 0.0;
+        Collection<Invoice> invoices = invoiceRepository.findAllByUserId(getCurrentLoggedUser().getId());
+        for (Invoice invoice : invoices){
+            Collection<ProjectTask> tasks = invoice.getTasks();
+            for (ProjectTask task : tasks){
+                Long duration = task.getTaskDuration();
+                Double hourRate = task.getHourRate();
+                Double price = hourRate * (duration / 3600);
+                taskPrice.put(task, price);
+                totalPrice += price;
+            }
+        }
+        model.addAttribute("price", taskPrice);
         model.addAttribute("msg", msg);
         model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("user", getCurrentLoggedUser());
         model.addAttribute("invoices", invoiceRepository.findAllByUserId(getCurrentLoggedUser().getId()));
-        return "invoice/allInvoices";
+        return "invoice/all";
     }
 
     // id - project id
@@ -78,7 +95,7 @@ public class InvoiceController {
         model.addAttribute("projectTasks", projectTaskRepository.findProjectTasksByProjectId(id));
         model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("user", getCurrentLoggedUser());
-        return "invoice/addInvoice";
+        return "invoice/add";
     }
 
     @RequestMapping(value = "/invoice/add", method = RequestMethod.POST)
@@ -86,7 +103,7 @@ public class InvoiceController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
             model.addAttribute("user", getCurrentLoggedUser());
-            return "invoice/addInvoice";
+            return "invoice/add";
         }
         invoice.setClient(clientRepository.findById(invoice.getClientId()).get());
         for (String task : invoice.getTaskIds()){
@@ -107,7 +124,7 @@ public class InvoiceController {
 
     @RequestMapping(value = "/invoice/edit/{id}")
     public ModelAndView gibMeEditForm(@PathVariable String id, Model model){
-        ModelAndView form = new ModelAndView("invoice/editInvoice");
+        ModelAndView form = new ModelAndView("invoice/edit");
 //        Project project = service.grabProjectId(id);
         Invoice invoice = invoiceRepository.findById(id).get();
         model.addAttribute("invoice", invoice);
@@ -167,7 +184,7 @@ public class InvoiceController {
     public String editProject(@PathVariable("id") String id, @Valid @ModelAttribute("invoice") Invoice invoice, BindingResult bindingResult, Model model){
         if (bindingResult.hasErrors()){
             invoice.setId(id);
-            return "invoice/editInvoice";
+            return "invoice/edit";
         }
         invoiceRepository.save(invoice);
         msg = "Invoice s id: " + id + " byl uspesne editovan!";
