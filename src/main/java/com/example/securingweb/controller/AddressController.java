@@ -29,19 +29,22 @@ public class AddressController {
     @Autowired
     private AddressRepository addressRepository;
 
+    @Autowired
+    private ClientRepository clientRepository;
+
     public AddressController(ProjectRepository repository) {
         this.repository = repository;
     }
 
-    @GetMapping("/address/all")
-    public String showAllProject(Model model){
-//        msg = "Test response msg.";
-        model.addAttribute("msg", msg);
-        model.addAttribute("addresses", addressRepository.findAddressByOwnerId(getCurrentLoggedUser().getId()));
-        model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
-        model.addAttribute("user", getCurrentLoggedUser());
-        return "address/allAddresses";
-    }
+//    @GetMapping("/address/all")
+//    public String showAllProject(Model model){
+////        msg = "Test response msg.";
+//        model.addAttribute("msg", msg);
+//        model.addAttribute("addresses", addressRepository.findAddressByOwnerId(getCurrentLoggedUser().getId()));
+//        model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
+//        model.addAttribute("user", getCurrentLoggedUser());
+//        return "address/allAddress";
+//    }
 
     // most mezi allProjects.html -> add project (addProject.html) -> metoda project/add dole
     @GetMapping("/address/ad")
@@ -59,6 +62,8 @@ public class AddressController {
     public String bringMeAdd(Model model, @PathVariable String id){
         Address ad = new Address();
         ad.setOwnerId(id);
+        Client client = clientRepository.findById(id).get();
+        model.addAttribute("client", client);
         model.addAttribute("address", ad);
         model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("user", getCurrentLoggedUser());
@@ -74,14 +79,14 @@ public class AddressController {
         }
         addressRepository.save(address);
         msg = "Adresa byl uspesne pridan!";
-        return "redirect:/address/all";
+        return "redirect:/client/all";
     }
 
     @RequestMapping(value = "/address/delete/{id}")
     public String deleteProject(@PathVariable String id) {
         addressRepository.deleteById(id);
         msg = "Adresa s id: " + id + " byl uspesne odstranen!";
-        return "redirect:/address/all";
+        return "redirect:/client/all";
     }
 
 
@@ -94,7 +99,9 @@ public class AddressController {
     @RequestMapping(value = "/address/edit/{id}")
     public ModelAndView gibMeEditForm(@PathVariable String id, Model model){
         ModelAndView form = new ModelAndView("address/editAddress");
-        Address address = addressRepository.findById(id).get();
+        Address address = addressRepository.findAddressByOwnerId(id);
+        Client client = clientRepository.findById(id).get();
+        model.addAttribute("client", client);
         model.addAttribute("address", address);
         model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("user", getCurrentLoggedUser());
@@ -109,6 +116,6 @@ public class AddressController {
         }
         addressRepository.save(address);
         msg = "Adresa s id: " + id + " byl uspesne editovan!";
-        return "redirect:/address/all";
+        return "redirect:/client/all";
     }
 }

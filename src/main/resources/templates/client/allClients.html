@@ -14,7 +14,7 @@
         <i class="fas fa-check-circle" style="color:green"></i><strong th:text="${msg}"></strong>
     </div>
     <div th:switch="${clients}">
-        <h2 th:case="null">No clients yet!</h2>
+        <h2 th:case="empty">No clients yet!</h2>
         <div th:case="*">
             <h2>Clients</h2><p><a th:href="@{'/client/ad'}" class="btn btn-outline-primary"><i class="bi bi-folder-plus" style="margin-right: 5px"></i>Add a new client</a></p>
             <table class="table table-striped">
@@ -25,22 +25,28 @@
                     <th>Company name</th>
                     <th>ICO</th>
                     <th>DIC</th>
-                    <th>Add address</th>
+                    <th>Manage Address</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="client : ${clients}">
-                    <td th:text="${client.getFirstName()}"></td>
-                    <td th:text="${client.getLastName()}"></td>
-                    <td th:text="${client.getCompanyName()}"></td>
-                    <td th:text="${client.getIco()}"></td>
-                    <td th:text="${client.getDic()}"></td>
-                    <td><a th:href="@{/address/ad/{id}(id=${client.getId()})}"><i class="bi-plus-circle" style="font-size: 1rem; color: forestgreen;"></i></a></td>
-                    <td><a href="#"><i class="bi-info-circle" style="font-size: 1rem; color: cornflowerblue;"></i></a></td>
-                    <td><a th:href="@{/client/edit/{id}(id=${client.getId()})}"><i class="bi-pencil" style="font-size: 1rem; color: forestgreen;"></i></a></td>
-                    <td><a th:href="@{/client/delete/{id}(id=${client.getId()})}"><i class="bi-x-circle-fill" style="font-size: 1rem; color: darkred;"></i></a></td>
+                <tr th:each="client, add : ${clientAddress}" th:with="progress=${client.value}">
+                    <td th:text="${client.key.getFirstName()}"></td>
+                    <td th:text="${client.key.getLastName()}"></td>
+                    <td th:text="${client.key.getCompanyName()}"></td>
+                    <td th:text="${client.key.getIco()}"></td>
+                    <td th:text="${client.key.getDic()}"></td>
+                    <td>
+                        <span th:if="${client.value == false}">
+                        <a th:href="@{/address/ad/{id}(id=${client.key.getId()})}"><i class="bi-plus-circle" style="font-size: 1rem; color: forestgreen;"></i></a>
+                        </span>
+                        <span th:unless="${client.value == false}">
+                            <a th:href="@{/address/edit/{id}(id=${client.key.getId()})}"><i class="bi-pencil" style="font-size: 1rem; color: forestgreen;"></i></a>
+                        </span>
+                    </td>
+                    <td><a th:href="@{/client/edit/{id}(id=${client.key.getId()})}"><i class="bi-pencil" style="font-size: 1rem; color: forestgreen;"></i></a></td>
+                    <td><a th:href="@{/client/delete/{id}(id=${client.key.getId()})}"><i class="bi-x-circle-fill" style="font-size: 1rem; color: darkred;"></i></a></td>
                 </tr>
                 </tbody>
             </table>
