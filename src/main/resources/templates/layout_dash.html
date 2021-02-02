@@ -78,7 +78,7 @@
                             My invoices
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" th:if="${user.getRole() == 'PREMIUM'}">
                         <a class="nav-link" href="/client/all">
                             My Clients
                         </a>
@@ -95,11 +95,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/user/edit">
                             Change details
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            Change password?
                         </a>
                     </li>
                 </ul>

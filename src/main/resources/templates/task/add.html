@@ -30,7 +30,7 @@
             <label>End date:</label>
             <input type="datetime-local" th:field="*{endDate}" class="form-control" placeholder="date of end">
         </div>
-        <div class="form-group">
+        <div class="form-group" th:if="${user.getRole() == 'PREMIUM'}" >
             <label>Hour rate:</label>
             <input type="number" th:field="*{hourRate}" class="form-control" placeholder="Hour rate">
         </div>

@@ -40,7 +40,7 @@
             <input type="number" th:field="*{estimatedHours}" class="form-control" placeholder="Estimated hours" >
             <p th:if="${#fields.hasErrors('estimatedHours')}" th:errors="*{estimatedHours}" class="alert alert-danger" role="alert">postCode was not set</p>
         </div>
-        <div class="form-group">
+        <div class="form-group" th:if="${user.getRole() == 'PREMIUM'}" >
             <label>Hour rate:</label>
             <input type="number" th:field="*{hourRate}" class="form-control" placeholder="Hour rate" >
         </div>
