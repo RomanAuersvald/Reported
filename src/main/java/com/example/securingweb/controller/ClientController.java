@@ -85,7 +85,7 @@ public class ClientController {
             return "client/add";
         }
         clientRepository.save(client);
-        msg = "Client byl uspesne pridan";
+        msg = "Client successfully added";
         Log notification = new Log(msg, getCurrentLoggedUser().getId(), 1, LocalDateTime.now());
         logRepository.save(notification);
         return "redirect:/client/all";
@@ -94,7 +94,7 @@ public class ClientController {
     @RequestMapping(value = "/client/delete/{id}")
     public String deleteProject(@PathVariable String id) {
         clientRepository.deleteById(id);
-        msg = "Client s id: " + id + " byl uspesne odstranen";
+        msg = "Client s id: " + id + " successfully deleted";
         Log notification = new Log(msg, getCurrentLoggedUser().getId(), 3, LocalDateTime.now());
         logRepository.save(notification);
         return "redirect:/client/all";
@@ -124,7 +124,7 @@ public class ClientController {
             return "client/edit";
         }
         clientRepository.save(client);
-        msg = "Client s id: " + id + " byl uspesne editovan";
+        msg = "Client s id: " + id + " successfully edited";
         Log notification = new Log(msg, getCurrentLoggedUser().getId(), 2, LocalDateTime.now());
         logRepository.save(notification);
         return "redirect:/client/all";

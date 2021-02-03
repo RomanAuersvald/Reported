@@ -9,7 +9,7 @@
 <body>
 
 <div layout:fragment="content" class="container">
-    <h2 style="margin-top: 30px">Nova Uloha</h2><hr>
+    <h2 style="margin-top: 30px">New task</h2><hr>
     <form th:action="@{/task/add}" th:object="${task}" method="post">
 
         <div class="form-group">
@@ -19,16 +19,16 @@
         </div>
         <div class="form-group">
             <label>Description:</label>
-            <input type="text" th:field="*{description}" class="form-control" placeholder="description">
+            <input type="text" th:field="*{description}" class="form-control" placeholder="Description">
         </div>
         <div class="form-group">
             <label>Start date:</label>
-            <input type="datetime-local" th:field="*{startDate}" class="form-control" placeholder="date of start">
+            <input type="datetime-local" th:field="*{startDate}" class="form-control" placeholder="Date of start">
             <p th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}" class="alert alert-danger" role="alert"></p>
         </div>
         <div class="form-group">
             <label>End date:</label>
-            <input type="datetime-local" th:field="*{endDate}" class="form-control" placeholder="date of end">
+            <input type="datetime-local" th:field="*{endDate}" class="form-control" placeholder="Date of end">
         </div>
         <div class="form-group" th:if="${user.getRole() == 'PREMIUM'}" >
             <label>Hour rate:</label>
@@ -37,8 +37,8 @@
         <div class="form-group">
         <input type="hidden" readonly class="form-control" th:field="*{projectId}">
         </div>
-        <button type="submit" class="btn btn-primary">Vytvorit ulohu</button>
-        <a href="/task/all" class="btn btn-success">Zpet</a>
+        <button type="submit" class="btn btn-primary">Create task</button>
+        <a href="/task/all" class="btn btn-success">Back</a>
     </form>
 </div>
 </body>

@@ -28,7 +28,7 @@ public class Invoice {
     private String projectId;
     @NotEmpty(message = "You need to select customer")
     private String clientId;
-    @NotEmpty(message = "You need to select at least one task yo")
+    @NotEmpty(message = "You need to select at least one task")
     private Collection<String> taskIds;
 
     // datum splatnosti

@@ -18,18 +18,18 @@
         <div class="form-group">
             <label>Name:</label>
             <input type="text" th:field="*{name}" class="form-control" placeholder="Name">
-            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="alert alert-danger" role="alert">postCode was not set</p>
+            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="alert alert-danger" role="alert"></p>
         </div>
 
         <div class="form-group">
             <label>Description:</label>
             <input type="text" th:field="*{description}" class="form-control" placeholder="Description">
-            <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="alert alert-danger" role="alert">postCode was not set</p>
+            <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="alert alert-danger" role="alert"></p>
         </div>
         <div class="form-group">
             <label>Start date:</label>
             <input type="datetime-local" th:field="*{projectStart}" class="form-control" placeholder="Start date">
-            <p th:if="${#fields.hasErrors('projectStart')}" th:errors="*{projectStart}" class="alert alert-danger" role="alert">postCode was not set</p>
+            <p th:if="${#fields.hasErrors('projectStart')}" th:errors="*{projectStart}" class="alert alert-danger" role="alert"></p>
         </div>
         <div class="form-group">
             <label>End date:</label>
@@ -38,7 +38,7 @@
         <div class="form-group">
             <label>Estimated budget:</label>
             <input type="number" th:field="*{estimatedHours}" class="form-control" placeholder="Estimated hours" >
-            <p th:if="${#fields.hasErrors('estimatedHours')}" th:errors="*{estimatedHours}" class="alert alert-danger" role="alert">postCode was not set</p>
+            <p th:if="${#fields.hasErrors('estimatedHours')}" th:errors="*{estimatedHours}" class="alert alert-danger" role="alert"></p>
         </div>
         <div class="form-group" th:if="${user.getRole() == 'PREMIUM'}" >
             <label>Hour rate:</label>
@@ -50,8 +50,8 @@
 <!--            <input type="text" th:field="*{ownerId}" class="form-control" >-->
 <!--        </div>-->
         <div>
-            <button type="submit" class="btn btn-primary" style="margin-right: 5px">Ulozit</button>
-            <a href="/project/all" class="btn btn-danger">Zrušit</a>
+            <button type="submit" class="btn btn-primary" style="margin-right: 5px">Save changes</button>
+            <a href="/project/all" class="btn btn-danger">Cancel</a>
         </div>
     </form>
 

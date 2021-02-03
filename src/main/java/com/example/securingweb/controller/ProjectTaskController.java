@@ -105,7 +105,7 @@ public class ProjectTaskController {
             System.out.println(duration);
         }
         repository.save(task);
-        msg = "Task byl uspesne pridan";
+        msg = "Task successfully added";
         Log notification = new Log(msg, getCurrentLoggedUser().getId(), 1, LocalDateTime.now());
         logRepository.save(notification);
         return "redirect:/task/all";
@@ -115,7 +115,7 @@ public class ProjectTaskController {
     public String deleteTask(@PathVariable String id) {
 //        repository.deleteById(id);
         service.deleteTask(id);
-        msg = "Task s id: " + id + " byl uspesne odstranen";
+        msg = "Task id: " + id + " successfully deleted";
         Log notification = new Log(msg, getCurrentLoggedUser().getId(), 3, LocalDateTime.now());
         logRepository.save(notification);
         return "redirect:/task/all";
@@ -147,7 +147,7 @@ public class ProjectTaskController {
             return "task/edit";
         }
         service.saveTask(task);
-        msg = "Task s id: " + id + " byl uspesne editovan";
+        msg = "Task id: " + id + " successfully edited";
         Log notification = new Log(msg, getCurrentLoggedUser().getId(), 2, LocalDateTime.now());
         logRepository.save(notification);
         return "redirect:/task/all";
@@ -168,7 +168,7 @@ public class ProjectTaskController {
         ProjectTask task = service.grabTaskId(id);
         task.setEndDate(LocalDateTime.now());
         service.saveTask(task);
-        msg = "Task s id: " + id + " byl oznacen za hotovy.";
+        msg = "Task id: " + id + " marked as done";
         Log notification = new Log(msg, getCurrentLoggedUser().getId(), 4, LocalDateTime.now());
         logRepository.save(notification);
         return "redirect:/task/all";

@@ -27,7 +27,7 @@
                     <th>Name</th>
                     <th>Description</th>
                     <th>Status</th>
-                    <th>Marked</th>
+                    <th>Closed</th>
                     <th>Info</th>
                     <th>Edit</th>
                     <th>Delete</th>
@@ -55,7 +55,7 @@
             </table>
         </div>
         <div th:if="${projectId != null}">
-            <p><a th:href="@{/task/ad/{id}(id=${projectId})}">Add a new task</a></p>
+            <p><a th:href="@{/task/ad/{id}(id=${projectId})}">Add new task</a></p>
         </div>
     </div>
 </div>

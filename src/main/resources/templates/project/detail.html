@@ -9,7 +9,7 @@
 <body>
 
 <div layout:fragment="content" class="container">
-    <h2 style="margin-top: 30px">Detail Projektu</h2><hr>
+    <h2 style="margin-top: 30px">Project detail</h2><hr>
     <form>
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Project name</label>
@@ -55,27 +55,27 @@
         </div>
     </form>
     <div>
-        <a th:href="@{/project/edit/{id}(id=${project.getId()})}" class="btn btn-outline-primary">Upravit projekt</a>
-        <a th:href="@{/project/delete/{id}(id=${project.getId()})}" class="btn btn-outline-danger">Smazat projekt</a>
+        <a th:href="@{/project/edit/{id}(id=${project.getId()})}" class="btn btn-outline-primary">Edit project</a>
+        <a th:href="@{/project/delete/{id}(id=${project.getId()})}" class="btn btn-outline-danger">Delete project</a>
         <a th:href="@{/project/completed/{id}(id=${project.getId()})}" class="btn btn-outline-dark">Complete project</a><br /><br />
-        <a th:href="@{/task/ad/{id}(id=${project.getId()})}" class="btn btn-outline-dark"><i class="bi-plus-circle" style="font-size: 1rem; color: forestgreen;"></i> Pridat Task</a>
-        <a th:if="${user.getRole() == 'PREMIUM'}"  th:href="@{/invoice/ad/{id}(id=${project.getId()})}" class="btn btn-outline-dark"><i class="bi-receipt" style="font-size: 1rem; color: purple;"></i> Vytvorit fakturu</a>
-        <a href="/project/all" class="btn btn-success">Zpet</a>
+        <a th:href="@{/task/ad/{id}(id=${project.getId()})}" class="btn btn-outline-dark"><i class="bi-plus-circle" style="font-size: 1rem; color: forestgreen;"></i>Add Task</a>
+        <a th:if="${user.getRole() == 'PREMIUM'}"  th:href="@{/invoice/ad/{id}(id=${project.getId()})}" class="btn btn-outline-dark"><i class="bi-receipt" style="font-size: 1rem; color: purple;"></i>Create invoice</a>
+        <a href="/project/all" class="btn btn-success">Back</a>
     </div>
     <div th:switch="${#lists.size(tasks)}">
         <div th:case="0">
             <h2 style="margin-top: 30px">No tasks yet!</h2>
-            <span>You may want add one <a th:href="@{/task/ad/{id}(id=${project.getId()})}"><i class="bi-plus-circle" style="font-size: 1rem; color: forestgreen;"></i></a></span>
+            <span>You may want to add one <a th:href="@{/task/ad/{id}(id=${project.getId()})}"><i class="bi-plus-circle" style="font-size: 1rem; color: forestgreen;"></i></a></span>
         </div>
         <div th:case="*">
             <h2 style="margin-top: 30px" th:text="'Tasks(' + ${#lists.size(tasks)} + '):'"></h2>
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Nazev</th>
-                    <th>Popis</th>
-                    <th>Zacatek</th>
-                    <th>Konec</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Start</th>
+                    <th>End</th>
                     <th>Status</th>
                     <th>Info</th>
                 </tr>
@@ -110,7 +110,7 @@
     <div th:if="${user.getRole() == 'PREMIUM'}"  th:switch="${#lists.size(invoices)}">
         <div th:case="0">
             <h2 style="margin-top: 30px">No invoices yet!</h2>
-            <span>You may want add one <a th:href="@{/invoice/ad/{id}(id=${project.getId()})}"><i class="bi-receipt" style="font-size: 1rem; color: purple;"></i></a></span>
+            <span>You may want to add one <a th:href="@{/invoice/ad/{id}(id=${project.getId()})}"><i class="bi-receipt" style="font-size: 1rem; color: purple;"></i></a></span>
         </div>
         <div th:case="*">
             <h2 style="margin-top: 30px" th:text="'Invoices(' + ${#lists.size(invoices)} + '):'"></h2>

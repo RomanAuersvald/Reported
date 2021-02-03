@@ -22,7 +22,7 @@
                 <option th:each="i : ${projectTasks}" th:value="${i.getId()}" th:text="${i.taskName}">
                 </option>
             </select>
-            <p th:if="${#fields.hasErrors('taskIds')}" th:errors="*{taskIds}" class="alert alert-danger" role="alert">firstName was not set</p>
+            <p th:if="${#fields.hasErrors('taskIds')}" th:errors="*{taskIds}" class="alert alert-danger" role="alert"></p>
         </div>
         <div class="form-group">
             <label>Client:</label>
@@ -30,12 +30,12 @@
                 <option th:each="i : ${clients}" th:value="${i.getId()}" th:text="${i.getCompanyName()}" selected>
                 </option>
             </select>
-            <p th:if="${#fields.hasErrors('clientId')}" th:errors="*{clientId}" class="alert alert-danger" role="alert">firstName was not set</p>
+            <p th:if="${#fields.hasErrors('clientId')}" th:errors="*{clientId}" class="alert alert-danger" role="alert"></p>
         </div>
         <div class="form-group">
             <label>Due date:</label>
-            <input type="datetime-local" th:field="*{dueBy}" class="form-control" placeholder="due" >
-            <p th:if="${#fields.hasErrors('dueBy')}" th:errors="*{dueBy}" class="alert alert-danger" role="alert">firstName was not set</p>
+            <input type="datetime-local" th:field="*{dueBy}" class="form-control" placeholder="Due date" >
+            <p th:if="${#fields.hasErrors('dueBy')}" th:errors="*{dueBy}" class="alert alert-danger" role="alert"></p>
         </div>
         <div class="form-group">
             <input type="hidden"  class="form-control" th:field="*{projectId}">

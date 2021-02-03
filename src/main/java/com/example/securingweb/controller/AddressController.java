@@ -73,7 +73,7 @@ public class AddressController {
             return "address/add";
         }
         addressRepository.save(address);
-        msg = "Adresa byla uspesne pridana";
+        msg = "Adress successfully added";
         Log notification = new Log(msg, getCurrentLoggedUser().getId(), 1, LocalDateTime.now());
         logRepository.save(notification);
         Optional<Client> client = clientRepository.findById(address.getOwnerId());
@@ -88,7 +88,7 @@ public class AddressController {
     @RequestMapping(value = "/address/delete/{id}")
     public String deleteProject(@PathVariable String id) {
         addressRepository.deleteById(id);
-        msg = "Adresa s id: " + id + " byla uspesne odstranena";
+        msg = "Adress id: " + id + "  successfully deleted";
         Log notification = new Log(msg, getCurrentLoggedUser().getId(), 3, LocalDateTime.now());
         logRepository.save(notification);
         return "redirect:/client/all";
@@ -123,7 +123,7 @@ public class AddressController {
             return "address/edit";
         }
         addressRepository.save(address);
-        msg = "Adresa s id: " + id + " byla uspesne editovana";
+        msg = "Adress s id: " + id + " successfully updated";
         Log notification = new Log(msg, getCurrentLoggedUser().getId(), 2, LocalDateTime.now());
         logRepository.save(notification);
         Optional<Client> client = clientRepository.findById(address.getOwnerId());

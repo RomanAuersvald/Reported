@@ -62,8 +62,8 @@ public class UserController {
             return "user/edit";
         }
         userRepository.save(user);
-        msg = "User s id: " + id + " byl uspesne editovan";
-        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 1, LocalDateTime.now());
+        msg = "User id: " + id + " successfully edited";
+        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 2, LocalDateTime.now());
         logRepository.save(notification);
         return "redirect:/user/detail"; // return to user detail
     }

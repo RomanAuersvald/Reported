@@ -16,7 +16,7 @@
     <div th:switch="${#lists.size(projects)}">
         <div th:case="0">
             <h2 style="margin-top: 30px">No projects yet!</h2>
-            <h3>You may want add one <a th:href="@{'/project/ad'}"><i class="bi-plus-circle" style="font-size: 3rem; color: forestgreen;"></i></a></h3>
+            <h3>You may want to add one <a th:href="@{'/project/ad'}"><i class="bi-plus-circle" style="font-size: 3rem; color: forestgreen;"></i></a></h3>
         </div>
         <div th:case="*">
             <h2 style="margin-top: 30px">Projects</h2><p><a th:href="@{'/project/ad'}" class="btn btn-outline-primary"><i class="bi bi-folder-plus" style="margin-right: 5px"></i>Add a new project</a></p>

@@ -72,7 +72,7 @@ public class ProjectController {
         }
         System.out.println(project);
         repository.save(project);
-        msg = "Projekt byl uspesne pridan";
+        msg = "Project successfully created";
         Log notification = new Log(msg, getCurrentLoggedUser().getId(), 1, LocalDateTime.now());
         logRepository.save(notification);
         return "redirect:/project/all";
@@ -82,7 +82,7 @@ public class ProjectController {
     public String addTestProject(Model model){
         ReportedUser user = getCurrentLoggedUser();
         Project project = new Project( "Projekt 1", "projekt o projektu", user.getId(), LocalDateTime.now());
-        msg = "Projeck byl uspesne pridan (Test)!";
+//        msg = "Projeck byl uspesne pridan (Test)!";
         model.addAttribute("msg", msg);
         model.addAttribute("project", project);
         model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
@@ -99,7 +99,7 @@ public class ProjectController {
             taskRepository.delete(task);
         }
         service.deleteProject(id);
-        msg = "Projekt s id: " + id + " byl uspesne odstranen";
+        msg = "Project id: " + id + " successfully deleted";
         Log notification = new Log(msg, getCurrentLoggedUser().getId(), 3, LocalDateTime.now());
         logRepository.save(notification);
         return "redirect:/project/all";
@@ -129,7 +129,7 @@ public class ProjectController {
             return "project/edit";
         }
         service.saveProject(project);
-        msg = "Projekt s id: " + id + " byl uspesne editovan";
+        msg = "Project id: " + id + " successfully edited";
         Log notification = new Log(msg, getCurrentLoggedUser().getId(), 2, LocalDateTime.now());
         logRepository.save(notification);
         return "redirect:/project/all";
@@ -153,7 +153,7 @@ public class ProjectController {
         Project project = service.grabProjectId(id);
         project.setProjectEnd(LocalDateTime.now());
         service.saveProject(project);
-        msg = "Project s id " + id + " byl oznacen za hotovy.";
+        msg = "Project id " + id + " marked as done.";
         Log notification = new Log(msg, getCurrentLoggedUser().getId(), 4, LocalDateTime.now());
         logRepository.save(notification);
         return "redirect:/project/detail/" + id;

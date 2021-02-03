@@ -46,7 +46,7 @@ public class Project {
 
     @NotEmpty(message = "Project name cannot be empty")
     private  String name;
-    @NotEmpty(message = "Project name cannot be empty")
+    @NotEmpty(message = "Project description cannot be empty")
     private  String description;
     private  String ownerId;
     @NotNull(message = "Fill estimated budget it will be cool")

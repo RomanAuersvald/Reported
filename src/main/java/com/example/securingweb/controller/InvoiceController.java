@@ -134,7 +134,7 @@ public class InvoiceController {
         }
         invoice.setCreated(LocalDateTime.now());
         invoiceRepository.save(invoice);
-        msg = "Invoice created";
+        msg = "Invoice successfully created";
         Log notification = new Log(msg, getCurrentLoggedUser().getId(), 1, LocalDateTime.now());
         logRepository.save(notification);
         return "redirect:/invoice/all";
@@ -143,7 +143,7 @@ public class InvoiceController {
     @RequestMapping(value = "/invoice/delete/{id}")
     public String deleteProject(@PathVariable String id) {
         invoiceRepository.deleteById(id);
-        msg = "Invoice s id: " + id + " byl uspesne odstranen";
+        msg = "Invoice s id: " + id + " successfully deleted";
         Log notification = new Log(msg, getCurrentLoggedUser().getId(), 3, LocalDateTime.now());
         logRepository.save(notification);
         return "redirect:/invoice/all";
@@ -218,7 +218,7 @@ public class InvoiceController {
             return "invoice/edit";
         }
         invoiceRepository.save(invoice);
-        msg = "Invoice s id: " + id + " byl uspesne editovan";
+        msg = "Invoice s id: " + id + " successfully edited";
         Log notification = new Log(msg, getCurrentLoggedUser().getId(), 2, LocalDateTime.now());
         logRepository.save(notification);
         return "redirect:/invoice/all";
