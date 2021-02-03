@@ -93,7 +93,7 @@ public class InvoiceController {
         invoice.setUserId(user.getId());
         List<ProjectTask> closedTasks = new ArrayList<ProjectTask>();
         for (ProjectTask task : projectTaskRepository.findProjectTasksByProjectId(id)){
-            if (task.taskComplete()){
+            if (task.taskComplete() && (task.getHourRate() != null)){
                 closedTasks.add(task);
             }
         }

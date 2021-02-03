@@ -47,13 +47,11 @@ public class RegistrationController {
         }
 
         if (bindingResult.hasErrors()) {
-            for (ObjectError error: bindingResult.getAllErrors()){
-                System.out.println(error);
-            }
+            model.addAttribute("user", user);
             model.addAttribute("login", user.getUsername());
             model.addAttribute("firstName", user.getFirstName());
             model.addAttribute("lastName", user.getLastName());
-            return "/registration";
+            return "/user/registration";
         }
 
         String encodedPassword = passwordEncoder.encode(user.getPassword());

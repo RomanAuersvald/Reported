@@ -37,6 +37,9 @@ public class ProjectController {
     @Autowired
     private LogRepository logRepository;
 
+    @Autowired
+    private AddressRepository addressRepository;
+
     public ProjectController(ProjectRepository repository) {
         this.repository = repository;
     }
@@ -44,6 +47,7 @@ public class ProjectController {
     @GetMapping("/project/all")
     public String showAllProject(Model model){
 //        msg = "";
+        model.addAttribute("address", addressRepository.findAddressByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("msg", msg);
         model.addAttribute("projects", repository.findProjectsByOwnerIdOrderByIdAsc(getCurrentLoggedUser().getId()));
         model.addAttribute("user", getCurrentLoggedUser());
@@ -141,6 +145,7 @@ public class ProjectController {
         Project project = service.grabProjectId(id);
         Collection<ProjectTask> tasks = taskRepository.findProjectTaskByProjectIdOrderByStartDateAsc(id);
         Collection<Invoice> invoices = invoiceRepository.findAllByProjectIdOrderByCreatedDesc(id);
+        model.addAttribute("address", addressRepository.findAddressByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("invoices", invoices);
         model.addAttribute("tasks", tasks);
         model.addAttribute("project", project);
