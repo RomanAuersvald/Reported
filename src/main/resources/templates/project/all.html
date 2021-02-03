@@ -20,6 +20,7 @@
         </div>
         <div th:case="*">
             <h2 style="margin-top: 30px">Projects</h2><p><a th:href="@{'/project/ad'}" class="btn btn-outline-primary"><i class="bi bi-folder-plus" style="margin-right: 5px"></i>Add a new project</a></p>
+            <div id="helper" class="form-text"><sup>To create invoice you have to have filled your address.</sup></div>
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -30,7 +31,7 @@
 <!--                    <th>Owner</th>-->
                     <th>Add task</th>
                     <th>Budget</th>
-                    <th th:if="${user.getRole() == 'PREMIUM'}">Invoice</th>
+                    <th th:if="${(user.getRole() == 'PREMIUM') && (address != null)}">Invoice</th>
                     <th>Info</th>
                     <th>Edit</th>
                     <th>Delete</th>
@@ -45,7 +46,7 @@
 <!--                    <td th:text="${project.ownerId}"></td>-->
                     <td><a th:href="@{/task/ad/{id}(id=${project.getId()})}"><i class="bi-plus-circle" style="font-size: 1rem; color: forestgreen;"></i></a></td>
                     <td th:text="${project.estimatedHours} + 'h'"></td>
-                    <td th:if="${user.getRole() == 'PREMIUM'}" ><a th:href="@{/invoice/ad/{id}(id=${project.getId()})}"><i class="bi-receipt" style="font-size: 1rem; color: purple;"></i></a></td>
+                    <td th:if="${(user.getRole() == 'PREMIUM') && (address != null)}" ><a th:href="@{/invoice/ad/{id}(id=${project.getId()})}"><i class="bi-receipt" style="font-size: 1rem; color: purple;"></i></a></td>
                     <td><a th:href="@{/project/detail/{id}(id=${project.getId()})}"><i class="bi-info-circle" style="font-size: 1rem; color: cornflowerblue;"></i></a></td>
                     <td><a th:href="@{/project/edit/{id}(id=${project.getId()})}"><i class="bi-pencil" style="font-size: 1rem; color: forestgreen;"></i></a></td>
                     <td><a th:href="@{/project/delete/{id}(id=${project.getId()})}"><i class="bi-x-circle-fill" style="font-size: 1rem; color: darkred;"></i></a></td>
