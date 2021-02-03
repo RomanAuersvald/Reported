@@ -74,8 +74,7 @@ public class InvoiceController {
         }
         model.addAttribute("price", taskPrice);
         model.addAttribute("msg", msg);
-        model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
-        model.addAttribute("user", getCurrentLoggedUser());
+        fillModel(model);
         model.addAttribute("invoices", invoiceRepository.findAllByUserIdOrderByIdAsc(getCurrentLoggedUser().getId()));
         return "invoice/all";
     }
@@ -107,6 +106,7 @@ public class InvoiceController {
         model.addAttribute("invoice", invoice);
         model.addAttribute("clients", clientsWithAddress);
         model.addAttribute("projectTasks", closedTasks);
+
         model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
         model.addAttribute("user", getCurrentLoggedUser());
         return "invoice/add";
@@ -121,11 +121,8 @@ public class InvoiceController {
                     closedTasks.add(task);
                 }
             }
-            ReportedUser user = getCurrentLoggedUser();
             model.addAttribute("projectTasks", closedTasks);
-            model.addAttribute("clients", clientRepository.findClientsByUserId(user.getId()));
-            model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
-            model.addAttribute("user", getCurrentLoggedUser());
+            fillModel(model);
             return "invoice/add";
         }
         invoice.setClient(clientRepository.findById(invoice.getClientId()).get());
@@ -155,11 +152,10 @@ public class InvoiceController {
 //        Project project = service.grabProjectId(id);
         Invoice invoice = invoiceRepository.findById(id).get();
         model.addAttribute("projectTasks", projectTaskRepository.findProjectTasksByProjectId(invoice.getProjectId()));
-        model.addAttribute("clients", clientRepository.findClientsByUserId(getCurrentLoggedUser().getId()));
+
         model.addAttribute("projectName", repository.findProjectById(invoice.getProjectId()).getName());
         model.addAttribute("invoice", invoice);
-        model.addAttribute("projects", repository.findProjectsByOwnerId(getCurrentLoggedUser().getId()));
-        model.addAttribute("user", getCurrentLoggedUser());
+        fillModel(model);
         return form;
     }
 
@@ -170,45 +166,21 @@ public class InvoiceController {
         Address addressUser = addressRepository.findAddressByOwnerId(invoice.getUserId());
         String filledHTML = invoiceService.parseThymeleafTemplate(invoice, address, addressUser);
 
-        String outputFolder = System.getProperty("user.home") + File.separator + id + ".pdf";
-        OutputStream outputStream = null;
-        try {
-            outputStream = new FileOutputStream(outputFolder);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        byte[] pdfContents = generetaPDF(filledHTML, invoice.getUserId());
+        if (pdfContents != null){
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.parseMediaType("application/pdf"));
+            String filename = id + ".pdf";
+            headers.add("content-disposition", "inline;filename=" + filename);
+            headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+            ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(
+                    pdfContents, headers, HttpStatus.OK);
+            return response;
+        }else{
+            ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(
+                    HttpStatus.BAD_REQUEST);
+            return response;
         }
-
-        ITextRenderer renderer = new ITextRenderer();
-        renderer.setDocumentFromString(filledHTML);
-        renderer.layout();
-        try {
-            renderer.createPDF(outputStream);
-        } catch (DocumentException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            outputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Path path = Paths.get(outputFolder);
-        byte[] pdfContents = null;
-        try {
-            pdfContents = Files.readAllBytes(path);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.parseMediaType("application/pdf"));
-        String filename = id + ".pdf";
-        headers.add("content-disposition", "inline;filename=" + filename);
-        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
-        ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(
-                pdfContents, headers, HttpStatus.OK);
-        return response;
     }
 
     @RequestMapping(value = "/invoice/update/{id}", method = RequestMethod.POST)
@@ -222,6 +194,45 @@ public class InvoiceController {
         Log notification = new Log(msg, getCurrentLoggedUser().getId(), 2, LocalDateTime.now());
         logRepository.save(notification);
         return "redirect:/invoice/all";
+    }
+
+    private byte[] generetaPDF(String forHTML, String userId){
+        String outputFolder = System.getProperty("user.home") + File.separator + userId + ".pdf";
+        OutputStream outputStream = null;
+        try {
+            outputStream = new FileOutputStream(outputFolder);
+        } catch (FileNotFoundException e) {
+            return null;
+        }
+
+        ITextRenderer renderer = new ITextRenderer();
+        renderer.setDocumentFromString(forHTML);
+        renderer.layout();
+        try {
+            renderer.createPDF(outputStream);
+        } catch (DocumentException e) {
+            return null;
+        }
+
+        try {
+            outputStream.close();
+        } catch (IOException e) {
+            return null;
+        }
+
+        Path path = Paths.get(outputFolder);
+        try {
+            return Files.readAllBytes(path);
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    private void fillModel(Model model){
+        ReportedUser user = getCurrentLoggedUser();
+        model.addAttribute("clients", clientRepository.findClientsByUserId(user.getId()));
+        model.addAttribute("projects", repository.findProjectsByOwnerId(user.getId()));
+        model.addAttribute("user", user);
     }
 
     private ReportedUser getCurrentLoggedUser(){
