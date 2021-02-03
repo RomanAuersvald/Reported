@@ -26,13 +26,18 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Task Start</label>
             <div class="col-sm-10">
-                <input type="text" readonly class="form-control-plaintext" th:value="${task.startDate.toLocalDate()}">
+                <input type="text" readonly class="form-control-plaintext" th:value="${task.startDate.toLocalDate() + ' ' + task.startDate.toLocalTime()}">
             </div>
         </div>
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Task End</label>
             <div class="col-sm-10">
-                <input type="text" readonly class="form-control-plaintext" th:value="${task.endDate}">
+                <span th:if="${task.endDate != null}">
+                    <input type="text" readonly class="form-control-plaintext" th:value="${task.endDate.toLocalDate() + ' ' + task.endDate.toLocalTime()}">
+                </span>
+                <span th:unless="${task.endDate != null}">
+                    <input type="text" readonly class="form-control-plaintext" th:value="${task.endDate}">
+                </span>
             </div>
         </div>
         <div class="form-group row" th:if="${user.getRole() == 'PREMIUM'}" >

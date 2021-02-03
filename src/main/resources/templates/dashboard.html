@@ -27,7 +27,7 @@
                 <div class="row">
                     <div class="col-md-6" th:each="project, stats : ${projectsProgress}" th:with="progress=${project.value}">
                         <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-                            <div class="col p-4 d-flex flex-column position-static text-nowrap">
+                            <div class="col p-4 d-flex flex-column position-static">
                                 <div><span th:if="${project.key.projectEnd != null}" style="white-space:nowrap;"><i class="bi-check-circle-fill" style="font-size: 1rem; color: green;margin-right: 5px"></i></span><strong class="d-inline-block mb-2 text-primary" th:text="'~' + ${project.key.estimatedHours} + ' hours'"></strong></div>
                                 <a th:href="@{/project/detail/{id}(id=${project.key.getId()})}"><h3 class="mb-0" th:text="${project.key.name}" style="margin-right: 18px;"></h3></a>
                                 <div class="mb-1 text-muted" th:text="${project.key.projectStart.toLocalDate()}"></div>
