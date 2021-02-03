@@ -24,6 +24,7 @@
                 <thead>
                 <tr>
 <!--                    <th>ID</th>-->
+                    <th></th>
                     <th>Name</th>
                     <th>ProjectStart</th>
                     <th>Description</th>
@@ -39,6 +40,7 @@
                 <tbody>
                 <tr th:each="project : ${projects}">
 <!--                    <td th:text="${project.getId()}"></td>-->
+                    <td><span th:if="${project.projectEnd != null}" style="white-space:nowrap;"><i class="bi-check-circle-fill" style="font-size: 1rem; color: green; margin-left: 15px"></i></span></td>
                     <td th:text="${project.name}"></td>
                     <td th:text="${project.projectStart.toLocalDate()}"></td>
                     <td th:text="${project.description}"></td>

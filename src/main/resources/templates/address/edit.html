@@ -9,8 +9,8 @@
 <body>
 
 <div layout:fragment="content" class="container">
-    <h2><span th:if="${client != null}" th:text="${client.companyName}"></span> Address</h2>
-    <h2><span th:if="${client == null}" th:text="${user.getNiceNameAndLastname()}"></span> Address</h2>
+    <h2 th:if="${client != null}" style="margin-top: 30px">Edit Address for: <span th:text="${client.companyName}"></span></h2>
+    <h2 th:if="${client == null}" style="margin-top: 30px">Edit Address for: <span th:text="${user.getNiceNameAndLastname()}"></span></h2>
     <form th:action="@{/address/update/{id}(id=${address.id})}" th:object="${address}" method="post">
 
         <div class="form-group">
@@ -33,12 +33,8 @@
         </div>
         <div>
             <button type="submit" class="btn btn-primary" style="margin-right: 5px">Save</button>
-            <span th:if="${client == null}">
-                        <a th:href="@{/user/detail}" class="btn btn-success">Back</a>
-                        </span>
-            <span th:unless="${client == null}">
-                            <a th:href="@{/client/all}" class="btn btn-success">Back</a>
-                        </span>
+            <span th:if="${client == null}"><a th:href="@{/user/detail}" class="btn btn-success">Back</a></span>
+            <span th:unless="${client == null}"><a th:href="@{/client/all}" class="btn btn-success">Back</a></span>
         </div>
 
     </form>
