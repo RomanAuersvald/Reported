@@ -22,7 +22,7 @@
                 <option th:each="i : ${projectTasks}" th:value="${i.getId()}" th:text="${i.taskName}">
                 </option>
             </select>
-            <div id="helper" class="form-text"><sup>For task to appear here you need to close it first.</sup></div>
+            <div id="helper" class="form-text"><sup>For task to appear here you need to close it first and set hour rate.</sup></div>
             <p th:if="${#fields.hasErrors('taskIds')}" th:errors="*{taskIds}" class="alert alert-danger" role="alert">firstName was not set</p>
         </div>
         <div class="form-group">
