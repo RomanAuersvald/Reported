@@ -45,10 +45,10 @@
     <div>
         <a href="/user/detail" class="btn btn-success">Back</a>
         <a href="/user/edit" class="btn btn-outline-warning">Edit</a>
-        <span th:if="${address == null}">
+        <span  th:if="${(address == null) && (user.getRole() == 'PREMIUM') }">
                         <a th:href="@{/address/ad/{id}(id=${user.getId()})}" class="btn btn-outline-warning">Add address</a>
                         </span>
-        <span th:unless="${address == null}">
+        <span  th:unless="${address == null}">
                             <a th:href="@{/address/edit/{id}(id=${user.getId()})}" class="btn btn-outline-warning"> Edit address</a>
                         </span>
     </div>
