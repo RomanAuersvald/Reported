@@ -10,7 +10,7 @@
 
 <div layout:fragment="content" class="container">
     <h2 style="margin-top: 30px">Project detail</h2>
-    <div id="helper" class="form-text"><sup>To create invoice you have to have filled your address.</sup></div><hr>
+    <div th:if="${user.getRole() == 'PREMIUM'}" id="helper" class="form-text"><sup>To create invoice you have to have filled your address.</sup></div><hr>
 
     <form>
         <div class="form-group row">
