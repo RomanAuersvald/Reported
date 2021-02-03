@@ -20,7 +20,7 @@
         </div>
         <div th:case="*">
             <h2 style="margin-top: 30px">Projects</h2><p><a th:href="@{'/project/ad'}" class="btn btn-outline-primary"><i class="bi bi-folder-plus" style="margin-right: 5px"></i>Add a new project</a></p>
-            <div id="helper" class="form-text"><sup>To create invoice you have to have filled your address.</sup></div>
+            <div th:if="${user.getRole() == 'PREMIUM'}" id="helper" class="form-text"><sup>To create invoice you have to have filled your address.</sup></div>
             <table class="table table-striped">
                 <thead>
                 <tr>
