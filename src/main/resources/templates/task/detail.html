@@ -5,6 +5,16 @@
        xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Reported - Dashboard</title>
+
+    <script src="https://cdn.tiny.cloud/1/0eyt8a9t95q9tc7bp9r36u1vm85vxjisnjbarbrhvrawlsyn/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+    <script>
+        tinymce.init({
+            selector: 'textarea#editor',
+            menubar: false,
+            readonly: 1
+        });
+    </script>
 </head>
 <body>
 
@@ -12,38 +22,48 @@
     <h2 style="margin-top: 30px">Task detail</h2><hr>
     <form>
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Task name</label>
-            <div class="col-sm-10">
-                <input type="text" readonly class="form-control-plaintext" th:value="${task.taskName}">
+            <div class="col-sm-6">
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Task name</label>
+                    <div class="col-sm-8">
+                        <input type="text" readonly class="form-control-plaintext" th:value="${task.taskName}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Short Description</label>
+                    <div class="col-sm-8">
+                        <input type="text" readonly class="form-control-plaintext" th:value="${task.shortDescription}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Task Start</label>
+                    <div class="col-sm-8">
+                        <input type="text" readonly class="form-control-plaintext" th:value="${task.startDate.toLocalDate() + ' ' + task.startDate.toLocalTime()}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Task End</label>
+                    <div class="col-sm-8">
+                        <span th:if="${task.endDate != null}">
+                            <input type="text" readonly class="form-control-plaintext" th:value="${task.endDate.toLocalDate() + ' ' + task.endDate.toLocalTime()}">
+                        </span>
+                        <span th:unless="${task.endDate != null}">
+                            <input type="text" readonly class="form-control-plaintext" th:value="${task.endDate}">
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group row" th:if="${user.getRole() == 'PREMIUM'}" >
+                    <label class="col-sm-4 col-form-label">Hour Rate</label>
+                    <div class="col-sm-8">
+                        <input type="text" readonly class="form-control-plaintext" th:value="${task.hourRate}">
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Description</label>
-            <div class="col-sm-10">
-                <input type="text" readonly class="form-control-plaintext" th:value="${task.description}">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Task Start</label>
-            <div class="col-sm-10">
-                <input type="text" readonly class="form-control-plaintext" th:value="${task.startDate.toLocalDate() + ' ' + task.startDate.toLocalTime()}">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Task End</label>
-            <div class="col-sm-10">
-                <span th:if="${task.endDate != null}">
-                    <input type="text" readonly class="form-control-plaintext" th:value="${task.endDate.toLocalDate() + ' ' + task.endDate.toLocalTime()}">
-                </span>
-                <span th:unless="${task.endDate != null}">
-                    <input type="text" readonly class="form-control-plaintext" th:value="${task.endDate}">
-                </span>
-            </div>
-        </div>
-        <div class="form-group row" th:if="${user.getRole() == 'PREMIUM'}" >
-            <label class="col-sm-2 col-form-label">Hour Rate</label>
-            <div class="col-sm-10">
-                <input type="text" readonly class="form-control-plaintext" th:value="${task.hourRate}">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Description:</label>
+                    <textarea id="editor" th:field="*{task.description}" class="form-control"></textarea>
+                </div>
             </div>
         </div>
     </form>

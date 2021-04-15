@@ -5,6 +5,15 @@
        xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Reported - Dashboard</title>
+
+    <script src="https://cdn.tiny.cloud/1/0eyt8a9t95q9tc7bp9r36u1vm85vxjisnjbarbrhvrawlsyn/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+    <script>
+        tinymce.init({
+            selector: 'textarea#editor',
+            menubar: false
+        });
+    </script>
 </head>
 <body>
 
@@ -18,8 +27,12 @@
             <p th:if="${#fields.hasErrors('taskName')}" th:errors="*{taskName}" class="alert alert-danger" role="alert"></p>
         </div>
         <div class="form-group">
+            <label>Short Description:</label>
+            <input type="text" th:field="*{shortDescription}" class="form-control" placeholder="Short Description">
+        </div>
+        <div class="form-group">
             <label>Description:</label>
-            <input type="text" th:field="*{description}" class="form-control" placeholder="Description">
+            <textarea id="editor" th:field="*{description}" class="form-control"></textarea>
         </div>
         <div class="form-group">
             <label>Start date:</label>

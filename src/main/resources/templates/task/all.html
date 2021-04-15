@@ -37,7 +37,7 @@
                 <tr th:each="task, proj : ${tasks}" th:with="progress=${task.value}">
                     <td th:text="${task.value.getName()}"></td>
                     <td th:text="${task.key.taskName}"></td>
-                    <td th:text="${task.key.description}"></td>
+                    <td th:text="${task.key.shortDescription}"></td>
                     <td>
                         <span th:if="${task.key.taskComplete() == true}">Done</span>
                         <span th:unless="${task.key.taskComplete() == true}">Pending</span>

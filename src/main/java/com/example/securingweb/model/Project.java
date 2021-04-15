@@ -48,6 +48,8 @@ public class Project {
     private  String name;
     @NotEmpty(message = "Project description cannot be empty")
     private  String description;
+    // tiny mce rich boi
+    private String longDescription;
     private  String ownerId;
     @NotNull(message = "Fill estimated budget it will be cool")
     private Double estimatedHours;
@@ -59,6 +61,13 @@ public class Project {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime projectEnd;
 
+    public String getLongDescription() {
+        return longDescription;
+    }
+
+    public void setLongDescription(String longDescription) {
+        this.longDescription = longDescription;
+    }
 
     public Double getHourRate() {
         return hourRate;

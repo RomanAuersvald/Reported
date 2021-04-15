@@ -43,9 +43,17 @@ public class ProjectTask {
     public void setDescription(String description) {
         this.description = description;
     }
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
+    }
     @NotEmpty(message = "Just fill that name, it will be easier to recognize this task.")
     private String taskName;
     private String description;
+    private String shortDescription;
     private String projectId;
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
