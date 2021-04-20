@@ -5,6 +5,7 @@
        xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Reported - Dashboard</title>
+    <script th:src="@{/client/ARESClientFiller.js}" type="text/javascript"></script>
 </head>
 <body>
 
@@ -14,28 +15,34 @@
 
         <div class="form-group">
             <label >Name:</label>
-            <input type="text" th:field="*{firstName}" class="form-control" placeholder="First name" >
+            <input id="firstName" type="text" th:field="*{firstName}" class="form-control" placeholder="First name" >
             <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="alert alert-danger" role="alert"></p>
         </div>
         <div class="form-group">
             <label >Last name:</label>
-            <input type="text" th:field="*{lastName}" class="form-control" placeholder="Last name" >
+            <input id="lastName" type="text" th:field="*{lastName}" class="form-control" placeholder="Last name" >
             <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="alert alert-danger" role="alert"></p>
         </div>
         <div class="form-group">
             <label >Company name:</label>
-            <input type="text" th:field="*{companyName}" class="form-control" placeholder="Company name" >
-            <p th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}" class="alert alert-danger" role="alert">companyName was not set</p>
+            <input id="companyName" type="text" th:field="*{companyName}" class="form-control" placeholder="Company name" >
+            <p th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}" class="alert alert-danger" role="alert"></p>
         </div>
         <div class="form-group">
             <label >ICO:</label>
-            <input type="text" th:field="*{ico}" class="form-control" placeholder="ICO code" >
-            <p th:if="${#fields.hasErrors('ico')}" th:errors="*{ico}" class="alert alert-danger" role="alert">ico was not set</p>
+            <div class="input-group">
+                <input type="text" th:field="*{ico}" class="form-control" placeholder="ICO code" id="ico">
+                <p th:if="${#fields.hasErrors('ico')}" th:errors="*{ico}" class="alert alert-danger" role="alert"></p>
+                <p class="invalid-tooltip" id="icoWarning" style="display:none">Check ICO format and length. Should be 8 numbers.</p>
+                <span class="input-group-btn">
+                <button class="btn btn-outline-secondary" type="button" th:onclick="verifyClient()">ARES verify</button>
+                </span>
+            </div><!-- /input-group -->
         </div>
         <div class="form-group">
             <label >DIC:</label>
-            <input type="text" th:field="*{dic}" class="form-control" placeholder="DIC code" >
-            <p th:if="${#fields.hasErrors('dic')}" th:errors="*{dic}" class="alert alert-danger" role="alert">dic was not set</p>
+            <input id="dic" type="text" th:field="*{dic}" class="form-control" placeholder="DIC code" >
+            <p th:if="${#fields.hasErrors('dic')}" th:errors="*{dic}" class="alert alert-danger" role="alert">/p>
         </div>
         <div class="form-group">
             <input type="hidden" th:field="*{userId}" class="form-control"  >
@@ -43,5 +50,6 @@
         <button type="submit" class="btn btn-primary">Add new client</button>
     </form>
 </div>
+
 </body>
 </html>

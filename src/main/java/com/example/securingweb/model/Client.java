@@ -81,8 +81,15 @@ public class Client {
     }
 
 
+    public Client(ARESClient client) {
+        setFirstName(" ");
+        setLastName(" ");
+        setDic("CZ" + client.getICO()); // opravdu to tak funguje??????
+        setIco(client.getICO());
+        setCompanyName(client.getCompanyName());
+    }
 
+    public Client() {
 
-
-
+    }
 }
