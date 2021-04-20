@@ -58,4 +58,13 @@ public class Address {
     private String postCode;
     private String ownerId; // client or user
 
+    public Address(){
+
+    }
+    public Address(ARESClient client){
+        this.city = client.getCityName();;
+        this.street = client.getStreetName();
+        this.postCode = String.valueOf(client.getPSC());
+    }
+
 }

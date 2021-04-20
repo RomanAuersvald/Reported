@@ -40,5 +40,33 @@ function verifyClient() {
     }else{
         $('#icoWarning').show();
     }
+}
 
+function fillClientAddress(){
+    let employeeId = $('#clientICO').val();
+    let url = "./getClientAddressFromICO/" + employeeId;
+    $.get(url, getClientAddressInfo);
+}
+
+//from the ajax call
+function getClientAddressInfo(data) {
+    $('#addressWarning').hide();
+    let status = data.responseStatus;
+
+    //check the response to make sure it's ok
+    if (status == "Ok") {
+        let response = data.response;
+
+        //get the JSON data
+        let street = response.street;
+        let city = response.city;
+        let postCode = response.postCode;
+
+        //set the input field values
+        $('#street').val(street);
+        $('#city').val(city);
+        $('#postCode').val(postCode);
+    }else{
+        $('#addressWarning').show();
+    }
 }

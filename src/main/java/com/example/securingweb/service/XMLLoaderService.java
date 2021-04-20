@@ -43,9 +43,9 @@ public class XMLLoaderService {
     public Optional<ARESClient> loadDataFor( String fromURL){
 
         String xmlData = restTemplate.getForObject(fromURL, String.class);
-
         Reader reader = new StringReader(xmlData);
         XMLStreamReader xmlReader = null;
+
         try {
             xmlReader = factory.createXMLStreamReader(reader);
         } catch (XMLStreamException e) {

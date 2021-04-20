@@ -78,6 +78,15 @@ public class ARESClient {
     public Integer getPocetZaznamu(){
         return this.Odpoved.Pocet_zaznamu;
     }
+    public String getStreetName(){
+        return this.Odpoved.Zaznam.Identifikace.Adresa_ARES.Nazev_ulice;
+    }
+    public Integer getPSC(){
+        return this.Odpoved.Zaznam.Identifikace.Adresa_ARES.PSC;
+    }
+    public String getCityName(){
+        return this.Odpoved.Zaznam.Identifikace.Adresa_ARES.Nazev_obce;
+    }
 
 }
 

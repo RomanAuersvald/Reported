@@ -5,6 +5,7 @@
        xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Reported - Dashboard</title>
+    <script th:src="@{/client/ARESClientFiller.js}" type="text/javascript"></script>
 </head>
 <body>
 
@@ -15,25 +16,28 @@
 
         <div class="form-group">
             <label >Street:</label>
-            <input type="text" th:field="*{street}" class="form-control" placeholder="Street name" >
+            <input type="text" th:field="*{street}" class="form-control" placeholder="Street name" id="street">
             <p th:if="${#fields.hasErrors('street')}" th:errors="*{street}" class="alert alert-danger" role="alert">Street was not set</p>
         </div>
         <div class="form-group">
             <label >City:</label>
-            <input type="text" th:field="*{city}" class="form-control" placeholder="City" >
+            <input type="text" th:field="*{city}" class="form-control" placeholder="City" id="city">
             <p th:if="${#fields.hasErrors('city')}" th:errors="*{city}" class="alert alert-danger" role="alert">City was not set</p>
         </div>
         <div class="form-group">
             <label >Post code:</label>
-            <input type="text" th:field="*{postCode}" class="form-control" placeholder="Post code" >
+            <input type="text" th:field="*{postCode}" class="form-control" placeholder="Post code" id="postCode">
             <p th:if="${#fields.hasErrors('postCode')}" th:errors="*{postCode}" class="alert alert-danger" role="alert">Postcode was not set</p>
         </div>
         <div class="form-group">
             <input type="hidden" readonly class="form-control" th:value="*{ownerId}"name="ownerId">
+            <input type="hidden" readonly class="form-control" th:value="${client.ico}"id="clientICO">
         </div>
+        <p class="invalid-tooltip" id="addressWarning" style="display:none">Could not load ARES info. Sorry. :(</p>
         <button type="submit" class="btn btn-primary">Add new address</button>
         <span th:if="${client == null}"><a th:href="@{/user/detail}" class="btn btn-success">Back</a></span>
         <span th:unless="${client == null}"><a th:href="@{/client/all}" class="btn btn-success">Back</a></span>
+        <span th:if="${client.getIco() != null && client.getIco().length() == 8}"><a th:onclick="fillClientAddress()" class="btn btn-success">Fill from ARES</a></span>
     </form>
 </div>
 </body>
