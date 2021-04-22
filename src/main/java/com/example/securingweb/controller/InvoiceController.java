@@ -64,7 +64,7 @@ public class InvoiceController {
         for (Invoice invoice : invoices){
             Collection<ProjectTask> tasks = invoice.getTasks();
             for (ProjectTask task : tasks){
-                Long duration = task.getTaskDuration();
+                Long duration = task.returnTaskDuration();
                 Double hourRate = task.getHourRate();
                 Double price = hourRate * (duration / 3600);
                 totalPrice += price;

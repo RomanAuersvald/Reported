@@ -101,7 +101,7 @@ public class ProjectTaskController {
         }
 //        System.out.println(project);
         if (task.taskComplete()){
-            Long duration = task.getTaskDuration();
+            Long duration = task.returnTaskDuration();
             System.out.println(duration);
         }
         repository.save(task);

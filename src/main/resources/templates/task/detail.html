@@ -15,6 +15,15 @@
             readonly: 1
         });
     </script>
+    <script th:src="@{/task/TaskEventHandler.js}" type="text/javascript"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        var taskID = /*[[${task.getId()}]]*/ '0';
+        console.log(taskID);
+
+        /*]]>*/
+    </script>
 </head>
 <body>
 
@@ -68,6 +77,12 @@
         </div>
     </form>
     <div>
+         <span th:if="${task.hasOngoingEntry() == false}">
+             <button class="btn btn-outline-secondary" type="button" th:onclick="startTaskEntry()" >Start</button>
+         </span>
+        <span th:unless="${task.hasOngoingEntry() == false}">
+            <button class="btn btn-outline-secondary" type="button" th:onclick="endTaskEntry()" >Stop</button>
+        </span>
         <a th:href="@{/task/edit/{id}(id=${task.getId()})}" class="btn btn-outline-primary">Edit task</a>
         <a th:href="@{/task/delete/{id}(id=${task.getId()})}" class="btn btn-outline-danger">Delete task</a>
         <a href="/task/all" class="btn btn-success">Back</a>

@@ -40,7 +40,7 @@ public class InvoiceService {
         Map<ProjectTask, Double> taskPrice = new HashMap<>();
         Double totalPrice = 0.0;
         for (ProjectTask task: invoice.getTasks()){
-            Long duration = task.getTaskDuration();
+            Long duration = task.returnTaskDuration();
             Double hourRate = task.getHourRate();
             Double price = hourRate * (duration / 3600);
             taskPrice.put(task, price);

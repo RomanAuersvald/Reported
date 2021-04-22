@@ -7,6 +7,7 @@ public class RestResponse {
     
     private String responseStatus;
     private Object response;
+    private ComplexResult complexResponse;
     
     public String getResponseStatus() {
         return responseStatus;
@@ -20,4 +21,10 @@ public class RestResponse {
     public void setResponse(Object response) {
         this.response = response;
     }
+
+    public void setComplexResponse(ComplexResult response) {
+        this.complexResponse = response;
+    }
+
+
 }

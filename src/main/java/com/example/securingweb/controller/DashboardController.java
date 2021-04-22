@@ -52,7 +52,7 @@ public class DashboardController {
             Double seconds = 0.0;
             for(ProjectTask task : projectTasks){
                 if (task.taskComplete()){
-                    seconds += task.getTaskDuration();
+                    seconds += task.returnTaskDuration();
                 }
             }
             Double hours = seconds / 3600;
