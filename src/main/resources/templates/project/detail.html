@@ -81,8 +81,8 @@
         <a th:href="@{/project/edit/{id}(id=${project.getId()})}" class="btn btn-outline-primary">Edit project</a>
         <a th:href="@{/project/delete/{id}(id=${project.getId()})}" class="btn btn-outline-danger">Delete project</a>
         <a th:href="@{/project/completed/{id}(id=${project.getId()})}" class="btn btn-outline-dark">Complete project</a><br /><br />
-        <a th:href="@{/task/ad/{id}(id=${project.getId()})}" class="btn btn-outline-dark"><i class="bi-plus-circle" style="font-size: 1rem; color: forestgreen;"></i>Add Task</a>
-        <a th:if="${(user.getRole() == 'PREMIUM') && (address != null)}"  th:href="@{/invoice/ad/{id}(id=${project.getId()})}" class="btn btn-outline-dark"><i class="bi-receipt" style="font-size: 1rem; color: purple;"></i>Create invoice</a>
+        <a th:href="@{/task/ad/{id}(id=${project.getId()})}" class="btn btn-outline-dark"><i class="bi-plus-circle" style="font-size: 1rem; color: forestgreen;margin-right: 3px;"></i>Add Task</a>
+        <a th:if="${(user.getRole() == 'PREMIUM') && (address != null)}"  th:href="@{/invoice/ad/{id}(id=${project.getId()})}" class="btn btn-outline-dark"><i class="bi-receipt" style="font-size: 1rem; color: purple;margin-right: 3px;"></i>Create invoice</a>
         <a href="/project/all" class="btn btn-success">Back</a>
     </div>
     <div th:switch="${#lists.size(tasks)}">
