@@ -1,4 +1,9 @@
-
+function showElementaris(e) {
+    document.getElementById(e).style.display = "block";
+}
+function hideElementaris(e) {
+    document.getElementById(e).style.display = "none";
+}
 
 function showOngoingEntryInfo(data) {
     var FinalProject;
@@ -14,24 +19,24 @@ function showOngoingEntryInfo(data) {
             if (response.project != null)
                 FinalProject = response.finalProject;
 
-            $(".ongoingEntry").show();
-            $(".stopEntry").show();
+            showElementaris("ongoingEntry");
+            showElementaris("stopEntry");
             let projectNameTaskName = response.project.name + " - " + response.task.taskName;
             $('#taskID').val(response.task.id);
             //set the input field values
-            console.log(projectNameTaskName)
+            console.log(projectNameTaskName);
             document.getElementById('projectNameTaskName').innerHTML
                 = projectNameTaskName
             //$('#projectNameTaskName').val(projectNameTaskName);
         }else{
-            console.log("no data objects")
-            $(".ongoingEntry").hide();
-            $(".stopEntry").hide();
+            console.log("no data objects 1");
+            hideElementaris("ongoingEntry");
+            hideElementaris("stopEntry");
         }
     }else{
-        console.log("no data objects")
-        $(".ongoingEntry").hide();
-        $(".stopEntry").hide();
+        console.log("no data objects 2");
+        hideElementaris("ongoingEntry");
+        hideElementaris("stopEntry");
     }
 
 
