@@ -60,7 +60,7 @@ public class RESTProjectTaskController {
         ProjectTask task = service.grabTaskId(taskID);
 
         if (task != null){
-            task.endLastTaskEntry(); // zahájení nové entry - no shit
+            task.endLastTaskEntry(); // ukončení nové entry - no shit
             service.saveTask(task);
             response.setResponseStatus(RestResponse.OK);
         }else{

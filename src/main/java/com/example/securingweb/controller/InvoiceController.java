@@ -114,7 +114,9 @@ public class InvoiceController {
 
     @RequestMapping(value = "/invoice/add", method = RequestMethod.POST)
     public String addInvoice(@Valid @ModelAttribute("invoice") Invoice invoice, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
+        Address address = addressRepository.findAddressByOwnerId(invoice.getClientId());
+        Address addressUser = addressRepository.findAddressByOwnerId(invoice.getUserId());
+        if (bindingResult.hasErrors() || (address == null) || (addressUser == null)) {
             List<ProjectTask> closedTasks = new ArrayList<ProjectTask>();
             for (ProjectTask task : projectTaskRepository.findProjectTasksByProjectId(invoice.getProjectId())){
                 if (task.taskComplete()){
@@ -126,9 +128,12 @@ public class InvoiceController {
             return "invoice/add";
         }
         invoice.setClient(clientRepository.findById(invoice.getClientId()).get());
+        invoice.setClientAddress(address);
+        invoice.setUserAddress(addressUser);
         for (String task : invoice.getTaskIds()){
             invoice.addTaskObjects(projectTaskRepository.findById(task).get());
         }
+
         invoice.setCreated(LocalDateTime.now());
         invoiceRepository.save(invoice);
         msg = "Invoice successfully created";
