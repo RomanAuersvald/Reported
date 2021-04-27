@@ -19,6 +19,14 @@ function startTaskEntry() {
 
 }
 
+function startTaskEntry2(id) {
+    let url = origin + "/task/startTaskEntry/" + id;
+    console.log(url)
+    $.get(url, showEntryProgress);
+
+}
+
+
 function endTaskEntry(){
     let tID = $('#taskID').val()
     var url = ""
