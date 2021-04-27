@@ -22,6 +22,8 @@ services:
     networks: # Networks to join (Services on the same network can communicate with each other using their name)
           - backend
 
+  invoice-service:
+
 
   mongodb:
     container_name: reported-mongodb

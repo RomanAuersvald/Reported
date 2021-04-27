@@ -5,16 +5,19 @@ import com.example.securingweb.model.*;
 import com.example.securingweb.service.InvoiceService;
 import com.example.securingweb.service.ProjectService;
 import com.lowagie.text.DocumentException;
+import com.netflix.appinfo.InstanceInfo;
+import com.netflix.discovery.EurekaClient;
+import com.netflix.discovery.shared.Application;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.*;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
@@ -29,6 +32,12 @@ import java.util.*;
 @Controller
 public class InvoiceController {
     private String msg = "";
+
+    private final RestTemplate restTemplate;
+
+    public InvoiceController(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     @Autowired
     private ProjectRepository repository;
@@ -54,14 +63,26 @@ public class InvoiceController {
     @Autowired
     private LogRepository logRepository;
 
+    @Autowired
+    private EurekaClient eurekaClient;
+
+    private String getRequestURLForMethod(String method, String param){
+        Application application = eurekaClient.getApplication("REPORTED-INVOICE-SERVICE");
+        InstanceInfo instanceInfo = application.getInstances().get(0);
+        return "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + "/invoices" + ((method != "") ? ("/" + method) : "") + ((param != "") ? ("/" + param) : "");
+    }
 
     @GetMapping("/invoice/all")
     public String showAllInvoices(Model model){
 //        msg = "Test response msg.";
         Map<Invoice, Double> taskPrice = new HashMap<>();
         Double totalPrice = 0.0;
-        Collection<Invoice> invoices = invoiceRepository.findAllByUserId(getCurrentLoggedUser().getId());
-        for (Invoice invoice : invoices){
+        String userID = getCurrentLoggedUser().getId();
+        //Invoice[] entity = restTemplate.getForObject("http://192.168.0.102:reported-invoice-service/invoices/all/" + userID, Invoice[].class) ;// invoiceRepository.findAllByUserId(getCurrentLoggedUser().getId());
+        String url = getRequestURLForMethod("all", userID);
+        System.out.println("URL" + url);
+        Collection<Invoice> inv = restTemplate.getForObject(url, Collection.class );
+        for (Invoice invoice : inv){
             Collection<ProjectTask> tasks = invoice.getTasks();
             for (ProjectTask task : tasks){
                 Long duration = task.returnTaskDuration();
