@@ -36,6 +36,26 @@ public class Invoice {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime dueBy; // vybírá se
 
+
+    private Address userAddress;
+    private Address clientAddress;
+
+    public Address getUserAddress() {
+        return userAddress;
+    }
+
+    public void setUserAddress(Address userAddress) {
+        this.userAddress = userAddress;
+    }
+
+    public Address getClientAddress() {
+        return clientAddress;
+    }
+
+    public void setClientAddress(Address clientAddress) {
+        this.clientAddress = clientAddress;
+    }
+
     public String getId() {
         return id;
     }
