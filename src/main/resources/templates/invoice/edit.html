@@ -10,7 +10,7 @@
 
 <div layout:fragment="content" class="container">
     <h2 style="margin-top: 30px">Invoice</h2>
-    <form th:action="@{/invoice/add}" th:object="${invoice}" method="post">
+    <form th:action="@{/invoice/update/{id}(id=${invoice.id})}" th:object="${invoice}" method="post">
 
         <div class="form-group">
             <label>Project name:</label>
@@ -44,6 +44,9 @@
             <input type="hidden"  class="form-control" th:field="*{userId}">
             <input type="hidden"  class="form-control" th:field="*{tasks}">
             <input type="hidden"  class="form-control" th:field="*{client}">
+            <input type="hidden"  class="form-control" th:field="*{userAddress}">
+            <input type="hidden"  class="form-control" th:field="*{clientAddress}">
+            <input type="hidden"  class="form-control" th:field="*{created}">
         </div>
         <button type="submit" class="btn btn-primary">Edit invoice</button>
         <a href="/invoice/all" class="btn btn-success">Back</a>

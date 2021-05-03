@@ -35,8 +35,6 @@ public class Invoice {
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime dueBy; // vybírá se
-
-
     private Address userAddress;
     private Address clientAddress;
 
@@ -82,6 +80,10 @@ public class Invoice {
 
     public Collection<ProjectTask> getTasks() {
         return tasks;
+    }
+
+    public void emptyProjectTasks(){
+        this.tasks.clear();
     }
 
     public void setTasks(Collection<ProjectTask> tasks) {

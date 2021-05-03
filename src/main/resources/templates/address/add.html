@@ -31,13 +31,13 @@
         </div>
         <div class="form-group">
             <input type="hidden" readonly class="form-control" th:value="*{ownerId}"name="ownerId">
-            <input type="hidden" readonly class="form-control" th:value="${client.ico}"id="clientICO">
+            <input type="hidden" readonly class="form-control" th:value="${client?.ico}" id="clientICO">
         </div>
         <p class="invalid-tooltip" id="addressWarning" style="display:none">Could not load ARES info. Sorry. :(</p>
         <button type="submit" class="btn btn-primary">Add new address</button>
         <span th:if="${client == null}"><a th:href="@{/user/detail}" class="btn btn-success">Back</a></span>
         <span th:unless="${client == null}"><a th:href="@{/client/all}" class="btn btn-success">Back</a></span>
-        <span th:if="${client.getIco() != null && client.getIco().length() == 8}"><a th:onclick="fillClientAddress()" class="btn btn-success">Fill from ARES</a></span>
+        <span th:if="${client?.getIco() != null && client?.getIco().length() == 8}"><a th:onclick="fillClientAddress()" class="btn btn-success">Fill from ARES</a></span>
     </form>
 </div>
 </body>

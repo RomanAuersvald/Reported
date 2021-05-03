@@ -1,4 +1,5 @@
 package com.example.securingweb.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -139,6 +140,7 @@ public class ReportedUser implements UserDetails {
         return true;
     }
 
+    @JsonIgnore
     public List<String> getRoleList(){
         if(this.role.length() > 0) {
             return Arrays.asList(this.role.split(","));
