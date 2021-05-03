@@ -5,6 +5,7 @@ package com.example.securingweb.controller;
         import com.example.securingweb.dao.ProjectTaskRepository;
         import com.example.securingweb.dao.UserRepository;
         import com.example.securingweb.model.*;
+        import com.example.securingweb.service.LogService;
         import com.example.securingweb.service.ProjectTaskService;
         import org.springframework.beans.factory.annotation.Autowired;
         import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,7 +36,7 @@ public class ProjectTaskController {
     private UserRepository userRepository;
 
     @Autowired
-    private LogRepository logRepository;
+    private LogService logService;
 
     public ProjectTaskController(ProjectTaskRepository repository) {
         this.repository = repository;
@@ -106,8 +107,7 @@ public class ProjectTaskController {
         }
         repository.save(task);
         msg = "Task successfully added";
-        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 1, LocalDateTime.now());
-        logRepository.save(notification);
+        logService.logAction(new Log(msg, getCurrentLoggedUser().getId(), 1, LocalDateTime.now()));
         return "redirect:/task/all";
     }
 
@@ -116,8 +116,7 @@ public class ProjectTaskController {
 //        repository.deleteById(id);
         service.deleteTask(id);
         msg = "Task id: " + id + " successfully deleted";
-        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 3, LocalDateTime.now());
-        logRepository.save(notification);
+        logService.logAction(new Log(msg, getCurrentLoggedUser().getId(), 3, LocalDateTime.now()));
         return "redirect:/task/all";
     }
 
@@ -148,8 +147,7 @@ public class ProjectTaskController {
         }
         service.saveTask(task);
         msg = "Task id: " + id + " successfully edited";
-        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 2, LocalDateTime.now());
-        logRepository.save(notification);
+        logService.logAction(new Log(msg, getCurrentLoggedUser().getId(), 2, LocalDateTime.now()));
         return "redirect:/task/all";
     }
 
@@ -169,8 +167,7 @@ public class ProjectTaskController {
         task.setEndDate(LocalDateTime.now());
         service.saveTask(task);
         msg = "Task id: " + id + " marked as done";
-        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 4, LocalDateTime.now());
-        logRepository.save(notification);
+        logService.logAction(new Log(msg, getCurrentLoggedUser().getId(), 4, LocalDateTime.now()));
         return "redirect:/task/all";
     }
 }

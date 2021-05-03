@@ -28,9 +28,6 @@ public class DashboardController {
     private ProjectTaskRepository taskRepository;
 
     @Autowired
-    private ProjectService service;
-
-    @Autowired
     private UserRepository userRepository;
 
     @GetMapping("/dashboard")

@@ -5,6 +5,7 @@ import com.example.securingweb.model.Address;
 import com.example.securingweb.model.Client;
 import com.example.securingweb.model.Log;
 import com.example.securingweb.model.ReportedUser;
+import com.example.securingweb.service.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -34,7 +35,7 @@ public class UserController {
     private ProjectRepository repository;
 
     @Autowired
-    private LogRepository logRepository;
+    private LogService logService;
 
 
     private ReportedUser getCurrentLoggedUser(){
@@ -63,8 +64,7 @@ public class UserController {
         }
         userRepository.save(user);
         msg = "User id: " + id + " successfully edited";
-        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 2, LocalDateTime.now());
-        logRepository.save(notification);
+        logService.logAction(new Log(msg, getCurrentLoggedUser().getId(), 2, LocalDateTime.now()));
         return "redirect:/user/detail"; // return to user detail
     }
 
@@ -74,8 +74,7 @@ public class UserController {
         user.setRole("PREMIUM");
         userRepository.save(user);
         msg = "User has been upgraded to Premium role.";
-        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 4, LocalDateTime.now());
-        logRepository.save(notification);
+        logService.logAction(new Log(msg, getCurrentLoggedUser().getId(), 4, LocalDateTime.now()));
         return "redirect:/dashboard";
     }
 
@@ -85,8 +84,7 @@ public class UserController {
         user.setRole("USER");
         userRepository.save(user);
         msg = "User has been changed to USER role.";
-        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 4, LocalDateTime.now());
-        logRepository.save(notification);
+        logService.logAction(new Log(msg, getCurrentLoggedUser().getId(), 4, LocalDateTime.now()));
         return "redirect:/dashboard";
     }
 

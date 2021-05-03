@@ -3,14 +3,11 @@ package com.example.securingweb.controller;
 import com.example.securingweb.dao.*;
 import com.example.securingweb.model.*;
 import com.example.securingweb.service.InvoiceService;
-import com.example.securingweb.service.ProjectService;
-import com.lowagie.text.DocumentException;
+import com.example.securingweb.service.LogService;
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Application;
-import com.sun.xml.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,13 +17,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
-import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import javax.validation.Valid;
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -59,12 +51,12 @@ public class InvoiceController {
     AddressRepository addressRepository;
 
     @Autowired
-    private LogRepository logRepository;
-
-    @Autowired
     private EurekaClient eurekaClient;
 
-    private String getRequestURLForMethod(String method, String param){
+    @Autowired
+    private LogService logService;
+
+    private String requestURLForInvoiceMethod(String method, String param){
         Application application = eurekaClient.getApplication("REPORTED-INVOICE-SERVICE");
         InstanceInfo instanceInfo = application.getInstances().get(0);
         return "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + "/invoices" + ((method != "") ? ("/" + method) : "") + ((param != "") ? ("/" + param) : "");
@@ -75,7 +67,7 @@ public class InvoiceController {
         Map<Invoice, Double> taskPrice = new HashMap<>();
         Double totalPrice = 0.0;
         String userID = getCurrentLoggedUser().getId();
-        String url = getRequestURLForMethod("all", userID);
+        String url = requestURLForInvoiceMethod("all", userID);
         System.out.println("URL" + url);
         List<Invoice> invoices = restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<Invoice>>() {}).getBody();
         for (Invoice invoice : invoices){
@@ -155,7 +147,7 @@ public class InvoiceController {
 
         invoice.setCreated(LocalDateTime.now());
 
-        String url = getRequestURLForMethod("", "");
+        String url = requestURLForInvoiceMethod("", "");
         System.out.println("URL post invoice " + url);
 
         HttpHeaders requestHeaders = new HttpHeaders();
@@ -171,9 +163,7 @@ public class InvoiceController {
             }else{
                 msg = "Invoice successfully created";
             }
-
-            Log notification = new Log(msg, getCurrentLoggedUser().getId(), 1, LocalDateTime.now());
-            logRepository.save(notification);
+            logService.logAction(new Log(msg, getCurrentLoggedUser().getId(), 1, LocalDateTime.now()));
             return "redirect:/invoice/all";
         }else{
             injectModelWithClosedTasks(model, invoice);
@@ -204,17 +194,15 @@ public class InvoiceController {
 
     @RequestMapping(value = "/invoice/delete/{id}")
     public String deleteProject(@PathVariable String id) {
-        String url = getRequestURLForMethod("delete", id);
+        String url = requestURLForInvoiceMethod("delete", id);
         System.out.println("URL invoice delete " + url);
         ResponseEntity response = restTemplate.getForEntity(url,ResponseEntity.class);
         if (response.getStatusCode() == HttpStatus.OK){
             msg = "Invoice s id: " + id + " successfully deleted";
-            Log notification = new Log(msg, getCurrentLoggedUser().getId(), 3, LocalDateTime.now());
-            logRepository.save(notification);
+            logService.logAction(new Log(msg, getCurrentLoggedUser().getId(), 3, LocalDateTime.now()));
         }else{
             msg = "Invoice s id: " + id + " failed to delete";
-            Log notification = new Log(msg, getCurrentLoggedUser().getId(), 1, LocalDateTime.now());
-            logRepository.save(notification);
+            logService.logAction(new Log(msg, getCurrentLoggedUser().getId(), 1, LocalDateTime.now()));
         }
         return "redirect:/invoice/all";
     }
@@ -222,7 +210,7 @@ public class InvoiceController {
     @RequestMapping(value = "/invoice/edit/{id}")
     public ModelAndView giveMeEditForm(@PathVariable String id, Model model){
         ModelAndView form = new ModelAndView("invoice/edit");
-        String url = getRequestURLForMethod("", id);
+        String url = requestURLForInvoiceMethod("", id);
         System.out.println("URL invoice edit " + url);
         Invoice invoice = restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<Invoice>() {}).getBody();
         model.addAttribute("projectTasks", projectTaskRepository.findProjectTasksByProjectId(invoice.getProjectId()));
@@ -234,7 +222,7 @@ public class InvoiceController {
 
     @RequestMapping(value = "/invoice/pdf/{id}", produces = "application/pdf")
     public ResponseEntity<byte[]> getMePDF(@PathVariable String id, Model model){
-        String url = getRequestURLForMethod("getPDF", id);
+        String url = requestURLForInvoiceMethod("getPDF", id);
         System.out.println("URL invoice pdf" + url);
         return restTemplate.getForEntity(url,byte[].class);
     }
@@ -251,4 +239,6 @@ public class InvoiceController {
         ReportedUser userDetails = ReportedUser.class.cast(principal);
         return userRepository.findByUsername(userDetails.getUsername());
     }
+
+
 }

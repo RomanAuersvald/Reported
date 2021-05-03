@@ -2,6 +2,7 @@ package com.example.securingweb.controller;
 
 import com.example.securingweb.dao.*;
 import com.example.securingweb.model.*;
+import com.example.securingweb.service.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -35,7 +36,7 @@ public class AddressController {
     }
 
     @Autowired
-    private LogRepository logRepository;
+    private LogService logService;
 
     @GetMapping("/address/ad")
     public String bringMeAdd(Model model){
@@ -74,8 +75,7 @@ public class AddressController {
         }
         addressRepository.save(address);
         msg = "Adress successfully added";
-        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 1, LocalDateTime.now());
-        logRepository.save(notification);
+        logService.logAction(new Log(msg, getCurrentLoggedUser().getId(), 1, LocalDateTime.now()));
         Optional<Client> client = clientRepository.findById(address.getOwnerId());
         if (client.isPresent()){
             //client
@@ -89,8 +89,7 @@ public class AddressController {
     public String deleteProject(@PathVariable String id) {
         addressRepository.deleteById(id);
         msg = "Adress id: " + id + "  successfully deleted";
-        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 3, LocalDateTime.now());
-        logRepository.save(notification);
+        logService.logAction(new Log(msg, getCurrentLoggedUser().getId(), 3, LocalDateTime.now()));
         return "redirect:/client/all";
     }
 
@@ -124,8 +123,7 @@ public class AddressController {
         }
         addressRepository.save(address);
         msg = "Adress s id: " + id + " successfully updated";
-        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 2, LocalDateTime.now());
-        logRepository.save(notification);
+        logService.logAction(new Log(msg, getCurrentLoggedUser().getId(), 2, LocalDateTime.now()));
         Optional<Client> client = clientRepository.findById(address.getOwnerId());
         if (client.isPresent()){
             //client

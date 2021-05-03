@@ -2,6 +2,7 @@ package com.example.securingweb.controller;
 
 import com.example.securingweb.dao.*;
 import com.example.securingweb.model.*;
+import com.example.securingweb.service.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -37,7 +38,7 @@ public class ClientController {
     }
 
     @Autowired
-    private LogRepository logRepository;
+    private LogService logService;
 
     @GetMapping("/client/all")
     public String showAllProject(Model model){
@@ -86,8 +87,7 @@ public class ClientController {
         }
         clientRepository.save(client);
         msg = "Client successfully added";
-        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 1, LocalDateTime.now());
-        logRepository.save(notification);
+        logService.logAction(new Log(msg, getCurrentLoggedUser().getId(), 1, LocalDateTime.now()));
         return "redirect:/client/all";
     }
 
@@ -95,8 +95,7 @@ public class ClientController {
     public String deleteProject(@PathVariable String id) {
         clientRepository.deleteById(id);
         msg = "Client s id: " + id + " successfully deleted";
-        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 3, LocalDateTime.now());
-        logRepository.save(notification);
+        logService.logAction(new Log(msg, getCurrentLoggedUser().getId(), 3, LocalDateTime.now()));
         return "redirect:/client/all";
     }
 
@@ -125,8 +124,7 @@ public class ClientController {
         }
         clientRepository.save(client);
         msg = "Client s id: " + id + " successfully edited";
-        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 2, LocalDateTime.now());
-        logRepository.save(notification);
+        logService.logAction(new Log(msg, getCurrentLoggedUser().getId(), 2, LocalDateTime.now()));
         return "redirect:/client/all";
     }
 }

@@ -4,6 +4,7 @@ import com.example.securingweb.dao.LogRepository;
 import com.example.securingweb.dao.UserRepository;
 import com.example.securingweb.model.Log;
 import com.example.securingweb.model.ReportedUser;
+import com.example.securingweb.service.LogService;
 import com.example.securingweb.service.ReportedUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,7 +33,7 @@ public class RegistrationController {
     private String user_message = "";
 
     @Autowired
-    private LogRepository logRepository;
+    private LogService logService;
 
     @PostMapping(path="/addUser")
     public //@ResponseBody // - pouze pokud chceme výsledek ukázat
@@ -58,8 +59,7 @@ public class RegistrationController {
         user.setRole("USER");
         user.setPassword(encodedPassword);
         userRepository.save(user);
-        Log notification = new Log("User has been created.", user.getId(), 4, LocalDateTime.now());
-        logRepository.save(notification);
+        logService.logAction(new Log("User has been created.", user.getId(), 1, LocalDateTime.now()));
         System.out.println("saved");
         user_message = "";
         return "redirect:/loginuser";

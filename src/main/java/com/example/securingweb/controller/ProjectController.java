@@ -2,6 +2,7 @@ package com.example.securingweb.controller;
 
 import com.example.securingweb.dao.*;
 import com.example.securingweb.model.*;
+import com.example.securingweb.service.LogService;
 import com.example.securingweb.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,7 +36,7 @@ public class ProjectController {
     private InvoiceRepository invoiceRepository;
 
     @Autowired
-    private LogRepository logRepository;
+    private LogService logService;
 
     @Autowired
     private AddressRepository addressRepository;
@@ -77,8 +78,7 @@ public class ProjectController {
         System.out.println(project);
         repository.save(project);
         msg = "Project successfully created";
-        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 1, LocalDateTime.now());
-        logRepository.save(notification);
+        logService.logAction(new Log(msg, getCurrentLoggedUser().getId(), 1, LocalDateTime.now()));
         return "redirect:/project/all";
     }
 
@@ -104,8 +104,7 @@ public class ProjectController {
         }
         service.deleteProject(id);
         msg = "Project id: " + id + " successfully deleted";
-        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 3, LocalDateTime.now());
-        logRepository.save(notification);
+        logService.logAction(new Log(msg, getCurrentLoggedUser().getId(), 3, LocalDateTime.now()));
         return "redirect:/project/all";
     }
 
@@ -134,8 +133,7 @@ public class ProjectController {
         }
         service.saveProject(project);
         msg = "Project id: " + id + " successfully edited";
-        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 2, LocalDateTime.now());
-        logRepository.save(notification);
+        logService.logAction(new Log(msg, getCurrentLoggedUser().getId(), 2, LocalDateTime.now()));
         return "redirect:/project/all";
     }
 
@@ -159,8 +157,7 @@ public class ProjectController {
         project.setProjectEnd(LocalDateTime.now());
         service.saveProject(project);
         msg = "Project id " + id + " marked as done.";
-        Log notification = new Log(msg, getCurrentLoggedUser().getId(), 4, LocalDateTime.now());
-        logRepository.save(notification);
+        logService.logAction(new Log(msg, getCurrentLoggedUser().getId(), 4, LocalDateTime.now()));
         return "redirect:/project/detail/" + id;
     }
 }
