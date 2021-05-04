@@ -14,7 +14,8 @@ public class ProjectTaskEntry implements Comparable<ProjectTaskEntry> {
 
     public Long returnTaskEntryDuration() {
         if (endDate != null){
-            return ChronoUnit.SECONDS.between(startDate, endDate);
+            long diff = ChronoUnit.SECONDS.between(startDate, endDate);
+            return diff;
         }else{
             return null;
         }
@@ -24,6 +25,10 @@ public class ProjectTaskEntry implements Comparable<ProjectTaskEntry> {
     public ProjectTaskEntry() {
         this.startDate = LocalDateTime.now();
         this.endDate = null;
+    }
+    public ProjectTaskEntry(LocalDateTime startDate, LocalDateTime endDate) {
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     public LocalDateTime getEndDate() {

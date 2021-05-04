@@ -64,17 +64,9 @@ public class InvoiceController {
         return "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + "/invoices" + ((method != "") ? ("/" + method) : "") + ((param != "") ? ("/" + param) : "");
     }
 
-    private String requestURLForLoginMethod(String method, String param){
-        Application application = eurekaClient.getApplication("RESTSPA");
-        InstanceInfo instanceInfo = application.getInstances().get(0);
-        return "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + "/login" + ((method != "") ? ("/" + method) : "") + ((param != "") ? ("/" + param) : "");
-    }
-
     @GetMapping("/invoice/all")
     public String showAllInvoices(Model model){
 
-        String url = requestURLForLoginMethod("", "");
-        System.out.println("URL post login " + url);
 
        // HttpHeaders requestHeaders = new HttpHeaders();
        // requestHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -93,7 +85,7 @@ public class InvoiceController {
         Double totalPrice = 0.0;
         String userID = getCurrentLoggedUser().getId();
         String url2 = requestURLForInvoiceMethod("all", userID);
-        System.out.println("URL" + url);
+        System.out.println("URL" + url2);
         List<Invoice> invoices = restTemplate.exchange(url2, HttpMethod.GET, null, new ParameterizedTypeReference<List<Invoice>>() {}).getBody();
         for (Invoice invoice : invoices){
             Collection<ProjectTask> tasks = invoice.getTasks();

@@ -101,10 +101,10 @@ public class ProjectTaskController {
             return "task/add";
         }
 //        System.out.println(project);
-        if (task.taskComplete()){
-            Long duration = task.returnTaskDuration();
-            System.out.println(duration);
-        }
+
+        task.addTaskEntry(new ProjectTaskEntry(task.getStartDate(), task.getEndDate()));
+
+
         repository.save(task);
         msg = "Task successfully added";
         logService.logAction(new Log(msg, getCurrentLoggedUser().getId(), 1, LocalDateTime.now()));

@@ -47,6 +47,13 @@ public class ProjectTask {
         taskEntries.add(new ProjectTaskEntry());
     }
 
+    public void addTaskEntry(ProjectTaskEntry entry){
+        if (taskEntries == null){
+            taskEntries = new ArrayList<ProjectTaskEntry>();
+        }
+        taskEntries.add(entry);
+    }
+
     public List<ProjectTaskEntry> getTaskEntries(){
         if (taskEntries != null){
             Collections.sort(taskEntries);
