@@ -13,6 +13,8 @@ import org.springframework.http.*;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -62,14 +64,37 @@ public class InvoiceController {
         return "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + "/invoices" + ((method != "") ? ("/" + method) : "") + ((param != "") ? ("/" + param) : "");
     }
 
+    private String requestURLForLoginMethod(String method, String param){
+        Application application = eurekaClient.getApplication("RESTSPA");
+        InstanceInfo instanceInfo = application.getInstances().get(0);
+        return "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + "/login" + ((method != "") ? ("/" + method) : "") + ((param != "") ? ("/" + param) : "");
+    }
+
     @GetMapping("/invoice/all")
     public String showAllInvoices(Model model){
+
+        String url = requestURLForLoginMethod("", "");
+        System.out.println("URL post login " + url);
+
+       // HttpHeaders requestHeaders = new HttpHeaders();
+       // requestHeaders.setContentType(MediaType.APPLICATION_JSON);
+       // requestHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+
+       // // request body parameters
+       // Map<String, Object> map = new HashMap<>();
+       // map.put("username", "roman");
+       // map.put("password", "roman");
+
+       // HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(map, requestHeaders);
+       // ResponseEntity<String> response = restTemplate.postForEntity(url, requestEntity, String.class);
+
+
         Map<Invoice, Double> taskPrice = new HashMap<>();
         Double totalPrice = 0.0;
         String userID = getCurrentLoggedUser().getId();
-        String url = requestURLForInvoiceMethod("all", userID);
+        String url2 = requestURLForInvoiceMethod("all", userID);
         System.out.println("URL" + url);
-        List<Invoice> invoices = restTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<Invoice>>() {}).getBody();
+        List<Invoice> invoices = restTemplate.exchange(url2, HttpMethod.GET, null, new ParameterizedTypeReference<List<Invoice>>() {}).getBody();
         for (Invoice invoice : invoices){
             Collection<ProjectTask> tasks = invoice.getTasks();
             for (ProjectTask task : tasks){
