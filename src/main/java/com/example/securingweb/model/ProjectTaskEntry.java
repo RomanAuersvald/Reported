@@ -19,7 +19,6 @@ public class ProjectTaskEntry implements Comparable<ProjectTaskEntry> {
         }else{
             return null;
         }
-
     }
 
     public ProjectTaskEntry() {

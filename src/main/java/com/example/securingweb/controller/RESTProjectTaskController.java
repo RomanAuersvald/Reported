@@ -50,7 +50,6 @@ public class RESTProjectTaskController {
             response.setResponseStatus(RestResponse.NOT_FOUND);
             response.setResponse("");
         }
-
         return response;
     }
 
@@ -99,7 +98,7 @@ public class RESTProjectTaskController {
         }
 
         if (finalProject != null && finalTask != null){
-            // něco běží, tak to vrátíme
+            // něco běží, tak to vrátíme - měl by se vracet list pro výběr té k ukončení
             response.setResponseStatus(RestResponse.OK);
             response.setResponse(new ComplexResult(finalProject, finalTask));
         }else{

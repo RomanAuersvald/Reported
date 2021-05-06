@@ -66,21 +66,6 @@ public class InvoiceController {
 
     @GetMapping("/invoice/all")
     public String showAllInvoices(Model model){
-
-
-       // HttpHeaders requestHeaders = new HttpHeaders();
-       // requestHeaders.setContentType(MediaType.APPLICATION_JSON);
-       // requestHeaders.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-
-       // // request body parameters
-       // Map<String, Object> map = new HashMap<>();
-       // map.put("username", "roman");
-       // map.put("password", "roman");
-
-       // HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(map, requestHeaders);
-       // ResponseEntity<String> response = restTemplate.postForEntity(url, requestEntity, String.class);
-
-
         Map<Invoice, Double> taskPrice = new HashMap<>();
         Double totalPrice = 0.0;
         String userID = getCurrentLoggedUser().getId();
